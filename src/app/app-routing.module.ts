@@ -24,9 +24,9 @@ const routes: Routes = [
   path:'account',
   loadChildren:()=>AuthModule
 },
-{path:'Testimonial',
+{
+  path:'Testimonial',
   component:TestimonialsComponent
-
 },
 {
   path:'',

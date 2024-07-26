@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
-import{HttpClientModule}from '@angular/common/http'
+import{HttpClientModule}from '@angular/common/http';
+import {MatDialogModule} from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,13 +16,18 @@ import{HttpClientModule}from '@angular/common/http'
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule
-
+    HttpClientModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 
 })

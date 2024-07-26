@@ -52,7 +52,7 @@
                           <p class="mb-0 fw-normal">{{bus.teacher_name}}</p>
                         </td>
                         <td>
-                            <button (click)="home.DeleteBus(bus.busid)" class="btn btn-danger m-1">Delete</button>
+                            <button (click)="OpenDeleteDailog(bus.busid)" class="btn btn-danger m-1">Delete</button>
                             <button class="btn btn-info m-1">Update</button></td>
                         
                       </tr> 
@@ -61,3 +61,18 @@
                 </div>
               </div>
             </div>
+<ng-template #deleteDailog>
+            <h1 mat-dialog-title>Delete bus</h1>
+<div mat-dialog-content>
+  Would you like to delete this bus?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close="no">No</button>
+  <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+</div></ng-template>
+
+<ng-template #updatedaialog>
+  
+  
+  
+</ng-template>

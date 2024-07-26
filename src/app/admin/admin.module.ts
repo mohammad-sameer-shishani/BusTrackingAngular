@@ -11,6 +11,7 @@ import { ManageTeachersComponent } from './manage-teachers/manage-teachers.compo
 import { ManageDriversComponent } from './manage-drivers/manage-drivers.component';
 import { ManageChildrenComponent } from './manage-children/manage-children.component';
 import { ManagePagesComponent } from './manage-pages/manage-pages.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({

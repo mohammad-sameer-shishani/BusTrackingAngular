@@ -7,6 +7,9 @@ import { Injectable } from '@angular/core';
 export class HomeService {
 
   constructor(private http:HttpClient) { }
+
+//declaring Arrays For Get All Methods
+
   AllBuses:any=[];
 
   allChildren:any=[];
@@ -19,9 +22,12 @@ export class HomeService {
 
   AllTestimonials : any=[];
 
+//Declaring variables for Get By Id Methods
+
   Bus:any;
   child:any;
 
+//Get All Methods
 
 getAllTestimonials(){
     this.http.get('https://localhost:7169/api/Testimonial').subscribe(response=>{
@@ -66,7 +72,6 @@ getAllTeachers(){
   })
 }
 
-
 getAllDrivers(){
   this.http.get('https://localhost:7169/api/User/GetAllDrivers').subscribe(response=>{
     this.AllDrivers = response;
@@ -86,6 +91,8 @@ getAllParents(){
     console.log(error.status);
   })
 }
+
+//Get By Id Methods
 
 getBusById(userid: number){
   this.http.get('https://localhost:7169/api/Bus/'+userid).subscribe(response=>{
@@ -107,6 +114,9 @@ getChildById(userid: number){
   })
 }
 
+//Delete Methods 
+
+
 DeleteBus(Busid:number){
   this.http.delete("https://localhost:7169/api/Bus/delete/"+Busid).subscribe((response)=>{
     console.log(Busid);
@@ -116,5 +126,16 @@ DeleteBus(Busid:number){
       console.log(error.status);
   })
 }
+
+//Update Methods
+
+updateBus(body:any){
+  this.http.put("https://localhost:7169/api/Bus/",body).subscribe((response)=>{
+    console.log('updated');
+},error => {
+  console.log("Error Updating Bus");
+})
+}
+
 
 }
