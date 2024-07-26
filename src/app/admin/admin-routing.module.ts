@@ -25,7 +25,7 @@ const routes: Routes = [
     component:ManageChildrenComponent
   },
   {
-    path:'Managchild',
+    path:'Managechild',
     component:ManageChildrenComponent
   },
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
     component:ManageTeachersComponent
   },
   {
-    path:'Managedriver',
+    path:'Managedrivers',
     component:ManageDriversComponent
   }
 ];

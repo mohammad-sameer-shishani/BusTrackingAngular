@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router :Router){}
-  login(){
-    console.log('trying to login') //TO DO
-    this.router.navigate(['/home']);
-  }
 loginForm:FormGroup=new FormGroup({
 
   email:new FormControl('',[Validators.required,Validators.email]),
@@ -20,4 +14,7 @@ loginForm:FormGroup=new FormGroup({
 
 }) 
 
+login(){
+  console.log('trying to login') //TO DO
+}
 }

@@ -6,6 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AuthModule } from './auth/auth.module';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { AdminModule } from './admin/admin.module';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
 },
 {
   path:'account',
-  loadChildren:()=>AuthModule
+  loadChildren:()=> import('./auth/auth.module').then(m=>m.AuthModule)
 },
 {
   path:'Testimonial',
@@ -31,6 +32,10 @@ const routes: Routes = [
 {
   path:'',
   component:HomeComponent
+},
+{
+  path:'profile',
+  component:ProfileComponent
 },
 {
   path:'admin',

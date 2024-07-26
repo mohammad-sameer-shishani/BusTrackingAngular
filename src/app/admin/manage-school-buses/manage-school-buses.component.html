@@ -10,71 +10,87 @@
               <div class="card-body p-4">
                 <div class="row">
                     <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Buses</h5>
-                    <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn btn-outline-primary"><a>Add Bus</a></h5></div>
+                    <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn btn-outline-primary"><a>Add Bus</a></h5>
+                </div>
                 <div class="table-responsive">
-                  <table class="table table-striped  text-nowrap mb-0 align-middle">
+                  <table class="table table-striped text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Bus</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Bus Number</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Capacity</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Driver</h6>
-                        </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Teacher</h6>
-                        </th>
-                        
+                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Bus</h6></th>
+                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Bus Number</h6></th>
+                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Capacity</h6></th>
+                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Driver</h6></th>
+                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Teacher</h6></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let bus of home.AllBuses" >
+                      <tr *ngFor="let bus of home.AllBuses">
                         <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><a (click)="home.getBusById(bus.busid)">Details</a></h6></td>
-                        <td class="border-bottom-0">
-                            
-                          <h6 class="fw-semibold mb-1">{{bus.busnumber}}</h6>
-                                                     
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{bus.childrennumber}}</p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <p class="mb-0 fw-normal">{{bus.driver_name}}</p>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{bus.teacher_name}}</p>
-                        </td>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-1">{{bus.busnumber}}</h6></td>
+                        <td class="border-bottom-0"><p class="mb-0 fw-normal">{{bus.childrennumber}}</p></td>
+                        <td class="border-bottom-0"><div class="d-flex align-items-center gap-2"><p class="mb-0 fw-normal">{{bus.driver_name}}</p></div></td>
+                        <td class="border-bottom-0"><p class="mb-0 fw-normal">{{bus.teacher_name}}</p></td>
                         <td>
                             <button (click)="OpenDeleteDailog(bus.busid)" class="btn btn-danger m-1">Delete</button>
-                            <button class="btn btn-info m-1">Update</button></td>
-                        
-                      </tr> 
+                            <button class="btn btn-info m-1" (click)="openUpdateDailog(bus)">Update</button>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-<ng-template #deleteDailog>
-            <h1 mat-dialog-title>Delete bus</h1>
-<div mat-dialog-content>
-  Would you like to delete this bus?
-</div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close="no">No</button>
-  <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
-</div></ng-template>
 
-<ng-template #updatedaialog>
-  
+            <!-- Delete Dialog -->
+            <ng-template #deleteDailog>
+              <h1 mat-dialog-title>Delete bus</h1>
+              <div mat-dialog-content>
+                Would you like to delete this bus?
+              </div>
+              <div mat-dialog-actions>
+                <button mat-button mat-dialog-close="no" class="m-2" style="background-color: #ff1e00; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">No</button>
+                <button mat-button mat-dialog-close="yes" class="m-2" cdkFocusInitial style="background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">Yes</button>
+              </div>
+            </ng-template>
 
-  
-  
-</ng-template>
+            <!-- Update Dialog -->
+            <ng-template #updateBusDialog>
+              <h2 mat-dialog-title>Update Bus Information</h2>
+              <mat-dialog-content class="mat-typography">
+                <form class="example-form" [formGroup]="updateForm">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Bus Number</mat-label>
+                    <input type="text" matInput formControlName="BusNumber" [(ngModel)]="pData.busnumber">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Children Number</mat-label>
+                    <input type="number" matInput formControlName="childrenNumber" [(ngModel)]="pData.childrennumber">
+                  </mat-form-field>
+                  <br>
+                  <!-- <mat-form-field>
+                    <mat-label>Teacher ID</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" >
+                      <mat-option *ngFor="let teacher of teachers" [value]="teacher.userid">
+                        {{teacher.firstname}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <br> -->
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Teacher ID</mat-label>
+                    <input type="text" matInput formControlName="TeacherId" [(ngModel)]="pData.teacher_name">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Driver ID</mat-label>
+                    <input type="text" matInput formControlName="DriverId" [(ngModel)]="pData.driver_name">
+                  </mat-form-field>
+                  <br>
+                </form>
+              </mat-dialog-content>
+              <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close>Cancel</button>
+                <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
+              </mat-dialog-actions>
+            </ng-template>

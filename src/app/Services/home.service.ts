@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class HomeService {
 
+
   constructor(private http:HttpClient) { }
 
 //declaring Arrays For Get All Methods
@@ -123,6 +124,16 @@ DeleteBus(Busid:number){
     console.log("Bus Deleted");
   },error=>{
       console.log("Error Deleting Bus");
+      console.log(error.status);
+  })
+}
+
+DeleteChild(Childid:number){
+  this.http.delete("https://localhost:7169/api/Children/delete/"+Childid).subscribe((response)=>{
+    console.log(Childid);
+    console.log("Delete Child");
+  },error=>{
+      console.log("Error Deleting Child");
       console.log(error.status);
   })
 }

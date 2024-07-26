@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
-import{HttpClientModule}from '@angular/common/http';
-import {MatDialogModule} from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     MatDialogModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatInputModule
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
+    RouterModule,
     HttpClientModule,
     MatDialogModule,
     ReactiveFormsModule,
-    FormsModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    FormsModule,
+    MatInputModule,
+    MatMenuModule
   ]
-
 })
 export class SharedModule { }
