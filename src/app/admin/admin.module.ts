@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { ManageSchoolBusesComponent } from './manage-school-buses/manage-school-buses.component';
 import { DashContentComponent } from './dash-content/dash-content.component';
 import { ManageTeachersComponent } from './manage-teachers/manage-teachers.component';
@@ -12,28 +11,29 @@ import { ManageDriversComponent } from './manage-drivers/manage-drivers.componen
 import { ManageChildrenComponent } from './manage-children/manage-children.component';
 import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { SharedModule } from '../shared/shared.module';
+import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
 
 
 @NgModule({
   declarations: [
     SidebarComponent,
     DashboardComponent,
-    NavbarComponent,
     ManageSchoolBusesComponent,
     DashContentComponent,
     ManageTeachersComponent,
     ManageDriversComponent,
     ManageChildrenComponent,
-    ManagePagesComponent
+    ManagePagesComponent,
+    AdminNavbarComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    SharedModule
   ],
   exports:[
     SidebarComponent,
     DashboardComponent,
-    NavbarComponent,
     ManageSchoolBusesComponent,
     DashContentComponent,
     ManageTeachersComponent,
