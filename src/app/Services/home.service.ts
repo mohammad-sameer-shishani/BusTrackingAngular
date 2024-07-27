@@ -53,15 +53,7 @@ getAllBuses(){
   })
 }
 
-GetAllChildren(){
-  this.http.get('https://localhost:7169/api/Children').subscribe((response)=>{
-    this.allChildren=response;
-    console.log('Got All Children');
-  },error=>{
-    console.log('error getting all children');
-    console.log(error.status);
-  })
-}
+
 
 getAllTeachers(){
   this.http.get('https://localhost:7169/api/User/GetAllTeachers').subscribe(response=>{

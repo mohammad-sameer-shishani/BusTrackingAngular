@@ -8,10 +8,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
 loginForm:FormGroup=new FormGroup({
-
   email:new FormControl('',[Validators.required,Validators.email]),
   password :new FormControl('',[Validators.minLength(8),Validators.required])
-
 }) 
 
 login(){
