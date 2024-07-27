@@ -19,7 +19,7 @@ export class AddChildComponent {
     }
   )
   
-  addChild()
+  AddChild()
     {
       this.child.addChild(this.addChildForm.value);
     }

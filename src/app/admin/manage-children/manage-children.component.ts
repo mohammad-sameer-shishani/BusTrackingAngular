@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChildService } from 'src/app/Services/child.service';
 import { HomeService } from 'src/app/Services/home.service';
 import { AddChildComponent } from '../add-child/add-child.component';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-children',
@@ -10,13 +11,28 @@ import { AddChildComponent } from '../add-child/add-child.component';
   styleUrls: ['./manage-children.component.css']
 })
 export class ManageChildrenComponent implements OnInit{
-  Child: any;
   constructor(public home:HomeService,public dialog: MatDialog,public child:ChildService){}
   
+  
   @ViewChild('deleteDailog') callDeleteDailog!:TemplateRef<any>; 
+  @ViewChild('UpdateChildDailog') callUpdateDialog!:TemplateRef<any>; 
+
+  prevChild:any;
+
   ngOnInit(): void {
     this.child.GetAllChildren();
+    this.home.getAllParents();
   }
+ 
+  UpdateChildForm: FormGroup = new FormGroup({
+    childid: new FormControl(Validators.required),
+    firstname: new FormControl(Validators.required),
+    lastname: new FormControl(Validators.required),
+    address: new FormControl(Validators.required),
+    parentid: new FormControl(Validators.required),
+    busid: new FormControl(Validators.required)
+  });
+
 
   openAddDailog(){
     this.dialog.open(AddChildComponent);
@@ -24,7 +40,7 @@ export class ManageChildrenComponent implements OnInit{
 
 
   OpenDeleteDailog(Childid:number){
-    const dailogResult=   this.dialog.open(this.callDeleteDailog);
+    const dailogResult=this.dialog.open(this.callDeleteDailog);
       dailogResult.afterClosed().subscribe((result)=>{
         if(result !=undefined){
           if(result=='yes') 
@@ -35,5 +51,16 @@ export class ManageChildrenComponent implements OnInit{
       })
     }
 
+    OpenUpdateDialog(Child:any){
+      this.prevChild=Child;
+      this.UpdateChildForm.controls["childid"].setValue(this.prevChild.childid);
+      console.log(this.prevChild);
+      this.dialog.open(this.callUpdateDialog);
+      this.child.updateChild(Child); 
+      
+    }
 
+    UpdateChild(){
+      this.child.updateChild(this.UpdateChildForm.value); 
+    }
 }

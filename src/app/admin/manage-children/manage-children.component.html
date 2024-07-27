@@ -17,36 +17,47 @@
                     <thead class="text-dark fs-4">
                       <tr>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Firstname</h6>
+                          <h4 class="fw-semibold mb-0">Firstname</h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Lastname </h6>
+                          <h4 class="fw-semibold mb-0">Lastname </h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Address</h6>
+                          <h4 class="fw-semibold mb-0">Address</h4>
                         </th>
-                        
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Bus id</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Parent id</h4>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let child of child.allChildren" >
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><a>{{child.firstname}} {{child.lastname}}</a></h6></td>
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}} </a></h4></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">{{child.busnumber}}</h6>
+                            <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">{{child.address}}</p>
                         </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{child.busid}}</p>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{child.parentid}}</p>
+                        </td>
                         <td>
-                            <button (click)="OpenDeleteDailog(child.Childid)" class="btn btn-danger m-1">Delete</button>
-                            <button class="btn btn-info m-1">Update</button></td>
-                        
+                            <button (click)="OpenDeleteDailog(child.childid)" class="btn btn-danger m-1">Delete</button>
+                            <button class="btn btn-info m-1" (click)="OpenUpdateDialog(child)">Update</button></td>
                       </tr> 
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
+            
             <ng-template #deleteDailog>
               <h1 mat-dialog-title>Delete Child</h1>
               <div mat-dialog-content>
@@ -54,6 +65,52 @@
               </div>
               <div mat-dialog-actions>
                 <button mat-button mat-dialog-close="no" class="m-2"  style="background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">No</button>
-                <button mat-button mat-dialog-close="yes" class="m-2"  cdkFocusInitial style="background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">Yes</button>
+                <button mat-button mat-dialog-close="yes" class="m-2"  cdkFocusInitial style="background-color: #e43419; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px;">Yes</button>
               </div>
+            </ng-template>
+
+
+
+            <!-- Update Child Dialog -->
+            <ng-template #UpdateChildDailog>
+              <h2 mat-dialog-title>Update Child Information</h2>
+              <mat-dialog-content class="mat-typography">
+                <form class="example-form" [formGroup]="UpdateChildForm">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput formControlName="firstname" [(ngModel)]="prevChild.firstname">
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" matInput formControlName="lastname" [(ngModel)]="prevChild.lastname">
+                  </mat-form-field>
+                  <br>
+               
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Address</mat-label>
+                    <input type="text" matInput formControlName="address" [(ngModel)]="prevChild.address">
+                 
+                  </mat-form-field>
+               
+                  <br>
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Parent</mat-label>
+                    <mat-select class="col-10" formControlName="parentid">
+                      <mat-option *ngFor="let paren of home.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+               
+                  <br>
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Bus</mat-label>
+                    <input type="number" matInput formControlName="busid" [(ngModel)]="prevChild.busid">
+                  </mat-form-field>
+                  <br>
+                </form>
+              </mat-dialog-content>
+              <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close="no" >Cancel</button>
+                <button mat-button mat-dialog-close="yes" [mat-dialog-close]="true"cdkFocusInitial (click)="UpdateChild()">Update</button>
+              </mat-dialog-actions>
             </ng-template>

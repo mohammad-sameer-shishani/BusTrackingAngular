@@ -43,7 +43,8 @@ getChildById(userid: number){
 
 //Delete Methods 
 DeleteChild(childId : number){
-  this.http.delete('https://localhost:7169/api/Children'+childId).subscribe(response=>{
+
+  this.http.delete('https://localhost:7169/api/Children/delete/'+childId).subscribe(response=>{
     this.child=response;
     console.log("deleted");
   },err=>{
@@ -60,6 +61,16 @@ addChild(body:any){
     console.log('error adding Child');
     console.log(err.status);
   })
+}
+
+updateChild(body:any){
+
+  this.http.put('https://localhost:7169/api/children',body).subscribe((response)=>{
+    console.log('Updated Child');
+},error => {
+  console.log("Error Updating Child");
+  console.log(error.status);
+})
 }
 
 }
