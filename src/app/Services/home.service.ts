@@ -12,20 +12,16 @@ export class HomeService {
 
   AllBuses:any=[];
 
-  allChildren:any=[];
+
   
-  AllTeachers: any=[];
 
-  AllDrivers : any=[];
-
-  AllParents : any=[];
 
   AllTestimonials : any=[];
 
 //Declaring variables for Get By Id Methods
 
   Bus:any;
-  child:any;
+  
 
 //Get All Methods
 
@@ -52,45 +48,11 @@ getAllBuses(){
   })
 }
 
-GetAllChildren(){
-  this.http.get('https://localhost:7169/api/Children').subscribe((response)=>{
-    this.allChildren=response;
-    console.log('Got All Children');
-  },error=>{
-    console.log('error getting all children');
-    console.log(error.status);
-  })
-}
 
-getAllTeachers(){
-  this.http.get('https://localhost:7169/api/User/GetAllTeachers').subscribe(response=>{
-    this.AllTeachers = response;
-    console.log('Got All Teachers');
-  },error => {
-    console.log("error");
-    console.log(error.status);
-  })
-}
 
-getAllDrivers(){
-  this.http.get('https://localhost:7169/api/User/GetAllDrivers').subscribe(response=>{
-    this.AllDrivers = response;
-    console.log('Got All Drivers');
-  },error => {
-    console.log("error");
-    console.log(error.status);
-  })
-}
 
-getAllParents(){
-  this.http.get('https://localhost:7169/api/User/GetAllParents').subscribe(response=>{
-    this.AllParents = response;
-    console.log('Got All Parents');
-  },error => {
-    console.log("error");
-    console.log(error.status);
-  })
-}
+
+
 
 //Get By Id Methods
 
@@ -104,15 +66,6 @@ getBusById(userid: number){
   })
 }
 
-getChildById(userid: number){
-  this.http.get('https://localhost:7169/api/Children/'+userid).subscribe(response=>{
-    this.child=response;
-    console.log("Got The Child By Id")
-  },error => {
-    console.log("error getting The Child");
-    console.log(error.status);
-  })
-}
 
 //Delete Methods 
 

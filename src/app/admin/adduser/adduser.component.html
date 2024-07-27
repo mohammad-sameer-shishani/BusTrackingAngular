@@ -1,0 +1,104 @@
+ 
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="example-form" [formGroup]="addUserForm">
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">First Name: </mat-label>
+      <input type="text" matInput formControlName="Firstname">
+      <mat-error *ngIf="addUserForm.controls['Firstname'].hasError('required')">
+        First Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Last Name:</mat-label>
+      <input type="text" matInput formControlName="Lastname">
+      <mat-error *ngIf="addUserForm.controls['Lastname'].hasError('required')">
+        Last Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Username:</mat-label>
+      <input type="text" matInput formControlName="Username">
+      <mat-error *ngIf="addUserForm.controls['Username'].hasError('required')">
+        Username is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="addUserForm.controls['Username'].hasError('minlength')">
+        Username must be at least 5 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Role Id:</mat-label>
+      <mat-icon matPrefix>perm_identity</mat-icon>
+      <input type="number" matInput formControlName="Roleid">
+      <mat-error *ngIf="addUserForm.controls['Roleid'].hasError('required')">
+        Role ID is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Email:</mat-label>
+      <input type="email" matInput formControlName="Email">
+      <mat-error *ngIf="addUserForm.controls['Email'].hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="addUserForm.controls['Email'].hasError('email')">
+        Please enter a valid email
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Password:</mat-label>
+      <input type="password" matInput formControlName="Password">
+      <mat-error *ngIf="addUserForm.controls['Password'].hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="addUserForm.controls['Password'].hasError('minlength')">
+        Password must be at least 8 characters long
+      </mat-error>
+      <mat-error *ngIf="addUserForm.controls['Password'].hasError('maxlength')">
+        Password cannot be more than 40 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Phone:</mat-label>
+      <input type="text" matInput formControlName="Phone">
+      <mat-error *ngIf="addUserForm.controls['Phone'].hasError('minlength')">
+        Phone must be at least 10 characters long
+      </mat-error>
+      <mat-error *ngIf="addUserForm.controls['Phone'].hasError('maxlength')">
+        Phone cannot be more than 14 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label style="margin-right: 20px;">Address:</mat-label>
+      <input type="text" matInput formControlName="Address">
+    </mat-form-field>
+
+    <mat-radio-group formControlName="Gender" class="example-full-width">
+      <mat-radio-button value="Male">Male</mat-radio-button>
+      <mat-radio-button value="Female">Female</mat-radio-button>
+    </mat-radio-group>
+
+ 
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="add()">Add</button>
+</mat-dialog-actions>
+
+
+
+
+
+
+
+ 
+
+
+

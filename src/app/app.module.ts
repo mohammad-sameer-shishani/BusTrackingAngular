@@ -10,6 +10,7 @@ import { ContactComponent } from './contact/contact.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AboutComponent,
     ContactComponent,
     TestimonialsComponent,
+    
   ],
   imports: [
     BrowserModule,

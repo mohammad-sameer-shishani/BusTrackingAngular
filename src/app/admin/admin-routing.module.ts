@@ -6,6 +6,7 @@ import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { ManageChildrenComponent } from './manage-children/manage-children.component';
 import { ManageTeachersComponent } from './manage-teachers/manage-teachers.component';
 import { ManageDriversComponent } from './manage-drivers/manage-drivers.component';
+import { AdduserComponent } from './adduser/adduser.component';
 
 const routes: Routes = [
   {
@@ -37,8 +38,12 @@ const routes: Routes = [
     component:ManageTeachersComponent
   },
   {
-    path:'Managedriver',
+    path:'managedriver',
     component:ManageDriversComponent
+  },
+  {
+    path:'adduser',
+    component:AdduserComponent
   }
 ];
 

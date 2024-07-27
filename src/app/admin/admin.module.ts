@@ -12,6 +12,8 @@ import { ManageChildrenComponent } from './manage-children/manage-children.compo
 import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { SharedModule } from '../shared/shared.module';
 import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
+import { CreateChildComponent } from './create-child/create-child.component';
+import { AdduserComponent } from './adduser/adduser.component';
 
 
 @NgModule({
@@ -24,15 +26,18 @@ import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
     ManageDriversComponent,
     ManageChildrenComponent,
     ManagePagesComponent,
-    AdminNavbarComponent
+    AdminNavbarComponent,
+    CreateChildComponent,
+    AdduserComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    
     SharedModule
   ],
   exports:[
-    SidebarComponent,
+   
     DashboardComponent,
     ManageSchoolBusesComponent,
     DashContentComponent,
