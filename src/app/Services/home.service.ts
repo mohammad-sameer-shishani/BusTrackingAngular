@@ -29,6 +29,7 @@ export class HomeService {
   child:any;
 
 //Get All Methods
+num:any;
 
 getAllTestimonials(){
     this.http.get('https://localhost:7169/api/Testimonial').subscribe(response=>{
