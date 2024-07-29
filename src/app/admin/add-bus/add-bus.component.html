@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Add Bus</h2>
+<mat-dialog-content class="mat-typography">
+    
+    <form class="example-form" [formGroup]="CreateBus">
+        <mat-form-field class="example-full-width">
+          <label>Bus number</label>
+          <input type="text" matInput formControlName="busnumber" >
+       
+          <mat-error *ngIf="CreateBus.controls['busnumber'].hasError('required')">
+            busnumber is <strong>required</strong> 
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+            <label>Capacity</label>
+            <input type="number" matInput formControlName="childrennumber" >
+          <mat-error *ngIf="CreateBus.controls['childrennumber'].hasError('required')">
+            Bus Capacity is <strong>required</strong> 
+          </mat-error>
+          </mat-form-field>
+            <br>
+          <mat-form-field class="example-full-width">
+            <label>Teacher</label>
+            
+            <mat-select class="col-10" formControlName="teacherid">
+                <mat-option *ngFor="let bus of bus.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
+              </mat-select>
+            <mat-error *ngIf="CreateBus.controls['teacherid'].hasError('required')">
+                Teacher is <strong>required</strong> 
+              </mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <label>Driver</label>
+            <mat-select class="col-10" formControlName="driverid">
+                <mat-option *ngFor="let driver of home.AllDrivers" [value]=driver.userid>{{driver.firstname}}</mat-option>
+              </mat-select>
+            <mat-error *ngIf="CreateBus.controls['driverid'].hasError('required')">
+                Driver is <strong>required</strong> 
+              </mat-error>
+          </mat-form-field>
+
+
+      </form>
+      
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="Create()" [disabled]="!CreateBus.valid">Create</button>
+</mat-dialog-actions>
+

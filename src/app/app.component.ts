@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ChildService } from './Services/child.service';
+import { HomeService } from './Services/home.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+ 
   title = 'BusTrackingAngular';
 }

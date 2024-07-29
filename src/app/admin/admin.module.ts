@@ -13,6 +13,8 @@ import { SharedModule } from '../shared/shared.module';
 import { AdminNavbarComponent } from './admin-navbar/admin-navbar.component';
 import { AddChildComponent } from './add-child/add-child.component';
 import { AdduserComponent } from './adduser/adduser.component';
+import { AddBusComponent } from './add-bus/add-bus.component';
+import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AdduserComponent } from './adduser/adduser.component';
     ManagePagesComponent,
     AdminNavbarComponent,
     AddChildComponent,
-    AdduserComponent
+    AdduserComponent,
+    AddBusComponent,
+    ManageTestimonialsComponent
   ],
   imports: [
     CommonModule,

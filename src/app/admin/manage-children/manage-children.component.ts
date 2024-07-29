@@ -4,6 +4,7 @@ import { ChildService } from 'src/app/Services/child.service';
 import { HomeService } from 'src/app/Services/home.service';
 import { AddChildComponent } from '../add-child/add-child.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BusService } from 'src/app/Services/bus.service';
 
 @Component({
   selector: 'app-manage-children',
@@ -11,18 +12,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./manage-children.component.css']
 })
 export class ManageChildrenComponent implements OnInit{
-  constructor(public home:HomeService,public dialog: MatDialog,public child:ChildService){}
+  constructor(public home:HomeService,public dialog: MatDialog,public child:ChildService,public bus:BusService){}
   
   
   @ViewChild('deleteDailog') callDeleteDailog!:TemplateRef<any>; 
   @ViewChild('UpdateChildDailog') callUpdateDialog!:TemplateRef<any>; 
 
   prevChild:any;
+  countBus:any;
 
   ngOnInit(): void {
     this.child.GetAllChildren();
     this.home.getAllParents();
-    this.home.getAllBuses();
+    this.bus.getAllBuses();
+  this.countBus=this.home.AllBuses.length;
   }
  
   UpdateChildForm: FormGroup = new FormGroup({

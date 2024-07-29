@@ -3,40 +3,35 @@
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
   data-sidebar-position="fixed" data-header-position="fixed">
   <div class="body-wrapper">
+
+   
     <app-admin-navbar></app-admin-navbar>
+    
+    
     <div class="container-fluid">
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
               <div class="card-body p-4">
-                <div class="row">
-                    <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Buses</h5>
-                    <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn btn-outline-primary"><a>Add Bus</a></h5>
-                </div>
-                <!-- <form>   
-                  <select class="col-10">
-                  <option *ngFor="let teach of home.AllTeachers" [value]=teach.firstname>{{teach.firstname}}</option>
-                </select>
-              </form>
-              <form>   
-                <select class="col-10">
-                <option *ngFor="let drive of home.AllDrivers" [value]=drive.userid>{{drive.firstname}}</option>
-              </select>
-            </form> -->
+               
+
+                <div class="row justify-content-between">
+                  <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Buses</h3> 
+                  <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="OpenCreatDailog()">Add Bus</button>
+          </div>
+
                 <div class="table-responsive">
                   <table class="table table-striped text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr>
-                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Bus</h6></th>
-                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Bus Number</h6></th>
-                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Capacity</h6></th>
-                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Driver</h6></th>
-                        <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Teacher</h6></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Bus</h4></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Capacity</h4></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Driver</h4></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Teacher</h4></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let bus of home.AllBuses">
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><a (click)="home.getBusById(bus.busid)">Details</a></h6></td>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-1">{{bus.busnumber}}</h6></td>
+                      <tr *ngFor="let bus of bus.AllBuses">
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-1">{{bus.busnumber}}</h4></td>
                         <td class="border-bottom-0"><p class="mb-0 fw-normal">{{bus.childrennumber}}</p></td>
                         <td class="border-bottom-0"><div class="d-flex align-items-center gap-2"><p class="mb-0 fw-normal">{{bus.driver_name}}</p></div></td>
                         <td class="border-bottom-0"><p class="mb-0 fw-normal">{{bus.teacher_name}}</p></td>
@@ -70,35 +65,47 @@
                 <form class="example-form" [formGroup]="updateForm">
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Bus Number</mat-label>
-                    <input type="text" matInput formControlName="BusNumber" [(ngModel)]="pData.busnumber">
+                    <input type="text" matInput formControlName="busnumber" [(ngModel)]="pData.busnumber">
+                    <mat-error *ngIf="updateForm.controls['busnumber'].hasError('required')">
+                      busnumber is <strong>required</strong> 
+                    </mat-error>
                   </mat-form-field>
                   <br>
                   <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Children Number</mat-label>
-                    <input type="number" matInput formControlName="childrenNumber" [(ngModel)]="pData.childrennumber">
+                    <mat-label>Capacity</mat-label>
+                    <input type="number" matInput formControlName="childrennumber" [(ngModel)]="pData.childrennumber">
+                    <mat-error *ngIf="updateForm.controls['childrennumber'].hasError('required')">
+                      Bus Capacity is <strong>required</strong> 
+                    </mat-error>
                   </mat-form-field>
                   <br>
-               
+                
                   <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Select Teacher</mat-label>
-                    <mat-select class="col-10" formControlName="TeacherId">
-                      <mat-option *ngFor="let teach of home.AllTeachers" [value]=teach.teacherid>{{teach.firstname}}</mat-option>
+                    <mat-label>Teacher</mat-label>
+                    
+                    <mat-select class="col-10" formControlName="teacherid">
+                      <mat-option *ngFor="let bus of bus.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="updateForm.controls['teacherid'].hasError('required')">
+                      Teacher is <strong>required</strong> 
+                    </mat-error>
                   </mat-form-field>
-               
-
                   <br>
                   <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Select Driver</mat-label>
-                    <mat-select class="col-10" formControlName="DriverId">
-                      <mat-option *ngFor="let buss of home.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
+                    <mat-label>Driver</mat-label>
+                    
+                    <mat-select class="col-10" formControlName="driverid">
+                      <mat-option *ngFor="let driver of home.AllDrivers" [value]=driver.userid>{{driver.firstname}}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="updateForm.controls['driverid'].hasError('required')">
+                      Driver is <strong>required</strong> 
+                    </mat-error>
                   </mat-form-field>
-               
+                  <br>
                 </form>
               </mat-dialog-content>
               <mat-dialog-actions align="end">
                 <button mat-button mat-dialog-close>Cancel</button>
-                <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
+                <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()" [disabled]="!updateForm.valid">Update</button>
               </mat-dialog-actions>
             </ng-template>

@@ -38,9 +38,6 @@ import { MatOptionModule } from '@angular/material/core';
   ],
   exports: [
    
-   
-   
-   
     NavbarComponent,
     FooterComponent,
     RouterModule,

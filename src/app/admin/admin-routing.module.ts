@@ -6,6 +6,8 @@ import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { ManageChildrenComponent } from './manage-children/manage-children.component';
 import { ManageTeachersComponent } from './manage-teachers/manage-teachers.component';
 import { ManageDriversComponent } from './manage-drivers/manage-drivers.component';
+import { TestimonialsComponent } from '../testimonials/testimonials.component';
+import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,14 @@ const routes: Routes = [
   {
     path:'drivers',
     component:ManageDriversComponent
+  },
+  {
+    path:'testimonial',
+    component:ManageTestimonialsComponent
+  },
+  {
+    path:'testimonials',
+    component:ManageTestimonialsComponent
   }
 ];
 

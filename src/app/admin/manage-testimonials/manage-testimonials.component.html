@@ -1,0 +1,79 @@
+<app-sidebar></app-sidebar>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <app-admin-navbar></app-admin-navbar>
+   
+   <!-- <button (click)="openAddDailog()" type="button" mat-button >add child</button> -->
+    <div class="container-fluid col-12">
+        <div class=" d-flex align-items-stretch">
+            <div class="card  w-100">
+              <div class="card-body  p-4">
+                <div class="row justify-content-between">
+                        <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Testimonials</h3> 
+                </div>
+                <div class="table-responsive ">
+                  <table class="table table-striped text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Client Name</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Message</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Status</h4>
+                        </th>
+                          <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Operation</h4>
+                          </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let test of home.AllTestimonials" >
+                       
+                        <td class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0"><a>{{test.full_Name}}</a></h4>
+                        </td>
+                        
+                        <td class="border-bottom-0">
+                            <h4 class="fw-semibold mb-1">{{test.message}}</h4>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{test.status}}</p>
+                        </td>
+                          <td>
+
+                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item  >
+                                <span>Details</span>
+                            </button>
+                            
+                            <button mat-menu-item (click)="acceptTestimonial(test)">
+                                <span>Accept</span>
+                            </button>
+                           
+                            <button mat-menu-item  (click)="rejectTestimonial(test)">                                
+                                <span>Reject</span>
+                            </button>
+                          </mat-menu>
+
+                       </td>
+                       
+                      </tr> 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+ 

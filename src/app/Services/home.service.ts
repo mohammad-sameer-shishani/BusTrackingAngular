@@ -28,6 +28,7 @@ export class HomeService {
 
   Bus:any;
   child:any;
+  testimonial:any;
 
 //Get All Methods
 num:any;
@@ -54,17 +55,17 @@ getAllRoles(){
   })
 }
 
-getAllBuses(){
-  this.http.get('https://localhost:7169/api/Bus').subscribe(response=>{
-    this.AllBuses=response;
+// getAllBuses(){
+//   this.http.get('https://localhost:7169/api/Bus').subscribe(response=>{
+//     this.AllBuses=response;
 
-  },
-  error=>{
-    console.log("error can not reach database");
-    console.log(error.status)
+//   },
+//   error=>{
+//     console.log("error can not reach database");
+//     console.log(error.status)
     
-  })
-}
+//   })
+// }
 
 
 
@@ -110,6 +111,15 @@ getBusById(userid: number){
   })
 }
 
+getTestimonialById(testid: number){
+  this.http.get('https://localhost:7169/api/Testimonial/'+testid).subscribe(response=>{
+    this.testimonial=response;
+    console.log("Got The Testimonial By Id")
+  },error => {
+    console.log("error getting The Testimonial");
+    console.log(error.status);
+  })
+}
 getChildById(userid: number){
   this.http.get('https://localhost:7169/api/Children/'+userid).subscribe(response=>{
     this.child=response;
@@ -156,5 +166,23 @@ updateBus(body:any){
 })
 }
 
+updateTestimonial(body:any){
+  this.http.put("https://localhost:7169/api/Testimonial",body).subscribe((response)=>{
+    console.log('Testimonial Updated');
+    window.location.reload();
+},error => {
+  console.log("Error Updating Testimonial");
+})
+}
+
+AllPageContent:any=[];
+getAllPageContent(){
+this.http.get('https://localhost:7169/api/PageContent').subscribe((response)=>{
+  this.AllPageContent=response;
+  console.log('Page Content');
+},error => {
+console.log("Error Getting Page Coontent");
+})
+}
 
 }

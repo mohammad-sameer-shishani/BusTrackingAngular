@@ -11,46 +11,40 @@
             <div class="card  w-100">
               <div class="card-body  p-4">
                 <div class="row justify-content-between">
-                    
-                        <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Drivers</h5> 
-                    
-                        <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="openCreateDailog()">Add Driver</button>
-
-                    
+                        <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Drivers</h3> 
+                        <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="openCreateDailog()">Add User</button>
                 </div>
                    
                 <div class="table-responsive ">
                   <table class="table table-striped text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr>
+                      
                         <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">User Id</h6>
-                          </th>
-                        <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Full Name</h6>
+                          <h4 class="fw-semibold mb-0">Full Name</h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">phone Number </h6>
+                          <h4 class="fw-semibold mb-0">phone Number </h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">Address</h6>
+                          <h4 class="fw-semibold mb-0">Address</h4>
                         </th>
                         <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">role name</h6>
+                            <h4 class="fw-semibold mb-0">Role</h4>
                           </th>
                           <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">username</h6>
+                            <h4 class="fw-semibold mb-0">username</h4>
                           </th>
 
 
                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">gender</h6>
+                            <h4 class="fw-semibold mb-0">gender</h4>
                          </th>
                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Created date</h6>
+                            <h4 class="fw-semibold mb-0">Created date</h4>
                          </th>
                           <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">operation</h6>
+                            <h4 class="fw-semibold mb-0">Operation</h4>
                           </th>
 
                          
@@ -58,12 +52,10 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let Driver of driver.AllDrivers" >
+                        
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{Driver.firstname}} {{Driver.lastname}}</a></h4></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">{{Driver.userid}}</h6>
-                        </td>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><a>{{Driver.firstname}} {{Driver.lastname}}</a></h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">{{Driver.phone}}</h6>
+                            <h4 class="fw-semibold mb-1">{{Driver.phone}}</h4>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">{{Driver.address}}</p>
