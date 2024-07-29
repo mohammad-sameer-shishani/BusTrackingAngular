@@ -10,7 +10,7 @@
             First Name is <strong>required</strong> 
           </mat-error>
         </mat-form-field>
-
+        <br>
         <mat-form-field class="example-full-width">
             <label>Last Name</label>
             <input type="text" matInput formControlName="lastName" >
@@ -18,7 +18,7 @@
                 Last Name is <strong>required</strong> 
               </mat-error>
           </mat-form-field>
-
+          <br>
           <mat-form-field class="example-full-width">
             <label>Address</label>
             <input type="text" matInput formControlName="address" >
@@ -26,21 +26,27 @@
                 Address is <strong>required</strong> 
               </mat-error>  
         </mat-form-field>
+        <br>
 
-          <mat-form-field class="example-full-width">
-            <label>Bus</label>
-            <input type="number" matInput formControlName="busid" >
-            <mat-error *ngIf="addChildForm.controls['busid'].hasError('required')">
-                Bus is <strong>required</strong> 
-              </mat-error>  
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Bus</mat-label>
+          <mat-select class="col-10" formControlName="busid">
+            <mat-option *ngFor="let bus of home.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addChildForm.controls['busid'].hasError('required')">
+            Bus is <strong>required</strong> 
+          </mat-error>  
         </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-            <label>Parent</label>
-            <input type="number" matInput formControlName="parentid" >
-            <mat-error *ngIf="addChildForm.controls['parentid'].hasError('required')">
-               Parent is <strong>required</strong> 
-              </mat-error>  
+        <br>
+       
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Parent</mat-label>
+          <mat-select class="col-10" formControlName="parentid">
+            <mat-option *ngFor="let paren of home.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addChildForm.controls['parentid'].hasError('required')">
+            Parent is <strong>required</strong> 
+           </mat-error>  
         </mat-form-field>
 
       </form>
@@ -48,7 +54,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="AddChild()">Create</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="AddChild()" [disabled]="!addChildForm.valid">Create</button>
 </mat-dialog-actions>
  
  

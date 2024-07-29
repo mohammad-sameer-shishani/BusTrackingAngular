@@ -22,6 +22,7 @@ export class HomeService {
   AllParents : any=[];
 
   AllTestimonials : any=[];
+  AllRoles:any=[];
 
 //Declaring variables for Get By Id Methods
 
@@ -40,6 +41,17 @@ getAllTestimonials(){
       console.log(error.status)
       
     })
+}
+
+getAllRoles(){
+  this.http.get('https://localhost:7169/api/Role').subscribe(response=>{
+    this.AllRoles=response;
+    console.log("Got Roles");
+  },
+  error=>{
+    console.log("error Getting Testimonials");
+    console.log(error.status)
+  })
 }
 
 getAllBuses(){
@@ -119,12 +131,14 @@ DeleteBus(Busid:number){
       console.log("Error Deleting Bus");
       console.log(error.status);
   })
+  window.location.reload();
 }
 
 DeleteChild(Childid:number){
   this.http.delete("https://localhost:7169/api/Children/delete/"+Childid).subscribe((response)=>{
     console.log(Childid);
-    console.log("Delete Child");
+    console.log("Child Deleted");
+    window.location.reload();
   },error=>{
       console.log("Error Deleting Child");
       console.log(error.status);
@@ -135,7 +149,8 @@ DeleteChild(Childid:number){
 
 updateBus(body:any){
   this.http.put("https://localhost:7169/api/Bus/",body).subscribe((response)=>{
-    console.log('updated');
+    console.log('Bus Updated');
+    window.location.reload();
 },error => {
   console.log("Error Updating Bus");
 })

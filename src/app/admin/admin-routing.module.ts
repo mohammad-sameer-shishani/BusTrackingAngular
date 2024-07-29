@@ -17,27 +17,31 @@ const routes: Routes = [
     component:DashboardComponent
   },
   {
-    path:'Manageschoolbuses',
+    path:'buses',
     component:ManageSchoolBusesComponent
   },
   {
-    path:'Managechildren',
+    path:'bus',
+    component:ManageSchoolBusesComponent
+  },
+  {
+    path:'children',
     component:ManageChildrenComponent
   },
   {
-    path:'Managechild',
+    path:'child',
     component:ManageChildrenComponent
   },
   {
-    path:'ManagePages',
+    path:'content',
     component:ManagePagesComponent
   },
   {
-    path:'ManageTeachers',
+    path:'teachers',
     component:ManageTeachersComponent
   },
   {
-    path:'Managedrivers',
+    path:'drivers',
     component:ManageDriversComponent
   }
 ];

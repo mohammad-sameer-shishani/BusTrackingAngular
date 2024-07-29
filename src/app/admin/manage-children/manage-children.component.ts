@@ -22,6 +22,7 @@ export class ManageChildrenComponent implements OnInit{
   ngOnInit(): void {
     this.child.GetAllChildren();
     this.home.getAllParents();
+    this.home.getAllBuses();
   }
  
   UpdateChildForm: FormGroup = new FormGroup({

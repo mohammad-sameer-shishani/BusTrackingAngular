@@ -12,7 +12,7 @@
                     <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Buses</h5>
                     <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn btn-outline-primary"><a>Add Bus</a></h5>
                 </div>
-                <form>   
+                <!-- <form>   
                   <select class="col-10">
                   <option *ngFor="let teach of home.AllTeachers" [value]=teach.firstname>{{teach.firstname}}</option>
                 </select>
@@ -21,7 +21,7 @@
                 <select class="col-10">
                 <option *ngFor="let drive of home.AllDrivers" [value]=drive.userid>{{drive.firstname}}</option>
               </select>
-            </form>
+            </form> -->
                 <div class="table-responsive">
                   <table class="table table-striped text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
@@ -80,25 +80,21 @@
                   <br>
                
                   <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Teacher ID</mat-label>
-                    <input type="text" matInput formControlName="TeacherId" [(ngModel)]="pData.teacher_name">
-                 
-                  </mat-form-field>
-               
-                  <br>
-                  <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Teacher</mat-label>
+                    <mat-label>Select Teacher</mat-label>
                     <mat-select class="col-10" formControlName="TeacherId">
                       <mat-option *ngFor="let teach of home.AllTeachers" [value]=teach.teacherid>{{teach.firstname}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                
+
                   <br>
                   <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Driver ID</mat-label>
-                    <input type="text" matInput formControlName="DriverId" [(ngModel)]="pData.driver_name">
+                    <mat-label>Select Driver</mat-label>
+                    <mat-select class="col-10" formControlName="DriverId">
+                      <mat-option *ngFor="let buss of home.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
+                    </mat-select>
                   </mat-form-field>
-                  <br>
+               
                 </form>
               </mat-dialog-content>
               <mat-dialog-actions align="end">

@@ -46,7 +46,8 @@ DeleteChild(childId : number){
 
   this.http.delete('https://localhost:7169/api/Children/delete/'+childId).subscribe(response=>{
     this.child=response;
-    console.log("deleted");
+    console.log("child deleted");
+    window.location.reload();
   },err=>{
     console.log("error deleting child");
     console.log(err.status);
@@ -57,16 +58,20 @@ DeleteChild(childId : number){
 addChild(body:any){
   this.http.post('https://localhost:7169/api/Children',body).subscribe(response=>{
     console.log('child added');
+    window.location.reload();
   },err=>{
     console.log('error adding Child');
     console.log(err.status);
   })
+  
 }
 
 updateChild(body:any){
 
   this.http.put('https://localhost:7169/api/children',body).subscribe((response)=>{
     console.log('Updated Child');
+    window.location.reload();
+
 },error => {
   console.log("Error Updating Child");
   console.log(error.status);

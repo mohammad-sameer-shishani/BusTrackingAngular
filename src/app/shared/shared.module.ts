@@ -12,6 +12,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -28,9 +32,15 @@ import {MatSelectModule} from '@angular/material/select';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule
+
   ],
   exports: [
+   
+   
+   
+   
     NavbarComponent,
     FooterComponent,
     RouterModule,
@@ -43,7 +53,10 @@ import {MatSelectModule} from '@angular/material/select';
     FormsModule,
     MatInputModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    MatOptionModule
   ]
 })
 export class SharedModule { }

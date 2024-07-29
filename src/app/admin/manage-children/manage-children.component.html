@@ -26,10 +26,10 @@
                           <h4 class="fw-semibold mb-0">Address</h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h4 class="fw-semibold mb-0">Bus id</h4>
+                          <h4 class="fw-semibold mb-0">Bus Number</h4>
                         </th>
                         <th class="border-bottom-0">
-                          <h4 class="fw-semibold mb-0">Parent id</h4>
+                          <h4 class="fw-semibold mb-0">Parent Name</h4>
                         </th>
                       </tr>
                     </thead>
@@ -43,10 +43,10 @@
                           <p class="mb-0 fw-normal">{{child.address}}</p>
                         </td>
                         <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{child.busid}}</p>
+                          <p class="mb-0 fw-normal">{{child.busnumber}}</p>
                         </td>
                         <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">{{child.parentid}}</p>
+                          <p class="mb-0 fw-normal">{{child.parent}}</p>
                         </td>
                         <td>
                             <button (click)="OpenDeleteDailog(child.childid)" class="btn btn-danger m-1">Delete</button>
@@ -96,21 +96,25 @@
                   <br>
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Parent</mat-label>
-                    <mat-select class="col-10" formControlName="parentid">
+                    <mat-select class="col-10" formControlName="parentid"  [(value)]="prevChild.userid">
                       <mat-option *ngFor="let paren of home.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-               
+                 
                   <br>
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Bus</mat-label>
-                    <input type="number" matInput formControlName="busid" [(ngModel)]="prevChild.busid">
+                    <mat-select class="col-10" formControlName="busid" [(value)]="prevChild.busid">
+                      <mat-option *ngFor="let buss of home.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
+                    </mat-select>
                   </mat-form-field>
+               
+               
                   <br>
                 </form>
               </mat-dialog-content>
               <mat-dialog-actions align="end">
                 <button mat-button mat-dialog-close="no" >Cancel</button>
-                <button mat-button mat-dialog-close="yes" [mat-dialog-close]="true"cdkFocusInitial (click)="UpdateChild()">Update</button>
+                <button mat-button mat-dialog-close="yes" [mat-dialog-close]="true"cdkFocusInitial (click)="UpdateChild()" [disabled]="!UpdateChildForm.valid">Update</button>
               </mat-dialog-actions>
             </ng-template>

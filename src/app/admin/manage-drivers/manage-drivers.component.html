@@ -1,1 +1,206 @@
-<p>manage-drivers works!</p>
+<app-sidebar></app-sidebar>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <app-admin-navbar></app-admin-navbar>
+   
+   <!-- <button (click)="openAddDailog()" type="button" mat-button >add child</button> -->
+    <div class="container-fluid col-12">
+        <div class=" d-flex align-items-stretch">
+            <div class="card  w-100">
+              <div class="card-body  p-4">
+                <div class="row justify-content-between">
+                    
+                        <h5 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Drivers</h5> 
+                    
+                        <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="openCreateDailog()">Add Driver</button>
+
+                    
+                </div>
+                   
+                <div class="table-responsive ">
+                  <table class="table table-striped text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">User Id</h6>
+                          </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Full Name</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">phone Number </h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Address</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">role name</h6>
+                          </th>
+                          <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">username</h6>
+                          </th>
+
+
+                         <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">gender</h6>
+                         </th>
+                         <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Created date</h6>
+                         </th>
+                          <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">operation</h6>
+                          </th>
+
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let Driver of driver.AllDrivers" >
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">{{Driver.userid}}</h6>
+                        </td>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><a>{{Driver.firstname}} {{Driver.lastname}}</a></h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">{{Driver.phone}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{Driver.address}}</p>
+                        </td>
+                        <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{Driver.rolename}}</p>
+                          </td>
+
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{Driver.username}}</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{Driver.gender}}</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{Driver.createdDate | date}}</p>
+                          </td>
+                         
+
+
+
+                          <td>
+
+
+                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item  >
+                                <span>Details</span>
+                            </button>
+                            
+                            <button mat-menu-item  type="button"  (click)="openDeleteDailog(Driver.userid)">
+                                
+                                <span>Delete</span>
+                            </button>
+                           
+                            <button mat-menu-item  (click)="openUpdateDialog(Driver)">
+                               
+                                
+                                <span>Update</span>
+                            </button>
+                          </mat-menu>
+
+                       </td>
+                       
+                          
+                            
+                        
+                      </tr> 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #deleteDailog>          
+    <h1 mat-dialog-title>Delete Course</h1>
+    <div mat-dialog-content>
+      Would you like to delete this course?
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close="no">No</button>
+      <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+    </div>
+  </ng-template> 
+
+
+
+
+
+  <ng-template #updateDailog>
+    <h2 mat-dialog-title>Update Driver Information</h2>
+  <mat-dialog-content class="mat-typography">
+      <form class="example-form" [formGroup]="UserUpdateForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>first name</mat-label>
+            <input type="text" matInput formControlName="firstname" [(ngModel)] ="UData.firstname"  >
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+              <mat-label>last name</mat-label>
+              <input type="text" matInput formControlName="lastname" [(ngModel)] = "UData.lastname">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width">
+              <mat-label>phone</mat-label>
+              <input type="text" matInput formControlName="phone" [(ngModel)]="UData.phone">
+            </mat-form-field>
+          
+          
+            <mat-form-field class="example-full-width">
+              <mat-label>address</mat-label>
+              <input type="text" matInput formControlName="address" [(ngModel)]="UData.address">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>username</mat-label>
+              <input type="text" matInput formControlName="username" [(ngModel)]="UData.username">
+            </mat-form-field>
+           
+
+            <mat-radio-group formControlName="gender" class="d-flex flex-row">
+              <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
+              <mat-radio-button value="Female">Female</mat-radio-button>
+            </mat-radio-group>
+
+
+
+            <div>
+              <input type="file" formControlName="imagename" #file (change)="uploadImage(file.files)">
+            </div>
+  
+        </form>
+  
+  
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
+  </mat-dialog-actions>
+  

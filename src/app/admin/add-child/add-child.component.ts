@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChildService } from 'src/app/Services/child.service';
+import { HomeService } from 'src/app/Services/home.service';
 
 @Component({
   selector: 'app-add-child',
@@ -8,7 +9,7 @@ import { ChildService } from 'src/app/Services/child.service';
   styleUrls: ['./add-child.component.css']
 })
 export class AddChildComponent {
-  constructor(public child:ChildService){}
+  constructor(public child:ChildService,public home:HomeService ){}
   addChildForm:FormGroup = new FormGroup(
     {
       firstName :new FormControl('', Validators.required ),
