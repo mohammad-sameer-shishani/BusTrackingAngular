@@ -1,0 +1,103 @@
+
+<app-sidebar></app-sidebar>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <app-admin-navbar></app-admin-navbar>
+   
+ 
+    <div class="container-fluid col-12">
+        <div class=" d-flex align-items-stretch">
+            <div class="card  w-100">
+              <div class="card-body  p-4">
+                <div class="row justify-content-between">
+                    
+                        <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Contact Us Email</h3> 
+                    
+                       
+
+                    
+                </div>
+                   
+                <div class="table-responsive ">
+                  <table class="table table-striped text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Emails</h4>
+                        </th>
+                       
+
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let emails of contact.allContactUs">
+                            <td class="border-bottom-0">
+                              <mat-expansion-panel hideToggle>
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                  Name:   {{ emails.userName }}
+                                  </mat-panel-title>
+                                  <mat-panel-description>
+                                  subject:  {{ emails.subject }}
+                                  </mat-panel-description>
+                                  <mat-panel-description>
+                                  Email:  {{ emails.userEmail }}
+                                  </mat-panel-description>
+                                  <mat-panel-description>
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                      <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">                            
+                                      <button mat-menu-item type="button" (click)="openDeleteDailog(emails.contactusid)">
+                                        <span>Delete</span>
+                                      </button>
+                                    </mat-menu>
+                                  </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p>{{emails.message}}</p>
+                              </mat-expansion-panel>
+                            </td>
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ng-template #deleteDailog>          
+              <h1 mat-dialog-title>Delete Course</h1>
+              <div mat-dialog-content>
+                Would you like to delete this course?
+              </div>
+              <div mat-dialog-actions>
+                <button mat-button mat-dialog-close="no">No</button>
+                <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+              </div>
+            </ng-template> 
+          
+          

@@ -8,6 +8,7 @@ import { ManageTeachersComponent } from './manage-teachers/manage-teachers.compo
 import { ManageDriversComponent } from './manage-drivers/manage-drivers.component';
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
+import { ManageContactusComponent } from './manage-contactus/manage-contactus.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path:'testimonials',
     component:ManageTestimonialsComponent
+  },
+  {
+    path:'contactus',
+    component:ManageContactusComponent
   }
 ];
 

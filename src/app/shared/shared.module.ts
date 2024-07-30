@@ -15,7 +15,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -53,7 +53,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    MatOptionModule
+    MatOptionModule,
+    MatExpansionModule
   ]
 })
 export class SharedModule { }
