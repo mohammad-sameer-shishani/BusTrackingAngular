@@ -106,7 +106,7 @@
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Bus</mat-label>
                     <mat-select class="col-10" formControlName="busid" [(value)]="prevChild.busid">
-                      <mat-option *ngFor="let buss of home.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
+                      <mat-option *ngFor="let buss of bus.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                

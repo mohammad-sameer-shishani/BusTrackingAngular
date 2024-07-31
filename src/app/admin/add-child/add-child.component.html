@@ -31,7 +31,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Bus</mat-label>
           <mat-select class="col-10" formControlName="busid">
-            <mat-option *ngFor="let bus of home.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
+            <mat-option *ngFor="let bus of bus.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
           </mat-select>
           <mat-error *ngIf="addChildForm.controls['busid'].hasError('required')">
             Bus is <strong>required</strong> 

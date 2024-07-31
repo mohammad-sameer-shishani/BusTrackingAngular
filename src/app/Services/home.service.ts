@@ -11,7 +11,6 @@ export class HomeService {
 
 //declaring Arrays For Get All Methods
 
-  AllBuses:any=[];
 
   allChildren:any=[];
   

@@ -13,6 +13,8 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { GoogleMapsModule } from '@angular/google-maps';
 import { map } from 'rxjs';
+import { TokenInterceptor } from 'src/Interceptor/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 @NgModule({
@@ -32,7 +34,12 @@ import { map } from 'rxjs';
     AuthModule,
     GoogleMapsModule
   ],
-  providers: [],
+  providers: [ 
+    {provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptor,
+    multi:true
+   }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

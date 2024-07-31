@@ -25,7 +25,6 @@ export class ManageChildrenComponent implements OnInit{
     this.child.GetAllChildren();
     this.home.getAllParents();
     this.bus.getAllBuses();
-  this.countBus=this.home.AllBuses.length;
   }
  
   UpdateChildForm: FormGroup = new FormGroup({
