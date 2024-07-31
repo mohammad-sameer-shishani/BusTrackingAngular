@@ -9,20 +9,20 @@ import { ContactusService } from '../Services/contactus.service';
 })
 export class ContactComponent {
 
-constructor(public contact:ContactusService){}
-
-ContactUsForm:FormGroup = new FormGroup(
-  {
-    userName: new FormControl(),
-    subject:new FormControl(),
-    userEmail:new FormControl(),
-    message:new FormControl(),
-  })
-
-Send(){
-  this.contact.createContactUs(this.ContactUsForm.value);
-}
-
-
-
-}
+  constructor(public contact:ContactusService){}
+  
+  ContactUsForm:FormGroup = new FormGroup(
+    {
+      userName: new FormControl('',Validators.required),
+      subject:new FormControl('',Validators.required),
+      userEmail:new FormControl('',[Validators.required,Validators.email]),
+      message:new FormControl('',[Validators.required,Validators.minLength(15)]),
+    })
+  
+  Send(){
+    this.contact.createContactUs(this.ContactUsForm.value);
+  }
+  
+  
+  
+  }

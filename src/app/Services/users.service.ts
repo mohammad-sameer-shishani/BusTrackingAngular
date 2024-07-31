@@ -56,7 +56,7 @@ getAllDrivers(){
 
 
 getAllParents(){
-  this.http.get('https://localhost:7169/api/User/GetAllDrivers').subscribe(res=>{
+  this.http.get('https://localhost:7169/api/User/GetAllParents').subscribe(res=>{
     this.AllParents = res;
   },err => {
     console.log("error");

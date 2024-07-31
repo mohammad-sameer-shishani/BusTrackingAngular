@@ -1,0 +1,173 @@
+<app-sidebar></app-sidebar>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <app-admin-navbar></app-admin-navbar>
+   
+   <!-- <button (click)="openAddDailog()" type="button" mat-button >add child</button> -->
+    <div class="container-fluid col-12">
+        <div class=" d-flex align-items-stretch">
+            <div class="card  w-100">
+              <div class="card-body  p-4">
+                <div class="row justify-content-between">
+                    
+                        <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Parents</h3> 
+                    
+                        <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="openCreateDailog()">Add User</button>
+
+                    
+                </div>
+                   
+                <div class="table-responsive ">
+                  <table class="table table-striped text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Full Name</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Phone Number</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h4 class="fw-semibold mb-0">Address</h4>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Role</h4>
+                          </th>
+                          <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Username</h4>
+                          </th>
+
+
+                         <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Gender</h4>
+                         </th>
+                         <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Created date</h4>
+                         </th>
+                          <th class="border-bottom-0">
+                            <h4 class="fw-semibold mb-0">Operation</h4>
+                          </th>
+
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let parent of parent.AllParents" >
+                       
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{parent.firstname}} {{parent.lastname}}</a></h4></td>
+                        <td class="border-bottom-0">
+                            <h4 class="fw-semibold mb-1">{{parent.phone}}</h4>
+                        </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{parent.address}}</p>
+                        </td>
+                        <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{parent.rolename}}</p>
+                          </td>
+
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{parent.username}}</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{parent.gender}}</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{parent.createdDate | date}}</p>
+                          </td>
+                          <td>
+                          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item  >
+                                <span>Details</span>
+                            </button>
+                            
+                            <button mat-menu-item  type="button"  (click)="openDeleteDailog(parent.userid)">
+                                
+                                <span>Delete</span>
+                            </button>
+                           
+                            <button mat-menu-item  (click)="openUpdateDialog(parent)">
+                               
+                                <span>Update</span>
+                            </button>
+                          </mat-menu>
+                       </td>
+                      </tr> 
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+<ng-template #deleteParentDailog>          
+    <h1 mat-dialog-title>Delete User</h1>
+    <div mat-dialog-content>
+      Would you like to delete this user?
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close="no">No</button>
+      <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+    </div>
+  </ng-template> 
+
+
+
+
+
+  <ng-template #updateParentDailog>
+    <h2 mat-dialog-title>Update Parent Information</h2>
+  <mat-dialog-content class="mat-typography">
+      <form class="example-form" [formGroup]="UserUpdateForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>first name</mat-label>
+            <input type="text" matInput formControlName="firstname" [(ngModel)] ="UData.firstname"  >
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+              <mat-label>last name</mat-label>
+              <input type="text" matInput formControlName="lastname" [(ngModel)] = "UData.lastname">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width">
+              <mat-label>phone</mat-label>
+              <input type="text" matInput formControlName="phone" [(ngModel)]="UData.phone">
+            </mat-form-field>
+          
+          
+            <mat-form-field class="example-full-width">
+              <mat-label>address</mat-label>
+              <input type="text" matInput formControlName="address" [(ngModel)]="UData.address">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>username</mat-label>
+              <input type="text" matInput formControlName="username" [(ngModel)]="UData.username">
+            </mat-form-field>
+           
+
+            <mat-radio-group formControlName="gender" class="d-flex flex-row">
+              <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
+              <mat-radio-button value="Female">Female</mat-radio-button>
+            </mat-radio-group>
+
+
+
+            <div>
+              <input type="file" formControlName="imagename" #file (change)="uploadImage(file.files)">
+            </div>
+  
+        </form>
+  
+  
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
+  </mat-dialog-actions>
+  

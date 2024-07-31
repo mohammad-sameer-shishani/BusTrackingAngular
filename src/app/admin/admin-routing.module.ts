@@ -9,6 +9,7 @@ import { ManageDriversComponent } from './manage-drivers/manage-drivers.componen
 import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 import { ManageContactusComponent } from './manage-contactus/manage-contactus.component';
+import { ManageParentsComponent } from './manage-parents/manage-parents.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
   {
     path:'contactus',
     component:ManageContactusComponent
+  },
+  {
+    path:'parents',
+    component:ManageParentsComponent
   }
 ];
 

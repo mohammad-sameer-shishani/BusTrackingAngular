@@ -16,6 +16,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 import { AddBusComponent } from './add-bus/add-bus.component';
 import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 import { ManageContactusComponent } from './manage-contactus/manage-contactus.component';
+import { ManageParentsComponent } from './manage-parents/manage-parents.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ManageContactusComponent } from './manage-contactus/manage-contactus.co
     AdduserComponent,
     AddBusComponent,
     ManageTestimonialsComponent,
-    ManageContactusComponent
+    ManageContactusComponent,
+    ManageParentsComponent
   ],
   imports: [
     CommonModule,

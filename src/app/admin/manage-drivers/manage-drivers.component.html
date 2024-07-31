@@ -115,84 +115,69 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<ng-template #deleteDailog>          
-    <h1 mat-dialog-title>Delete Course</h1>
-    <div mat-dialog-content>
-      Would you like to delete this course?
-    </div>
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close="no">No</button>
-      <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
-    </div>
-  </ng-template> 
-
-
-
-
-
-  <ng-template #updateDailog>
-    <h2 mat-dialog-title>Update Driver Information</h2>
-  <mat-dialog-content class="mat-typography">
-      <form class="example-form" [formGroup]="UserUpdateForm">
-          <mat-form-field class="example-full-width">
-            <mat-label>first name</mat-label>
-            <input type="text" matInput formControlName="firstname" [(ngModel)] ="UData.firstname"  >
-          </mat-form-field>
-  
-          <mat-form-field class="example-full-width">
-              <mat-label>last name</mat-label>
-              <input type="text" matInput formControlName="lastname" [(ngModel)] = "UData.lastname">
-            </mat-form-field>
-  
-            <mat-form-field class="example-full-width">
-              <mat-label>phone</mat-label>
-              <input type="text" matInput formControlName="phone" [(ngModel)]="UData.phone">
-            </mat-form-field>
+            <ng-template #deleteDailog>          
+              <h1 mat-dialog-title>Delete User</h1>
+              <div mat-dialog-content>
+                Would you like to delete this user?
+              </div>
+              <div mat-dialog-actions>
+                <button mat-button mat-dialog-close="no">No</button>
+                <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+              </div>
+            </ng-template> 
           
           
-            <mat-form-field class="example-full-width">
-              <mat-label>address</mat-label>
-              <input type="text" matInput formControlName="address" [(ngModel)]="UData.address">
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>username</mat-label>
-              <input type="text" matInput formControlName="username" [(ngModel)]="UData.username">
-            </mat-form-field>
-           
-
-            <mat-radio-group formControlName="gender" class="d-flex flex-row">
-              <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
-              <mat-radio-button value="Female">Female</mat-radio-button>
-            </mat-radio-group>
-
-
-
-            <div>
-              <input type="file" formControlName="imagename" #file (change)="uploadImage(file.files)">
-            </div>
-  
-        </form>
-  
-  
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
-  </mat-dialog-actions>
-  
+          
+          
+          
+            <ng-template #updateDailog>
+              <h2 mat-dialog-title>Update Driver Information</h2>
+            <mat-dialog-content class="mat-typography">
+                <form class="example-form" [formGroup]="UserUpdateForm">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>first name</mat-label>
+                      <input type="text" matInput formControlName="firstname" [(ngModel)] ="UData.firstname"  >
+                    </mat-form-field>
+            
+                    <mat-form-field class="example-full-width">
+                        <mat-label>last name</mat-label>
+                        <input type="text" matInput formControlName="lastname" [(ngModel)] = "UData.lastname">
+                      </mat-form-field>
+            
+                      <mat-form-field class="example-full-width">
+                        <mat-label>phone</mat-label>
+                        <input type="text" matInput formControlName="phone" [(ngModel)]="UData.phone">
+                      </mat-form-field>
+                    
+                    
+                      <mat-form-field class="example-full-width">
+                        <mat-label>address</mat-label>
+                        <input type="text" matInput formControlName="address" [(ngModel)]="UData.address">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>username</mat-label>
+                        <input type="text" matInput formControlName="username" [(ngModel)]="UData.username">
+                      </mat-form-field>
+                     
+          
+                      <mat-radio-group formControlName="gender" class="d-flex flex-row">
+                        <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
+                        <mat-radio-button value="Female">Female</mat-radio-button>
+                      </mat-radio-group>
+          
+          
+          
+                      <div>
+                        <input type="file" formControlName="imagename" #file (change)="uploadImage(file.files)">
+                      </div>
+            
+                  </form>
+            
+            
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+              <button mat-button mat-dialog-close>Cancel</button>
+              <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update()">Update</button>
+            </mat-dialog-actions>
+            
+          
