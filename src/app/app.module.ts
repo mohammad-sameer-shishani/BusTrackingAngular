@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './profile/profile.component';
 
+import { GoogleMapsModule } from '@angular/google-maps';
+import { map } from 'rxjs';
+
 
 @NgModule({
   declarations: [
@@ -26,8 +29,8 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    AuthModule
-   
+    AuthModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

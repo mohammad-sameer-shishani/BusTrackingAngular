@@ -8,6 +8,7 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { AdminModule } from './admin/admin.module';
 import { ProfileComponent } from './profile/profile.component';
 
+
 const routes: Routes = [
   {
     path:'home',
