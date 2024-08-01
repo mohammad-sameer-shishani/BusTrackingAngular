@@ -10,7 +10,6 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './profile/profile.component';
-
 import { GoogleMapsModule } from '@angular/google-maps';
 import { map } from 'rxjs';
 import { TokenInterceptor } from 'src/Interceptor/token.interceptor';
