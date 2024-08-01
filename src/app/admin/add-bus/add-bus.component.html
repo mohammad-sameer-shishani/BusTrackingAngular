@@ -23,7 +23,7 @@
             <label>Teacher</label>
             
             <mat-select class="col-10" formControlName="teacherid">
-                <mat-option *ngFor="let bus of bus.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
+                <mat-option *ngFor="let teacher of user.AllTeachers" [value]=teacher.userid>{{teacher.firstname}} {{teacher.lastname}}</mat-option>
               </mat-select>
             <mat-error *ngIf="CreateBus.controls['teacherid'].hasError('required')">
                 Teacher is <strong>required</strong> 

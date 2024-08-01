@@ -74,9 +74,6 @@
                             <p class="mb-0 fw-normal">{{Driver.createdDate | date}}</p>
                           </td>
                          
-
-
-
                           <td>
 
 
@@ -84,10 +81,7 @@
                             <mat-icon>more_vert</mat-icon>
                           </button>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item  >
-                                <span>Details</span>
-                            </button>
-                            
+                          
                             <button mat-menu-item  type="button"  (click)="openDeleteDailog(Driver.userid)">
                                 
                                 <span>Delete</span>

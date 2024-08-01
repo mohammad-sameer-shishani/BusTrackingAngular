@@ -16,10 +16,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FilterPipe } from '../pipes/filter.pipe';
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
@@ -54,7 +56,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatRadioModule,
     MatCardModule,
     MatOptionModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FilterPipe
   ]
 })
 export class SharedModule { }

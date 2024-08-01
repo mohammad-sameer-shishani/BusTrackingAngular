@@ -13,7 +13,12 @@
                   <div class="row justify-content-between">
                     <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Children</h3> 
                     <button class="card-title fw-semibold mb-4  col-md-2 btn btn-outline-primary" type="button" (click)="openAddDailog()">Add Child</button>
-            </div>
+                  </div>
+                  <div class="row mb-4">
+                    <div class="col-12">
+                      <input type="text" class="form-control" placeholder="Search by name..." [(ngModel)]="searchText">
+                    </div>
+                  </div>
                   <table class="table table-striped text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
                       <tr>
@@ -35,8 +40,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let child of child.allChildren" >
-                        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}} </a></h4></td>
+                      <tr *ngFor="let child of child.allChildren  | filter:searchText" >
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
                         <td class="border-bottom-0">
                             <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
                         </td>
@@ -58,6 +63,7 @@
                 </div>
               </div>
             </div>
+    </div>
             
             <ng-template #deleteDailog>
               <h1 mat-dialog-title>Delete Child</h1>
@@ -81,36 +87,40 @@
                     <mat-label>First Name</mat-label>
                     <input type="text" matInput formControlName="firstname" [(ngModel)]="prevChild.firstname">
                   </mat-form-field>
+
                   <br>
+
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Last Name</mat-label>
                     <input type="text" matInput formControlName="lastname" [(ngModel)]="prevChild.lastname">
                   </mat-form-field>
+
                   <br>
                
                   <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>Address</mat-label>
                     <input type="text" matInput formControlName="address" [(ngModel)]="prevChild.address">
-                 
                   </mat-form-field>
                
                   <br>
-                  <mat-form-field class="example-full-width" appearance="fill">
+                
+                  <mat-form-field>
                     <mat-label>Parent</mat-label>
-                    <mat-select class="col-10" formControlName="parentid"  [(value)]="prevChild.userid">
-                      <mat-option *ngFor="let paren of home.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
+                    <mat-select [(value)]="prevChild.parentid" >
+                      <mat-option *ngFor="let paren of user.AllParents" [value]=paren.userid>{{paren.firstname}} {{paren.lastname}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                 
+                  <input type="text" matInput class="d-none" formControlName="parentid" [(ngModel)]="prevChild.parentid">
+                  
                   <br>
-                  <mat-form-field class="example-full-width" appearance="fill">
+
+                  <mat-form-field>
                     <mat-label>Bus</mat-label>
-                    <mat-select class="col-10" formControlName="busid" [(value)]="prevChild.busid">
-                      <mat-option *ngFor="let buss of home.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
+                    <mat-select [(value)]="prevChild.busid" >
+                      <mat-option *ngFor="let buss of bus.AllBuses" [value]=buss.busid>{{buss.busnumber}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-               
-               
+                  <input type="text" matInput class="d-none" formControlName="busid" [(ngModel)]="prevChild.busid">
                   <br>
                 </form>
               </mat-dialog-content>

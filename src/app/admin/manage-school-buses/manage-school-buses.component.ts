@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BusService } from 'src/app/Services/bus.service';
 import { HomeService } from 'src/app/Services/home.service';
 import { AddBusComponent } from '../add-bus/add-bus.component';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-manage-school-buses',
@@ -11,6 +12,14 @@ import { AddBusComponent } from '../add-bus/add-bus.component';
   styleUrls: ['./manage-school-buses.component.css']
 })
 export class ManageSchoolBusesComponent implements OnInit {
+  
+  constructor(public home: HomeService,public bus: BusService, public dialog: MatDialog,public user:UsersService) { }
+  
+  ngOnInit(): void {
+    this.bus.getAllBuses();
+    this.user.getAllDrivers();
+    this.user.getAllTeachers()
+  }
   updateForm: FormGroup = new FormGroup({
     busid: new FormControl(''),
     busnumber: new FormControl('',Validators.required),
@@ -19,16 +28,10 @@ export class ManageSchoolBusesComponent implements OnInit {
     driverid: new FormControl('',Validators.required)
   });
 
-  constructor(public home: HomeService,public bus: BusService, public dialog: MatDialog) { }
 
   @ViewChild('deleteDailog') CalldeleteDailog!: TemplateRef<any>;
   @ViewChild('updateBusDialog') CallupdateBusDialog!: TemplateRef<any>;
   pData: any;
-
-  teachers:any=[];
-  getTeachersNames(){
-    this.teachers=this.home.AllTeachers;
-  }
 
 
   openUpdateDailog(bus: any) {
@@ -58,10 +61,6 @@ export class ManageSchoolBusesComponent implements OnInit {
   }
  
 
-  ngOnInit(): void {
-    this.bus.getAllBuses();
-    this.home.getAllDrivers();
-  }
 
   update() {
     this.bus.updateBus(this.updateForm.value);

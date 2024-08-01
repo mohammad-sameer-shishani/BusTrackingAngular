@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { AdminModule } from './admin/admin.module';
 import { ProfileComponent } from './profile/profile.component';
+import { TeacherModule } from './teacher/teacher.module';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
   path:'account',
   loadChildren:()=> import('./auth/auth.module').then(m=>m.AuthModule)
 },
+
 {
   path:'Testimonial',
   component:TestimonialsComponent
@@ -40,6 +42,9 @@ const routes: Routes = [
 {
   path:'admin',
   loadChildren:()=>AdminModule
+},
+{path:'teacher',
+  loadChildren:()=>TeacherModule
 }
 ];
 

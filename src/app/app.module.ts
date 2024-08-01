@@ -10,6 +10,8 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './profile/profile.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from 'src/Interceptor/token.interceptor';
 
 
 @NgModule({
@@ -29,7 +31,12 @@ import { ProfileComponent } from './profile/profile.component';
     AuthModule
    
   ],
-  providers: [],
+  providers: [
+ {provide:HTTP_INTERCEPTORS,
+  useClass:TokenInterceptor,
+  multi:true
+ }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

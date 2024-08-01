@@ -25,8 +25,8 @@
                       <tr>
                         <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Bus</h4></th>
                         <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Capacity</h4></th>
-                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Driver</h4></th>
-                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Teacher</h4></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Driver(username)</h4></th>
+                        <th class="border-bottom-0"><h4 class="fw-semibold mb-0">Teacher(username)</h4></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -79,29 +79,27 @@
                     </mat-error>
                   </mat-form-field>
                   <br>
-                
-                  <mat-form-field class="example-full-width" appearance="fill">
+              
+                  <mat-form-field>
                     <mat-label>Teacher</mat-label>
-                    
-                    <mat-select class="col-10" formControlName="teacherid">
-                      <mat-option *ngFor="let bus of bus.AllBuses" [value]=bus.busid>{{bus.busnumber}}</mat-option>
+                    <mat-select [(value)]="pData.teacherid" >
+                      <mat-option *ngFor="let teacher of user.AllTeachers" [value]=teacher.userid>{{teacher.firstname}} {{teacher.lastname}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="updateForm.controls['teacherid'].hasError('required')">
-                      Teacher is <strong>required</strong> 
-                    </mat-error>
                   </mat-form-field>
+                  <input type="text" matInput class="d-none" formControlName="teacherid" [(ngModel)]="pData.teacherid">
+                  
                   <br>
-                  <mat-form-field class="example-full-width" appearance="fill">
+
+                  <mat-form-field>
                     <mat-label>Driver</mat-label>
-                    
-                    <mat-select class="col-10" formControlName="driverid">
-                      <mat-option *ngFor="let driver of home.AllDrivers" [value]=driver.userid>{{driver.firstname}}</mat-option>
+                    <mat-select [(value)]="pData.driverid" >
+                      <mat-option *ngFor="let driver of user.AllDrivers" [value]=driver.userid>{{driver.firstname}} {{driver.lastname}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="updateForm.controls['driverid'].hasError('required')">
-                      Driver is <strong>required</strong> 
-                    </mat-error>
                   </mat-form-field>
+                  <input type="text" matInput class="d-none" formControlName="driverid" [(ngModel)]="pData.driverid">
                   <br>
+
+
                 </form>
               </mat-dialog-content>
               <mat-dialog-actions align="end">

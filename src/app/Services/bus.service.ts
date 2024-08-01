@@ -38,6 +38,7 @@ CreatBus(body:any){
 updateBus(body:any){
   this.http.put("https://localhost:7169/api/Bus/",body).subscribe((response)=>{
     console.log('Bus Updated');
+    window.location.reload();
 },error => {
   console.log("Error Updating Bus");
 })

@@ -11,7 +11,7 @@ export class HomeService {
 
 //declaring Arrays For Get All Methods
 
-  AllBuses:any=[];
+  
 
   allChildren:any=[];
   
@@ -54,18 +54,6 @@ getAllRoles(){
     console.log(error.status)
   })
 }
-
-// getAllBuses(){
-//   this.http.get('https://localhost:7169/api/Bus').subscribe(response=>{
-//     this.AllBuses=response;
-
-//   },
-//   error=>{
-//     console.log("error can not reach database");
-//     console.log(error.status)
-    
-//   })
-// }
 
 
 
