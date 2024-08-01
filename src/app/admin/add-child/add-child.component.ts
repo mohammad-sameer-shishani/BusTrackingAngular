@@ -10,7 +10,7 @@ import { HomeService } from 'src/app/Services/home.service';
   styleUrls: ['./add-child.component.css']
 })
 export class AddChildComponent {
-  constructor(public child:ChildService,public home:HomeService,public bus:BusService ){}
+  constructor(public child:ChildService,public home:HomeService,public bus:BusService  ){}
   addChildForm:FormGroup = new FormGroup(
     {
       firstName :new FormControl('', Validators.required ),

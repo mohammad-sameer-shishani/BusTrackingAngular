@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { ProfileComponent } from './profile/profile.component';
 import { TeacherModule } from './teacher/teacher.module';
 
+
 const routes: Routes = [
   {
     path:'home',

@@ -15,5 +15,4 @@ export class AdminNavbarComponent {
     localStorage.clear();
     this.router.navigate(['account/login'])
   }
-
 }

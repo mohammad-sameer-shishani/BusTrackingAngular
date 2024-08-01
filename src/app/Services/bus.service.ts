@@ -77,4 +77,10 @@ this.http.get('https://localhost:7169/api/Bus/CountBuses').subscribe(response=>{
 return 0;
 }
 
+
+
+getBusForParent(parentId: number){
+  this.http.get('https://localhost:7169/api/Bus/CountBuses/'+parentId);
+}
+
 }

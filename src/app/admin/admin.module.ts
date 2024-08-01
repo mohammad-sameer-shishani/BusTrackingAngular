@@ -17,6 +17,9 @@ import { AddBusComponent } from './add-bus/add-bus.component';
 import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 import { ManageContactusComponent } from './manage-contactus/manage-contactus.component';
 import { ManageParentsComponent } from './manage-parents/manage-parents.component';
+import { MapComponent } from './map/map.component';
+import { MapModule } from '../map/map.module';
+
 import { ReportsComponent } from './reports/reports.component';
 
 
@@ -36,12 +39,14 @@ import { ReportsComponent } from './reports/reports.component';
     ManageTestimonialsComponent,
     ManageContactusComponent,
     ManageParentsComponent,
+    MapComponent,
     ReportsComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+    MapModule
   ],
   exports:[
     SidebarComponent,
@@ -50,7 +55,8 @@ import { ReportsComponent } from './reports/reports.component';
     ManageTeachersComponent,
     ManageDriversComponent,
     ManageChildrenComponent,
-    ManagePagesComponent
+    ManagePagesComponent,
+    MapComponent
   ]
 })
 export class AdminModule { }
