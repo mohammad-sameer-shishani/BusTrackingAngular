@@ -37,8 +37,18 @@ export class DashboardComponent implements OnInit{
     this.countParents=this.home.AllParents.length;
     this.countTeachers=this.home.AllTeachers.length;
     this.loadStatistics();
+    this.GetUserIdFromLocal();
   }
-
+  GetUserIdFromLocal(){
+    let user=localStorage.getItem("user");
+    if (user) {
+      // Parse the JSON string to an object
+      let userObj = JSON.parse(user);
+      let id=userObj.UserId;
+  } else {
+      console.log("No user found in localStorage");
+  }
+  }
 
 
 

@@ -21,7 +21,8 @@ export class UsersService {
 
   ];
   
-
+  User:any;
+ UserObj:any;
   addUser(body:any){
     body.Imagepath = this.displayImage;
     this.http.post('https://localhost:7169/api/User',body).subscribe((res)=>{
@@ -91,13 +92,14 @@ getAllParents(){
 getUserById(userid: number){
   this.spinner.show();
   this.http.get('https://localhost:7169/api/User/'+userid).subscribe(res=>{
-    console.log("success")
+    this.User=res;
+    console.log("Got The User By Id",this.User)
     this.toastr.success('Reterived Successfully','',{
-      positionClass: 'toast-bottom-right'})
-  },err => {
-    console.log("error");
+      positionClass: 'toast-bottom-right'})  
+    },err => {
+    console.log("error getting user");
     console.log(err.status);
-    this.toastr.error('Something Wont Wrong!!')
+    this.toastr.error('Something Went Wrong!!')
   })
   this.spinner.hide();
 }

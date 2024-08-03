@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient,private router:Router) { 
+  constructor(private http:HttpClient,private router:Router,private toastr:ToastrService) { 
    
   }
   Login(email:any,password:any){
@@ -45,7 +46,7 @@ else if (data.RoleId=="4") {
 }
 },err=>{
 console.log('error while loging in')
-
+this.toastr.error('Invalid Email or Password!!')
 })
   }
 }

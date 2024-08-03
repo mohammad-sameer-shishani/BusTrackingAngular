@@ -23,7 +23,7 @@ export class AdduserComponent implements OnInit{
       Roleid : new FormControl('',Validators.required), 
       Password : new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(40)]),
       Imagepath: new FormControl(),
-      Phone : new FormControl('07',[Validators.minLength(10),Validators.maxLength(14)]),
+      Phone : new FormControl('',[Validators.minLength(10),Validators.maxLength(14)]),
       Address : new FormControl(),
       Gender : new FormControl(),
       Email : new FormControl('',[Validators.email  ,Validators.required])

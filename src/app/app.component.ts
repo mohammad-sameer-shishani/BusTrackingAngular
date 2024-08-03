@@ -17,7 +17,7 @@ constructor (private spinner : NgxSpinnerService){}
     setTimeout (()=>{
       this.spinner.hide();
 
-    },3000)
+    },500)
   }
 
 
