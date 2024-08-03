@@ -148,7 +148,7 @@
             </mat-form-field>
            
 
-            <mat-radio-group formControlName="gender" class="d-flex flex-row">
+            <mat-radio-group formControlName="gender" [(ngModel)]="UData.gender" class="d-flex flex-row">
               <mat-radio-button value="Male" class="me-3">Male</mat-radio-button>
               <mat-radio-button value="Female">Female</mat-radio-button>
             </mat-radio-group>
@@ -156,7 +156,7 @@
 
 
             <div>
-              <input type="file" formControlName="imagename" #file (change)="uploadImage(file.files)">
+              <input type="file" formControlName="Imagepath"  #file (change)="uploadImage(file.files)">
             </div>
   
         </form>

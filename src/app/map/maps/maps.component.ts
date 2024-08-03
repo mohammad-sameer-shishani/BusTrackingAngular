@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { StopsService } from 'src/app/Services/stops.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,7 +12,12 @@ export class MapsComponent implements OnInit {
   map: google.maps.Map | null = null;
   directionsService: google.maps.DirectionsService | null = null;
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
-  distanceMatrixService: google.maps.DistanceMatrixService | null = null;
+
+  // Define @Input() properties
+  @Input() origin: string = '';  
+  @Input() destination: string = '';  
+  @Input() waypoints: google.maps.DirectionsWaypoint[] = [];
+  @Input() stops: { latitude: number, longitude: number, stopName: string }[] = [];
 
   constructor() {}
 
@@ -41,11 +47,10 @@ export class MapsComponent implements OnInit {
       this.directionsService = new google.maps.DirectionsService();
       this.directionsRenderer = new google.maps.DirectionsRenderer();
       this.directionsRenderer.setMap(this.map);
-      this.distanceMatrixService = new google.maps.DistanceMatrixService();
 
-      // Example usage
+      // Call the route calculation function after initializing the map
       this.calculateAndDisplayRoute();
-      this.calculateDistanceMatrix();
+      this.displayStopsOnMap();
     } else {
       console.error('Map container is not available');
     }
@@ -54,33 +59,15 @@ export class MapsComponent implements OnInit {
   calculateAndDisplayRoute(): void {
     if (this.directionsService && this.directionsRenderer) {
       const request: google.maps.DirectionsRequest = {
-        origin: 'New York, NY', // Start location
-        destination: 'Los Angeles, CA', // End location
-        waypoints: [
-          { location: 'Philadelphia, PA' }, // First stop
-          { location: 'Pittsburgh, PA' }, // Second stop
-        ],
+        origin: this.origin,
+        destination: this.destination,
+        waypoints: this.waypoints,
         travelMode: google.maps.TravelMode.DRIVING
       };
 
       this.directionsService.route(request, (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK && result && this.directionsRenderer) {
-          this.directionsRenderer.setDirections(result);
-
-          // Loop through legs to get travel time between stops
-          const route = result.routes[0];
-          route.legs.forEach((leg, index) => {
-            console.log(`Leg ${index + 1}:`);
-            console.log(`From: ${leg.start_address}`);
-            console.log(`To: ${leg.end_address}`);
-            if (leg.duration) {
-              console.log(`Duration: ${leg.duration.text}`);
-            } else {
-              console.log(`Duration: Not available`);
-            }
-            console.log(`Distance: ${leg.distance?.text || 'Not available'}`);
-          });
-
+        if (status === google.maps.DirectionsStatus.OK && result) {
+          this.directionsRenderer!.setDirections(result);
         } else {
           console.error('Directions request failed due to ' + status);
         }
@@ -90,28 +77,17 @@ export class MapsComponent implements OnInit {
     }
   }
 
-  calculateDistanceMatrix(): void {
-    if (this.distanceMatrixService) {
-      const request: google.maps.DistanceMatrixRequest = {
-        origins: ['New York, NY', 'Philadelphia, PA'], // Multiple origins
-        destinations: ['Los Angeles, CA', 'San Francisco, CA'], // Multiple destinations
-        travelMode: google.maps.TravelMode.DRIVING,
-      };
-
-      this.distanceMatrixService.getDistanceMatrix(request, (response, status) => {
-        if (status === google.maps.DistanceMatrixStatus.OK && response) {
-          response.rows.forEach((row, i) => {
-            row.elements.forEach((element, j) => {
-              console.log(`From ${request.origins[i]} to ${request.destinations[j]}:`);
-              console.log(`Distance: ${element.distance.text}, Duration: ${element.duration.text}`);
-            });
-          });
-        } else {
-          console.error('Distance Matrix request failed due to ' + status);
-        }
+  displayStopsOnMap(): void {
+    if (this.map) {
+      this.stops.forEach(stop => {
+        const marker = new google.maps.Marker({
+          position: new google.maps.LatLng(stop.latitude, stop.longitude),
+          map: this.map,
+          title: stop.stopName
+        });
       });
-    } else {
-      console.error('Distance Matrix Service is not initialized.');
     }
   }
+
+
 }

@@ -17,6 +17,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FilterPipe } from '../pipes/filter.pipe';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+
+
+
+
+
+
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -57,7 +65,8 @@ import { FilterPipe } from '../pipes/filter.pipe';
     MatCardModule,
     MatOptionModule,
     MatExpansionModule,
-    FilterPipe
+    FilterPipe,
+    MatProgressBarModule
   ]
 })
 export class SharedModule { }

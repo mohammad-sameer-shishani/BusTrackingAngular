@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StopsService {
-  private apiUrl = ' https://localhost:7169/api/Stops';
+  private apiUrl = 'https://localhost:7169/api/Stops';
   constructor(private http: HttpClient) { }
 
   getStops(busId: number) {

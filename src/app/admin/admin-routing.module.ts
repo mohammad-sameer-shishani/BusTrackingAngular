@@ -12,6 +12,7 @@ import { ManageContactusComponent } from './manage-contactus/manage-contactus.co
 import { ManageParentsComponent } from './manage-parents/manage-parents.component';
 import { MapComponent } from './map/map.component';
 import { ReportsComponent } from './reports/reports.component';
+import { UserReportComponent } from './user-report/user-report.component';
 
 const routes: Routes = [
   {
@@ -73,7 +74,11 @@ const routes: Routes = [
   {
     path:'reports',
     component:ReportsComponent
+  },{
+    path : 'userreports',
+    component:UserReportComponent
   }
+
 ];
 
 @NgModule({

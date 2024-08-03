@@ -26,7 +26,8 @@ export class AdduserComponent implements OnInit{
       Phone : new FormControl('07',[Validators.minLength(10),Validators.maxLength(14)]),
       Address : new FormControl(),
       Gender : new FormControl(),
-      Email : new FormControl('',[Validators.email  ,Validators.required]),
+      Email : new FormControl('',[Validators.email  ,Validators.required])
+      
   
     }
   )
@@ -38,5 +39,16 @@ export class AdduserComponent implements OnInit{
   
   
   
+  uploadImage(file:any){
+    if(file.length ==0 )
+      return; 
+  
+    let fileToUpload =<File> file[0]; 
+  
+    const formData = new FormData(); 
+    formData.append('file' ,fileToUpload,fileToUpload.name ); 
+    this.user.uploadAttachmenet(formData);
+  
+  }
   
 }

@@ -36,7 +36,9 @@
               "src/assets/HomeTemplate/vendor/remixicon/remixicon.css",
               "src/assets/HomeTemplate/vendor/swiper/swiper-bundle.min.css",
               "src/assets/HomeTemplate/css/style.css",
-              "src/assets/Temp2/css/styles.min.css"
+              "src/assets/Temp2/css/styles.min.css",
+              "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/assets/HomeTemplate/vendor/bootstrap/js/bootstrap.bundle.min.js",
@@ -57,7 +59,27 @@
 
 
 
+            ],"allowedCommonJsDependencies": [
+              "canvg",
+              "core-js/modules/es.array.index-of.js",
+              "core-js/modules/es.array.iterator.js",
+              "core-js/modules/es.array.reduce.js",
+              "core-js/modules/es.array.reverse.js",
+              "core-js/modules/es.promise.js",
+              "core-js/modules/es.regexp.to-string.js",
+              "core-js/modules/es.string.ends-with.js",
+              "core-js/modules/es.string.includes.js",
+              "core-js/modules/es.string.match.js",
+              "core-js/modules/es.string.replace.js",
+              "core-js/modules/es.string.split.js",
+              "core-js/modules/es.string.starts-with.js",
+              "core-js/modules/es.string.trim.js",
+              "core-js/modules/web.dom-collections.iterator.js",
+              "raf",
+              "rgbcolor",
+              "html2canvas"
             ]
+
           },
           "configurations": {
             "production": {

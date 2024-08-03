@@ -11,9 +11,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './profile/profile.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { map } from 'rxjs';
+import { map, timeout } from 'rxjs';
 import { TokenInterceptor } from 'src/Interceptor/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
+import { MapModule } from './map/map.module';
+
+
+
 
 
 @NgModule({
@@ -31,7 +37,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     SharedModule,
     BrowserAnimationsModule,
     AuthModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot(),
+    ToastNoAnimationModule.forRoot(),
+    MapModule
   ],
   providers: [ 
     {provide:HTTP_INTERCEPTORS,

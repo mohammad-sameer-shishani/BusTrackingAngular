@@ -1,7 +1,28 @@
 <div class="dashboard-container">
-    <app-sidebar></app-sidebar> <!-- Sidebar on the left -->
+  <!--  <app-sidebar></app-sidebar>  Sidebar on the left -->
 
-    <div class="content-wrapper">
-<app-maps></app-maps> <!-- Map component on the right -->
-    </div>
+
+
+
+
+
+  <div>
+    <h3>Select Child's Address to Add as Waypoint</h3>
+    <ul>
+      <li *ngFor="let child of children">
+        <span (click)="addWaypoint(child.address)" style="cursor: pointer; color: blue;">
+          {{ child.name }} - {{ child.address }}
+        </span>
+      </li>
+    </ul>
+  </div>
+    
+  <app-maps 
+  [origin]="origin" 
+  [destination]="destination" 
+  [waypoints]="waypoints" 
+  [stops]="stops">
+  </app-maps>
+
+      
 </div>

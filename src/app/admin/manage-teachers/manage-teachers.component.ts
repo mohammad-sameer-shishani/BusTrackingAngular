@@ -22,7 +22,7 @@ export class ManageTeachersComponent {
     address : new FormControl(),
     username : new FormControl,
     gender : new FormControl(),
-    imagepath:new FormControl()
+    Imagepath:new FormControl()
   
   })
   

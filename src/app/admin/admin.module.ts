@@ -21,6 +21,7 @@ import { MapComponent } from './map/map.component';
 import { MapModule } from '../map/map.module';
 
 import { ReportsComponent } from './reports/reports.component';
+import { UserReportComponent } from './user-report/user-report.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ReportsComponent } from './reports/reports.component';
     ManageContactusComponent,
     ManageParentsComponent,
     MapComponent,
-    ReportsComponent
+    ReportsComponent,
+    UserReportComponent
   ],
   imports: [
     CommonModule,

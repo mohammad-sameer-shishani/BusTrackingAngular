@@ -1,0 +1,58 @@
+<div class="container">
+    <button mat-raised-button routerLink="/admin/dashboard">Back</button>
+    <h2 class="text-center">User Report</h2>
+  
+    <div class="form-group">
+      <label for="year">Year:</label>
+      <input type="number" [(ngModel)]="year" id="year" class="form-control" placeholder="Enter year">
+    </div>
+  
+    <div class="form-group">
+      <label for="month">Month (optional):</label>
+      <input type="number" [(ngModel)]="month" id="month" class="form-control" placeholder="Enter month">
+    </div>
+  
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="loadUsersByYear()">Load Users by Year</button>
+      <button class="btn btn-info" (click)="loadUsersByMonthAndYear()">Load Users by Month and Year</button>
+      <button class="btn btn-danger" (click)="downloadReportAsPDF()">Download Report as PDF</button>
+    </div>
+  
+    <div id="user-report-table" class="table-responsive mt-4">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+          
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>RoleId</th>
+            <th>Created Date</th>
+            <th>Address</th>
+            <th>Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+           
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.roleid || 'N/A' }}</td> <!-- Handle optional RoleId -->
+            <td>{{ user.createdDate ? (user.createdDate | date: 'short') : 'N/A' }}</td> <!-- Handle optional CreatedDate -->
+            <td>{{ user.address || 'N/A' }}</td> <!-- Handle optional Address -->
+            <td>{{ user.gender || 'N/A' }}</td> <!-- Handle optional Gender -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="users.length === 0" class="alert alert-info">
+      No users found for the selected period.
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+  
