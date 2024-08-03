@@ -49,5 +49,11 @@ console.log('error while loging in')
 this.toastr.error('Invalid Email or Password!!')
 })
   }
+
+  logout(){
+    localStorage.clear();    
+    this.router.navigate(['/account/login'])
+  }
+
 }
 

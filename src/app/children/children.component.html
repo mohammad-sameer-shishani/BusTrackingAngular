@@ -1,0 +1,44 @@
+
+<app-navbar></app-navbar>
+<div class="m-5 row">.</div>
+<table class="table table-striped text-nowrap mb-5 align-middle m-5">
+    <thead class="text-dark fs-4 ">
+      <tr>
+        <th class="border-bottom-0">
+          <h4 class="fw-semibold mb-0">Firstname</h4>
+        </th>
+        <th class="border-bottom-0">
+          <h4 class="fw-semibold mb-0">Lastname </h4>
+        </th>
+        <th class="border-bottom-0">
+          <h4 class="fw-semibold mb-0">Address</h4>
+        </th>
+        <th class="border-bottom-0">
+            <h4 class="fw-semibold mb-0">Bus Number</h4>
+          </th>
+           <th class="border-bottom-0">
+            <h4 class="fw-semibold mb-0">Status</h4>
+          </th>
+      
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let child of child.myChildren" >
+        <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
+        <td class="border-bottom-0">
+            <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
+        </td>
+        <td class="border-bottom-0">
+          <p class="mb-0 fw-normal">{{child.address}}</p>
+        </td>
+        <td class="border-bottom-0">
+          <p class="mb-0 fw-normal">{{child.busnumber}}</p>
+        </td>
+        <td class="border-bottom-0">
+            <p class="mb-0 fw-normal"></p>
+          </td>
+          
+      </tr> 
+    </tbody>
+  </table>
+  <app-footer></app-footer>

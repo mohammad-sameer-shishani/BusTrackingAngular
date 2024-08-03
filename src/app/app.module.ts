@@ -17,6 +17,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
 import { MapModule } from './map/map.module';
+import { ChildrenComponent } from './children/children.component';
 
 
 
@@ -29,7 +30,8 @@ import { MapModule } from './map/map.module';
     AboutComponent,
     ContactComponent,
     TestimonialsComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChildrenComponent
   ],
   imports: [
     BrowserModule,

@@ -1,20 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChildService {
+export class ChildService{
 
   constructor(private http:HttpClient) { }
 
+
+
 //declaring Arrays For Get All Methods
   allChildren:any=[];
-
+  myChildren:any=[];
+  user:any;
+  userid:any;
   //Declaring variables for Get By Id Methods
   child:any;
-
-
+user2:any;
+GetMyId(){
+  this.user2=localStorage.getItem('user');
+  return this.user2.UserId;
+}
 
 //get all children
 GetAllChildren(){
@@ -27,6 +34,17 @@ GetAllChildren(){
   })
 }
 
+
+//get my children
+GetMyChildren(parentid:any){
+  this.http.get('https://localhost:7169/api/Children/GetChildrenByParentId/'+parentid).subscribe((response)=>{
+    this.myChildren=response;
+    console.log('Got my Children');
+  },error=>{
+    console.log('error getting my children');
+    console.log(error.status);
+  })
+}
 
 
 //Get By Id Methods
