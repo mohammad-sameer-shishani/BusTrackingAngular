@@ -19,7 +19,7 @@ export class StopsService {
     this.spinner.show();
     this.http.get('https://localhost:7169/api/Stops/BusStops/'+busId).subscribe((res)=>{
       this.BusStops =res;
-      console.log(res)
+     // console.log(res)
       this.toastr.success('Reterived Successfully','',{
         positionClass: 'toast-bottom-right'})
     },err=>{

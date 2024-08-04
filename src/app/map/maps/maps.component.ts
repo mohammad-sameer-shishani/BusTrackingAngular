@@ -22,7 +22,9 @@ export class MapsComponent implements OnInit {
 
   @ViewChild('mapContainer', { static: false }) mapContainer: ElementRef | null = null;
   map: google.maps.Map | null = null;
-
+  directionsService: google.maps.DirectionsService | null = null;  // تأكد من تعريف هذه الخاصية
+  directionsRenderer: google.maps.DirectionsRenderer | null = null;
+  distanceMatrixService: google.maps.DistanceMatrixService | null = null;
   constructor(private busLocationService: BusLocationService, private stopsService: StopsService) {}
 
   ngOnInit(): void {
@@ -41,8 +43,8 @@ export class MapsComponent implements OnInit {
   initializeMap(): void {
     if (this.mapContainer) {
       const mapOptions = {
-        center: new google.maps.LatLng(0, 0),
-        zoom: 2,
+        center: new google.maps.LatLng(32.556776, 35.846592),
+        zoom: 13,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
@@ -56,10 +58,16 @@ export class MapsComponent implements OnInit {
     if (this.map && this.busMarkers.length > 0) {
       for (let marker of this.busMarkers) {
         const position = new google.maps.LatLng(marker.latitude, marker.longitude);
+        const busIcon = {
+          url: 'https://maps.google.com/mapfiles/kml/shapes/bus.png', // أيقونة الحافلة
+          scaledSize: new google.maps.Size(32, 32) // حجم الأيقونة
+        };
+
         const mapMarker = new google.maps.Marker({
           position,
           map: this.map,
-          title: marker.stopName
+          title: marker.stopName,
+          icon: busIcon // تحديد الأيقونة للحافلة
         });
 
         mapMarker.addListener('click', async () => {
@@ -82,7 +90,7 @@ export class MapsComponent implements OnInit {
         stopName: stop.stopname
       }));
       this.displayBusStops();
-    }, 1000); // وقت انتظار لضمان جلب البيانات
+    }, 500); // وقت انتظار لضمان جلب البيانات
   }
 
   displayBusStops(): void {
@@ -101,4 +109,40 @@ export class MapsComponent implements OnInit {
       }
     }
   }
+
+
+
+
+  calculateAndDisplayRoute(): void {
+    if (this.directionsService && this.directionsRenderer && this.busMarkers.length > 0 && this.busStops.length > 0) {
+        const origin = new google.maps.LatLng(this.busMarkers[0].latitude, this.busMarkers[0].longitude);
+        const destination = new google.maps.LatLng(this.busStops[this.busStops.length - 1].latitude, this.busStops[this.busStops.length - 1].longitude);
+
+        const waypoints = this.busStops.slice(0, -1).map(stop => ({
+            location: new google.maps.LatLng(stop.latitude, stop.longitude),
+            stopover: true
+        }));
+
+        const request: google.maps.DirectionsRequest = {
+            origin: origin,
+            destination: destination,
+            waypoints: waypoints,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        this.directionsService.route(request, (result, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                if (this.directionsRenderer) {
+                    this.directionsRenderer.setDirections(result);
+                }
+            } else {
+                console.error('فشل طلب الاتجاهات بسبب: ' + status);
+            }
+        });
+    } else {
+        console.error('تأكد من وجود جميع البيانات المطلوبة لحساب المسار.');
+    }
+}
+
+
 }
