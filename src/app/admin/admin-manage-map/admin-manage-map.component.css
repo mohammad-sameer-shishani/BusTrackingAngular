@@ -1,0 +1,31 @@
+h2 {
+    color: #2c3e50;
+  }
+  
+  h3 {
+    margin-top: 20px;
+    color: #34495e;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  .card-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 100;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 300px;
+  }

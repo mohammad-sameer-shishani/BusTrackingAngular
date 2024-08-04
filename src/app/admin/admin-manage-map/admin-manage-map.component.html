@@ -1,0 +1,15 @@
+<!-- Map Component -->
+<app-maps
+  [busMarkers]="busMarkers"
+  [busStops]="busStops"
+  (busMarkerClicked)="onBusMarkerClicked($event)"
+  (stopMarkerClicked)="onStopMarkerClicked($event)">
+</app-maps>
+
+<!-- Display stop details in a card -->
+<div *ngIf="stopDetails" class="card-container">
+  <div class="card">
+    <h3>{{ stopDetails.stopName }}</h3>
+    <p>Location: {{ stopDetails.latitude }}, {{ stopDetails.longitude }}</p>
+  </div>
+</div>
