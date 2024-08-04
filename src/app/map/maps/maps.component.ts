@@ -25,6 +25,10 @@ export class MapsComponent implements OnInit {
   directionsService: google.maps.DirectionsService | null = null;  // تأكد من تعريف هذه الخاصية
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
   distanceMatrixService: google.maps.DistanceMatrixService | null = null;
+
+  private stopMarkers: google.maps.Marker[] = [];
+
+
   constructor(private busLocationService: BusLocationService, private stopsService: StopsService) {}
 
   ngOnInit(): void {
@@ -40,6 +44,68 @@ export class MapsComponent implements OnInit {
     document.head.appendChild(script);
   }
 
+
+
+
+
+
+  initializeMap(): void {
+    if (this.mapContainer) {
+        // Check if there are busMarkers available to center the map around a bus
+        const firstBusMarker = this.busMarkers && this.busMarkers.length > 0 ? this.busMarkers[0] : null;
+        const center = firstBusMarker 
+            ? new google.maps.LatLng(firstBusMarker.latitude, firstBusMarker.longitude)
+            : new google.maps.LatLng(32.556776, 35.846592); // Default center location
+
+        const mapOptions = {
+            center: center,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
+
+        // Initialize DirectionsService and DirectionsRenderer
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer({
+            map: this.map, // Attach the renderer to the map
+            polylineOptions: {
+                strokeColor: '#FF0000', // Set the color of the route
+            },
+        });
+
+        this.displayBusMarkers(); // Display the bus markers on the map
+    } else {
+        console.error('Map container is not available');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
   initializeMap(): void {
     if (this.mapContainer) {
       const mapOptions = {
@@ -52,97 +118,174 @@ export class MapsComponent implements OnInit {
     } else {
       console.error('Map container is not available');
     }
-  }
+  }*/
 
-  displayBusMarkers(): void {
-    if (this.map && this.busMarkers.length > 0) {
-      for (let marker of this.busMarkers) {
-        const position = new google.maps.LatLng(marker.latitude, marker.longitude);
-        const busIcon = {
-          url: 'https://maps.google.com/mapfiles/kml/shapes/bus.png', // أيقونة الحافلة
-          scaledSize: new google.maps.Size(32, 32) // حجم الأيقونة
-        };
 
-        const mapMarker = new google.maps.Marker({
-          position,
-          map: this.map,
-          title: marker.stopName,
-          icon: busIcon // تحديد الأيقونة للحافلة
-        });
 
-        mapMarker.addListener('click', async () => {
-          this.busMarkerClicked.emit(marker.busId);
-          this.loadStopsForBus(marker.busId);
-        });
+
+
+
+
+
+
+
+
+
+
+
+    displayBusMarkers(): void {
+      if (this.map && this.busMarkers.length > 0) {
+        for (let marker of this.busMarkers) {
+          const position = new google.maps.LatLng(marker.latitude, marker.longitude);
+          const busIcon = {
+            url: 'https://maps.google.com/mapfiles/kml/shapes/bus.png', // Bus icon
+            scaledSize: new google.maps.Size(32, 32) // Icon size
+          };
+  
+          const mapMarker = new google.maps.Marker({
+            position,
+            map: this.map,
+            title: marker.stopName,
+            icon: busIcon // Assign the bus icon
+          });
+  
+          mapMarker.addListener('click', async () => {
+            this.busMarkerClicked.emit(marker.busId);
+  
+            // Load stops for the bus
+            await this.loadStopsForBus(marker.busId);
+            // After stops are loaded, calculate and display the route
+            this.calculateAndDisplayRoute(marker.busId);
+          });
+        }
       }
     }
-  }
 
-  loadStopsForBus(busId: number): void {
-    // استدعاء الخدمة وجلب التوقفات
-    this.stopsService.getStops(busId);
-    // انتظار معالجة البيانات وتحديث الخريطة
-    setTimeout(() => {
-      this.busStops = this.stopsService.BusStops.map((stop: any) => ({
-        stopId: stop.stopid,
-        latitude: stop.latitude,
-        longitude: stop.longitude,
-        stopName: stop.stopname
-      }));
-      this.displayBusStops();
-    }, 500); // وقت انتظار لضمان جلب البيانات
+
+
+
+  
+    async loadStopsForBus(busId: number): Promise<void> {
+      try {
+        // Fetch stops for the bus using a promise-based approach
+        const stops = await new Promise<any[]>((resolve, reject) => {
+          this.stopsService.getStops(busId);
+          const interval = setInterval(() => {
+            if (this.stopsService.BusStops.length > 0) {
+              clearInterval(interval);
+              resolve(this.stopsService.BusStops);
+            }
+          }, 100);
+    
+          setTimeout(() => {
+            clearInterval(interval);
+            reject(new Error('Timeout while loading stops'));
+          }, 5000); // Adjust the timeout as necessary
+        });
+    
+        // Map the stops to the format used by the map component
+        this.busStops = stops.map((stop: any) => ({
+          stopId: stop.stopid,
+          latitude: stop.latitude,
+          longitude: stop.longitude,
+          stopName: stop.stopname
+        }));
+    
+        // Display the stops on the map
+        this.displayBusStops();
+      } catch (error) {
+        console.error('Failed to load stops:', error);
+      }
+    }
+    
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   displayBusStops(): void {
+    this.clearStopMarkers(); // Clear existing markers before adding new ones
+  
     if (this.map && this.busStops.length > 0) {
-      for (let stop of this.busStops) {
+      this.busStops.forEach(stop => {
         const position = new google.maps.LatLng(stop.latitude, stop.longitude);
+        const homeIcon = {
+          url: 'http://maps.google.com/mapfiles/kml/pal3/icon31.png',
+          scaledSize: new google.maps.Size(40, 40),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(20, 40)
+        };
+  
         const stopMarker = new google.maps.Marker({
           position,
           map: this.map,
-          title: stop.stopName
+          title: stop.stopName,
+          icon: homeIcon
         });
-
+  
         stopMarker.addListener('click', () => {
           this.stopMarkerClicked.emit(stop.stopId);
         });
-      }
+  
+        this.stopMarkers.push(stopMarker); // Store the marker reference
+      });
     }
+  }
+
+
+  clearStopMarkers(): void {
+    // Remove all markers from the map
+    this.stopMarkers.forEach(marker => marker.setMap(null));
+    // Clear the array
+    this.stopMarkers = [];
   }
 
 
 
 
-  calculateAndDisplayRoute(): void {
-    if (this.directionsService && this.directionsRenderer && this.busMarkers.length > 0 && this.busStops.length > 0) {
-        const origin = new google.maps.LatLng(this.busMarkers[0].latitude, this.busMarkers[0].longitude);
-        const destination = new google.maps.LatLng(this.busStops[this.busStops.length - 1].latitude, this.busStops[this.busStops.length - 1].longitude);
 
-        const waypoints = this.busStops.slice(0, -1).map(stop => ({
-            location: new google.maps.LatLng(stop.latitude, stop.longitude),
-            stopover: true
-        }));
 
-        const request: google.maps.DirectionsRequest = {
-            origin: origin,
-            destination: destination,
-            waypoints: waypoints,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
+calculateAndDisplayRoute(busId: number): void {
+  if (!this.directionsService || !this.directionsRenderer) {
+    console.error('Directions service or renderer is not initialized');
+    return;
+  }
 
-        this.directionsService.route(request, (result, status) => {
-            if (status === google.maps.DirectionsStatus.OK) {
-                if (this.directionsRenderer) {
-                    this.directionsRenderer.setDirections(result);
-                }
-            } else {
-                console.error('فشل طلب الاتجاهات بسبب: ' + status);
-            }
-        });
+  if (this.busMarkers.length === 0 || this.busStops.length === 0) {
+    console.error('Insufficient data to calculate route. Ensure that busMarkers and busStops are populated.');
+    return;
+  }
+
+  const busMarker = this.busMarkers.find(marker => marker.busId === busId);
+  if (!busMarker) {
+    console.error('Bus marker not found');
+    return;
+  }
+
+  const origin = new google.maps.LatLng(busMarker.latitude, busMarker.longitude);
+  const destination = new google.maps.LatLng(this.busStops[this.busStops.length - 1].latitude, this.busStops[this.busStops.length - 1].longitude);
+
+  const waypoints: google.maps.DirectionsWaypoint[] = this.busStops.map(stop => ({
+    location: new google.maps.LatLng(stop.latitude, stop.longitude),
+    stopover: true
+  }));
+
+  const request: google.maps.DirectionsRequest = {
+    origin: origin,
+    destination: destination,
+    waypoints: waypoints,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+
+  this.directionsService.route(request, (result, status) => {
+    if (status === google.maps.DirectionsStatus.OK) {
+      this.directionsRenderer!.setDirections(result);
     } else {
-        console.error('تأكد من وجود جميع البيانات المطلوبة لحساب المسار.');
+      console.error('Directions request failed due to ' + status);
     }
+  });
 }
+
 
 
 }
