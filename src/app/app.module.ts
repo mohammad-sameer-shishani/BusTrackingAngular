@@ -31,7 +31,8 @@ import { ChildrenComponent } from './children/children.component';
     ContactComponent,
     TestimonialsComponent,
     ProfileComponent,
-    ChildrenComponent
+    ChildrenComponent,
+   
   ],
   imports: [
     BrowserModule,

@@ -8,3 +8,31 @@
   height: 100%;
   width: 100%;
 }
+.custom-marker {
+  background-color: #4285f4;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.custom-marker {
+  background-color: #4285f4;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.custom-stop-marker {
+  background-color: #f4b400; /* Different color for stops */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}

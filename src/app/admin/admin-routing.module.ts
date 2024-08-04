@@ -10,9 +10,10 @@ import { TestimonialsComponent } from '../testimonials/testimonials.component';
 import { ManageTestimonialsComponent } from './manage-testimonials/manage-testimonials.component';
 import { ManageContactusComponent } from './manage-contactus/manage-contactus.component';
 import { ManageParentsComponent } from './manage-parents/manage-parents.component';
-import { MapComponent } from './map/map.component';
+
 import { ReportsComponent } from './reports/reports.component';
 import { UserReportComponent } from './user-report/user-report.component';
+import { AdminManageMapComponent } from './admin-manage-map/admin-manage-map.component';
 
 const routes: Routes = [
   {
@@ -67,11 +68,11 @@ const routes: Routes = [
   {
     path:'parents',
     component:ManageParentsComponent
+  },{
+    path:'adminmap',
+    component:AdminManageMapComponent
   },
-  {
-    path:'map',
-    component:MapComponent
-  },
+ 
   {
     path:'reports',
     component:ReportsComponent
