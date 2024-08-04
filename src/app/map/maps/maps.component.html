@@ -1,1 +1,9 @@
 <div #mapContainer id="map" style="height: 100%; width: 100%;"></div>
+<div class="time-card" *ngIf="stopTimes.length > 0 || totalTripTime">
+    <h4>Trip Information</h4>
+    <div *ngFor="let time of stopTimes; let i = index">
+      Stop {{ i + 1 }}: {{ time }}
+    </div>
+    <hr />
+    <div>Total Trip Time: {{ totalTripTime }}</div>
+  </div>

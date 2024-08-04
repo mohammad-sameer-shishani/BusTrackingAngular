@@ -6,10 +6,16 @@
   (stopMarkerClicked)="onStopMarkerClicked($event)">
 </app-maps>
 
-<!-- Display stop details in a card -->
-<div *ngIf="stopDetails" class="card-container">
-  <div class="card">
-    <h3>Stop name: {{ stopDetails.stopName }}</h3>
-    <p>Location: {{ stopDetails.latitude }}, {{ stopDetails.longitude }}</p>
+<div #mapContainer class="map-container"></div>
+<button (click)="toggleStopsVisibility()">
+  Toggle Stops
+</button>
+<!-- Card to display times -->
+<div class="time-card" *ngIf="stopTimes.length > 0 || totalTripTime">
+  <h4>Trip Information</h4>
+  <div *ngFor="let time of stopTimes; let i = index">
+    Stop {{ i + 1 }}: {{ time }}
   </div>
+  <hr />
+  <div>Total Trip Time: {{ totalTripTime }}</div>
 </div>

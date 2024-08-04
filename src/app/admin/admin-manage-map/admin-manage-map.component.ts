@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
+import { MapsComponent } from 'src/app/map/maps/maps.component';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
 import { StopsService } from 'src/app/Services/stops.service';
 
@@ -14,7 +15,10 @@ export class AdminManageMapComponent implements OnInit {
   stopDetails: any;
   selectedBusId: number | null = null;
   selectedStopId: number | null = null;
-
+  stopTimes: string[] = [];  // Add this property
+  totalTripTime: string = '';  // Add this property
+  stopsVisible: boolean = true;  // Add this property to track visibility of stops
+  @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
   constructor(
     private cdr: ChangeDetectorRef,
     private busLocationService: BusLocationService,
@@ -59,4 +63,16 @@ export class AdminManageMapComponent implements OnInit {
     this.stopsService.getStop(stopId);
     this.stopDetails = this.stopsService.StopForBus;
   }
+
+  toggleStopsVisibility(): void {
+    this.mapsComponent.toggleStopsVisibility();
+  }
+
+
+    // Add this method to calculate the trip time
+    calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
+      // Logic to calculate trip time and set stopTimes and totalTripTime
+      // Trigger change detection to update the view
+      this.cdr.detectChanges();
+    }
 }

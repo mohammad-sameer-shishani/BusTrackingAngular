@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { StopsService } from 'src/app/Services/stops.service';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
 import { environment } from 'src/environments/environment';
@@ -25,11 +25,12 @@ export class MapsComponent implements OnInit {
   directionsService: google.maps.DirectionsService | null = null;  // تأكد من تعريف هذه الخاصية
   directionsRenderer: google.maps.DirectionsRenderer | null = null;
   distanceMatrixService: google.maps.DistanceMatrixService | null = null;
-
+  private changeDetectorRef: ChangeDetectorRef;
   private stopMarkers: google.maps.Marker[] = [];
-
-
-  constructor(private busLocationService: BusLocationService, private stopsService: StopsService) {}
+  stopTimes: string[] = [];
+  totalTripTime: string = '';
+  stopsVisible: boolean = true;
+  constructor(private busLocationService: BusLocationService, private stopsService: StopsService ,private cdr: ChangeDetectorRef   ) {this.changeDetectorRef = cdr;}
 
   ngOnInit(): void {
     this.loadGoogleMaps();
@@ -73,7 +74,7 @@ export class MapsComponent implements OnInit {
                 strokeColor: '#FF0000', // Set the color of the route
             },
         });
-
+        this.distanceMatrixService = new google.maps.DistanceMatrixService(); // Initialize the distance matrix service
         this.displayBusMarkers(); // Display the bus markers on the map
     } else {
         console.error('Map container is not available');
@@ -204,9 +205,8 @@ export class MapsComponent implements OnInit {
   }
 
   displayBusStops(): void {
-    this.clearStopMarkers(); // Clear existing markers before adding new ones
-  
-    if (this.map && this.busStops.length > 0) {
+    this.clearStopMarkers();
+    if (this.map && this.busStops.length > 0 && this.stopsVisible) {
       this.busStops.forEach(stop => {
         const position = new google.maps.LatLng(stop.latitude, stop.longitude);
         const homeIcon = {
@@ -215,23 +215,22 @@ export class MapsComponent implements OnInit {
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(20, 40)
         };
-  
+
         const stopMarker = new google.maps.Marker({
           position,
           map: this.map,
           title: stop.stopName,
           icon: homeIcon
         });
-  
+
         stopMarker.addListener('click', () => {
           this.stopMarkerClicked.emit(stop.stopId);
         });
-  
-        this.stopMarkers.push(stopMarker); // Store the marker reference
+
+        this.stopMarkers.push(stopMarker);
       });
     }
   }
-
 
   clearStopMarkers(): void {
     // Remove all markers from the map
@@ -241,7 +240,14 @@ export class MapsComponent implements OnInit {
   }
 
 
-
+  toggleStopsVisibility(): void {
+    this.stopsVisible = !this.stopsVisible;
+    if (this.stopsVisible) {
+      this.displayBusStops();
+    } else {
+      this.clearStopMarkers();
+    }
+  }
 
 
 
@@ -280,12 +286,54 @@ calculateAndDisplayRoute(busId: number): void {
   this.directionsService.route(request, (result, status) => {
     if (status === google.maps.DirectionsStatus.OK) {
       this.directionsRenderer!.setDirections(result);
+      this.calculateTripTime(origin, this.busStops);
     } else {
       console.error('Directions request failed due to ' + status);
     }
   });
 }
 
+calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
+  if (this.distanceMatrixService) {
+      const destinations = stops.map(stop => new google.maps.LatLng(stop.latitude, stop.longitude));
 
+      this.distanceMatrixService.getDistanceMatrix({
+          origins: [origin],
+          destinations: destinations,
+          travelMode: google.maps.TravelMode.DRIVING,
+          unitSystem: google.maps.UnitSystem.METRIC
+      }, (response, status) => {
+          if (status === google.maps.DistanceMatrixStatus.OK && response) {
+              let totalTime = 0;
+              this.stopTimes = [];
 
+              response.rows[0].elements.forEach((element, index) => {
+                  if (element.status === 'OK') {
+                      const duration = element.duration.value; // Time in seconds
+                      const formattedTime = (duration / 60).toFixed(2) + ' mins';
+                      this.stopTimes.push(formattedTime);
+                      totalTime += duration;
+                  }
+              });
+
+              this.totalTripTime = (totalTime / 60).toFixed(2) + ' mins';
+
+              // Trigger change detection to update the view
+              this.changeDetectorRef.detectChanges();
+          } else {
+              console.error('Distance Matrix request failed due to ' + status);
+          }
+      });
+  } else {
+      console.error('Distance Matrix Service is not initialized');
+  }
 }
+
+
+
+
+// ... your existing code ...
+}
+
+
+
