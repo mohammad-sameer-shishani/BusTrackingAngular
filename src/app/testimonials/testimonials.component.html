@@ -22,14 +22,14 @@
 
         <div class="row">
 
-          <div class="col-lg-6">
-            <div class="testimonial-item">
-              <img src="../../assets/HomeTemplate/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-              <h3>Saul Goodman</h3>
-              <h4>Ceo &amp; Founder</h4>
+          <div class="col-lg-6" *ngFor="let testi of testi.allTestimonials" [hidden]="testi.status!='Accept'" >
+            <div class="testimonial-item my-4  mt-lg-0" >
+              <img src="../../assets/Images/man.jpg" class="testimonial-img" alt="">
+              <h3>{{testi.full_Name}}</h3>
+              <!-- <h4>Ceo &amp; Founder</h4> -->
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                {{testi.message}}
                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
               </p>
             </div>
