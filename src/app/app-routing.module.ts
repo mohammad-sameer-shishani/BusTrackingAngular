@@ -8,6 +8,7 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { AdminModule } from './admin/admin.module';
 import { ProfileComponent } from './profile/profile.component';
 import { TeacherModule } from './teacher/teacher.module';
+import { DriverModule } from './driver/driver.module';
 
 
 const routes: Routes = [
@@ -46,6 +47,9 @@ const routes: Routes = [
 },
 {path:'teacher',
   loadChildren:()=>TeacherModule
+},
+{path:'driver',
+  loadChildren:()=>DriverModule
 }
 ];
 

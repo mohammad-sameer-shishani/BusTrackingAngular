@@ -42,7 +42,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Parent</mat-label>
           <mat-select class="col-10" formControlName="parentid">
-            <mat-option *ngFor="let paren of home.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
+            <mat-option *ngFor="let paren of parent.AllParents" [value]=paren.userid>{{paren.firstname}}</mat-option>
           </mat-select>
           <mat-error *ngIf="addChildForm.controls['parentid'].hasError('required')">
             Parent is <strong>required</strong> 

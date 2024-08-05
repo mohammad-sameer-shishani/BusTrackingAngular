@@ -33,7 +33,7 @@
           <mat-form-field class="example-full-width">
             <label>Driver</label>
             <mat-select class="col-10" formControlName="driverid">
-                <mat-option *ngFor="let driver of home.AllDrivers" [value]=driver.userid>{{driver.firstname}}</mat-option>
+                <mat-option *ngFor="let driver of driver.AllDrivers" [value]=driver.userid>{{driver.firstname}}</mat-option>
               </mat-select>
             <mat-error *ngIf="CreateBus.controls['driverid'].hasError('required')">
                 Driver is <strong>required</strong> 

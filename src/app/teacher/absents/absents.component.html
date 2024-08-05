@@ -4,4 +4,59 @@
   data-sidebar-position="fixed" data-header-position="fixed">
   <div class="body-wrapper">
     <app-teacher-navbar></app-teacher-navbar>
-<p>absents works!</p>
+    <div class="container-fluid">
+      <div class="col-lg-12 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body p-4">
+             
+                <div class="row justify-content-between">
+                  <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Attendance</h3> 
+                </div>
+                <div class="row mb-4">
+                  <div class="col-12">
+                    <input type="text" class="form-control" placeholder="Search by name..." [(ngModel)]="searchText">
+                  </div>
+                </div>
+                <table class="table table-striped text-nowrap mb-0 align-middle">
+                  <thead class="text-dark fs-4">
+                    <tr>
+                      <th class="border-bottom-0">
+                        <h4 class="fw-semibold mb-0">Firstname</h4>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h4 class="fw-semibold mb-0">Lastname </h4>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h4 class="fw-semibold mb-0">Address</h4>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h4 class="fw-semibold mb-0">Bus Number</h4>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h4 class="fw-semibold mb-0">Parent Name</h4>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let child of child.allChildren | filter:searchText">
+                      <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
+                      <td class="border-bottom-0">
+                          <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{child.address}}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{child.busnumber}}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{child.parent}}</p>
+                      </td>
+                     
+                    </tr> 
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+  </div>

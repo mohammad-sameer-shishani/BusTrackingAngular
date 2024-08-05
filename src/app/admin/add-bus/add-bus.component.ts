@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/Services/users.service';
   styleUrls: ['./add-bus.component.css']
 })
 export class AddBusComponent implements OnInit{
-  constructor(public bus:BusService,public home:HomeService,public user:UsersService){}
+  constructor(public bus:BusService,public home:HomeService,public user:UsersService,public driver:UsersService){}
   ngOnInit(): void {
    this.user.getAllTeachers();
   }

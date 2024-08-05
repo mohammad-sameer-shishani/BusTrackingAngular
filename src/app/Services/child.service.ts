@@ -18,6 +18,9 @@ export class ChildService{
   //Declaring variables for Get By Id Methods
   child:any;
 user2:any;
+
+baseURL='https://localhost:7169/api/Children/';
+
 GetMyId(){
   this.user2=localStorage.getItem('user');
   return this.user2.UserId;
@@ -25,7 +28,7 @@ GetMyId(){
 
 //get all children
 GetAllChildren(){
-  this.http.get('https://localhost:7169/api/Children').subscribe((response)=>{
+  this.http.get(this.baseURL).subscribe((response)=>{
     this.allChildren=response;
     console.log('Got All Children');
   },error=>{
@@ -37,7 +40,7 @@ GetAllChildren(){
 
 //get my children
 GetMyChildren(parentid:any){
-  this.http.get('https://localhost:7169/api/Children/GetChildrenByParentId/'+parentid).subscribe((response)=>{
+  this.http.get(this.baseURL+'GetChildrenByParentId/'+parentid).subscribe((response)=>{
     this.myChildren=response;
     console.log('Got my Children');
   },error=>{
@@ -49,7 +52,7 @@ GetMyChildren(parentid:any){
 
 //Get By Id Methods
 getChildById(userid: number){
-  this.http.get('https://localhost:7169/api/Children/'+userid).subscribe(response=>{
+  this.http.get(this.baseURL+userid).subscribe(response=>{
     this.child=response;
     console.log("Got The Child By Id")
   },error => {
@@ -62,7 +65,7 @@ getChildById(userid: number){
 //Delete Methods 
 DeleteChild(childId : number){
 
-  this.http.delete('https://localhost:7169/api/Children/delete/'+childId).subscribe(response=>{
+  this.http.delete(this.baseURL+'delete/'+childId).subscribe(response=>{
     this.child=response;
     console.log("child deleted");
     window.location.reload();
@@ -74,7 +77,7 @@ DeleteChild(childId : number){
 
 //create child
 addChild(body:any){
-  this.http.post('https://localhost:7169/api/Children',body).subscribe(response=>{
+  this.http.post(this.baseURL,body).subscribe(response=>{
     console.log('child added');
     window.location.reload();
   },err=>{
@@ -86,7 +89,7 @@ addChild(body:any){
 
 updateChild(body:any){
 
-  this.http.put('https://localhost:7169/api/children',body).subscribe((response)=>{
+  this.http.put(this.baseURL,body).subscribe((response)=>{
     console.log('Updated Child');
     window.location.reload();
 
@@ -94,6 +97,11 @@ updateChild(body:any){
   console.log("Error Updating Child");
   console.log(error.status);
 })
+}
+
+
+GetAttendance(){
+  this.http.get(this.baseURL+'')
 }
 
 }

@@ -7,6 +7,8 @@ import { TeacherSidebarComponent } from './teacher-sidebar/teacher-sidebar.compo
 import { ArrivalStatusComponent } from './arrival-status/arrival-status.component';
 import { AbsentsComponent } from './absents/absents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ViewChildrenComponent } from './view-children/view-children.component';
+import { SharedModule } from "../shared/shared.module";
 
 
 @NgModule({
@@ -15,11 +17,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TeacherSidebarComponent,
     ArrivalStatusComponent,
     AbsentsComponent,
-    DashboardComponent
+    DashboardComponent,
+    ViewChildrenComponent
   ],
   imports: [
     CommonModule,
-    TeacherRoutingModule
-  ]
+    TeacherRoutingModule,
+    SharedModule
+]
 })
 export class TeacherModule { }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BusService } from 'src/app/Services/bus.service';
 import { ChildService } from 'src/app/Services/child.service';
 import { HomeService } from 'src/app/Services/home.service';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-add-child',
@@ -10,7 +11,7 @@ import { HomeService } from 'src/app/Services/home.service';
   styleUrls: ['./add-child.component.css']
 })
 export class AddChildComponent {
-  constructor(public child:ChildService,public home:HomeService,public bus:BusService  ){}
+  constructor(public child:ChildService,public home:HomeService,public bus:BusService,public parent:UsersService ){}
   addChildForm:FormGroup = new FormGroup(
     {
       firstName :new FormControl('', Validators.required ),
