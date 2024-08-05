@@ -25,7 +25,7 @@ export class AdminManageMapComponent implements OnInit {
     private stopsService: StopsService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAllBusesLocations();
   }
 

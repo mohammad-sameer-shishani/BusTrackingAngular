@@ -19,7 +19,7 @@ export class BusLocationService {
 
   getAllBusesLocations(){
     this.spinner.show();
-    debugger;
+  
     this.http.get(`${this.apiUrl}/GetAllBusesLocations`).subscribe((res)=>{
       this.allBusesLocations = res;
 

@@ -30,6 +30,11 @@ export class MapsComponent implements OnInit {
   stopTimes: string[] = [];
   totalTripTime: string = '';
   stopsVisible: boolean = true;
+
+
+
+  private infoWindow: google.maps.InfoWindow | null = null;
+
   constructor(private busLocationService: BusLocationService, private stopsService: StopsService ,private cdr: ChangeDetectorRef   ) {this.changeDetectorRef = cdr;}
 
   ngOnInit(): void {
@@ -215,22 +220,35 @@ export class MapsComponent implements OnInit {
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(20, 40)
         };
-
+  
         const stopMarker = new google.maps.Marker({
           position,
           map: this.map,
           title: stop.stopName,
           icon: homeIcon
         });
-
+  
+        // Create an info window without the stop ID
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<div><h4>${stop.stopName}</h4><p>Latitude: ${stop.latitude}</p><p>Longitude: ${stop.longitude}</p></div>`
+        });
+  
         stopMarker.addListener('click', () => {
+          // Close any previously opened info window
+          this.infoWindow?.close();
+          // Open the new info window
+          infoWindow.open(this.map, stopMarker);
+          // Store the reference to the currently open info window
+          this.infoWindow = infoWindow;
           this.stopMarkerClicked.emit(stop.stopId);
         });
-
+  
         this.stopMarkers.push(stopMarker);
       });
     }
   }
+  
+  
 
   clearStopMarkers(): void {
     // Remove all markers from the map
@@ -246,8 +264,10 @@ export class MapsComponent implements OnInit {
       this.displayBusStops();
     } else {
       this.clearStopMarkers();
+      this.infoWindow?.close(); // Close the info window if stops are hidden
     }
   }
+  
 
 
 

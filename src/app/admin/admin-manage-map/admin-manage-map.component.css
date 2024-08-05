@@ -1,31 +1,88 @@
-h2 {
-    color: #2c3e50;
-  }
-  
-  h3 {
-    margin-top: 20px;
-    color: #34495e;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  .card-container {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    z-index: 100;
-  }
-  
-  .card {
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    max-width: 300px;
-  }
+/* General Layout */
+.page-wrapper {
+  display: flex;
+  flex-direction: row; /* Align sidebar and content horizontally */
+  height: 100vh; /* Full height of the viewport */
+  overflow: hidden;
+}
+
+/* Sidebar Styling */
+app-sidebar {
+  width: 250px; /* Width of the sidebar */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  background-color: #f8f9fa; /* Sidebar background color */
+}
+
+/* Body Wrapper for the Main Content Area */
+.body-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allow the body wrapper to take up the remaining space */
+  overflow: hidden;
+}
+
+/* Content Wrapper for the Main Content Area */
+.container-fluid {
+  display: flex;
+  flex-grow: 1; /* Allow the container to take up the remaining space */
+  padding: 20px; /* Padding inside the container */
+}
+
+/* Map Container Styling */
+.map-container {
+  flex-grow: 1; /* Allow map to grow and fill the available space */
+  height: 100%; /* Full height of the content wrapper */
+  border: 1px solid #ddd; /* Light border */
+  background-color: #f5f5f5; /* Background color for the map area */
+  margin-bottom: 20px; /* Space below the map */
+}
+
+/* Card styling for displaying times */
+.time-card {
+  background-color: #ffffff; /* White background for the card */
+  border: 1px solid #ddd; /* Light border for the card */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px; /* Padding inside the card */
+  max-width: 600px; /* Maximum width of the card */
+  margin: 0 auto; /* Center the card horizontally */
+  font-family: Arial, sans-serif; /* Font styling for the card */
+}
+
+/* Header styling inside the card */
+.time-card h4 {
+  margin-top: 0;
+  color: #333; /* Dark text color */
+  font-size: 1.25rem; /* Font size for the header */
+}
+
+/* Style for the list of times inside the card */
+.time-card div {
+  margin-bottom: 10px; /* Space between times */
+  color: #555; /* Slightly lighter text color */
+  font-size: 1rem; /* Font size for times */
+}
+
+/* Divider line inside the card */
+.time-card hr {
+  margin: 20px 0; /* Space above and below the line */
+  border: 0;
+  border-top: 1px solid #ddd; /* Light gray line */
+}
+
+/* Styling for the toggle button */
+.time-card button {
+  background-color: #007bff; /* Primary color for the button */
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.time-card button:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
