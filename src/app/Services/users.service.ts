@@ -23,6 +23,15 @@ export class UsersService {
   
   User:any;
  UserObj:any;
+
+
+ user2:any;
+ GetMyId():number{
+ this.user2=localStorage.getItem('user');
+ this.user2=JSON.parse(this.user2);
+ return this.user2.UserId;
+}
+
   addUser(body:any){
     body.Imagepath = this.displayImage;
     this.http.post('https://localhost:7169/api/User',body).subscribe((res)=>{

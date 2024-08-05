@@ -32,6 +32,14 @@ export class HomeService {
 //Get All Methods
 num:any;
 
+
+user2:any;
+GetMyId():number{
+this.user2=localStorage.getItem('user');
+this.user2=JSON.parse(this.user2);
+return this.user2.UserId;
+}
+
 getAllTestimonials(){
     this.http.get('https://localhost:7169/api/Testimonial').subscribe(response=>{
       this.AllTestimonials=response;

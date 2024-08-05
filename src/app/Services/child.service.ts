@@ -13,16 +13,18 @@ export class ChildService{
 //declaring Arrays For Get All Methods
   allChildren:any=[];
   myChildren:any=[];
+  ChildrenByDriverId:any=[];
   user:any;
   userid:any;
   //Declaring variables for Get By Id Methods
   child:any;
-user2:any;
-
-baseURL='https://localhost:7169/api/Children/';
-
-GetMyId(){
+  
+  baseURL='https://localhost:7169/api/Children/';
+  
+  user2:any;
+  GetMyId():number{
   this.user2=localStorage.getItem('user');
+  this.user2=JSON.parse(this.user2);
   return this.user2.UserId;
 }
 
@@ -37,6 +39,16 @@ GetAllChildren(){
   })
 }
 
+
+GetChildrenByDriverId(driverid:number){
+  this.http.get(this.baseURL+'GetChildrenByDriverId/'+driverid).subscribe((response)=>{
+    this.ChildrenByDriverId=response;
+    console.log('Got Children By Driver Id');
+  },error=>{
+    console.log('error getting children');
+    console.log(error.status);
+  })
+}
 
 //get my children
 GetMyChildren(parentid:any){

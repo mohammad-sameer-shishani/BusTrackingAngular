@@ -10,7 +10,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
               <div class="card-body p-4">
                
                   <div class="row justify-content-between">
-                    <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Children</h3> 
+                    <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Children</h3> 
                   </div>
                   <div class="row mb-4">
                     <div class="col-12">
@@ -38,7 +38,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let child of child.allChildren " [hidden]="child.busid!=bus">
+                      <tr *ngFor="let child of child.ChildrenByDriverId ">
                         <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
                         <td class="border-bottom-0">
                             <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
