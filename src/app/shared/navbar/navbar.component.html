@@ -20,7 +20,8 @@
           <li><a routerLink="/account/profile" *ngIf="isAuthenticated">My Profile</a></li>    <!--<img src="../../../assets/Temp2/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle mx-1">-->
                        <!--Remove when Done With admin dashboard-->
           <li><a routerLink="/admin">Admin</a></li>                 <!--Remove when Done With admin dashboard-->
-
+          <li><a routerLink="/teacher">Teacher</a></li>  
+          <li><a routerLink="/driver">Driver</a></li>  
           <li><a routerLink="/account/login" class="getstarted" *ngIf="!isAuthenticated">Log in</a></li>
           <li><a (click)="logout()" class="getstarted" *ngIf="isAuthenticated">Logout</a></li>
         </ul>
