@@ -9,6 +9,9 @@ import { AbsentsComponent } from './absents/absents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewChildrenComponent } from './view-children/view-children.component';
 import { SharedModule } from "../shared/shared.module";
+import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
+import { TeacherMapComponent } from './teacher-map/teacher-map.component';
+import { MapComponent } from '../driver/map/map.component';
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import { SharedModule } from "../shared/shared.module";
     ArrivalStatusComponent,
     AbsentsComponent,
     DashboardComponent,
-    ViewChildrenComponent
+    ViewChildrenComponent,
+    ChildAttendanceComponent,
+    TeacherMapComponent
   ],
   imports: [
     CommonModule,

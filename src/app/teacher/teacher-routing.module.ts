@@ -4,6 +4,8 @@ import { ArrivalStatusComponent } from './arrival-status/arrival-status.componen
 import { AbsentsComponent } from './absents/absents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewChildrenComponent } from './view-children/view-children.component';
+import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
+import { TeacherMapComponent } from './teacher-map/teacher-map.component';
 
 const routes: Routes = [
 {
@@ -20,6 +22,14 @@ const routes: Routes = [
 {
   path:'viewchildren',
   component:ViewChildrenComponent
+},
+{
+  path:'childattendance/:childid',
+  component:ChildAttendanceComponent
+},
+{
+  path:'map',
+  component:TeacherMapComponent
 }
 ];
 

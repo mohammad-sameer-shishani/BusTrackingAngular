@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { ChildService } from 'src/app/Services/child.service';
 
 @Component({
@@ -7,10 +8,14 @@ import { ChildService } from 'src/app/Services/child.service';
   styleUrls: ['./view-children.component.css']
 })
 export class ViewChildrenComponent implements OnInit{
-constructor(public child :ChildService){}
+constructor(public child :ChildService, private router : Router){}
 searchText: string = '';  
 ngOnInit(): void {
     this.child.GetAllChildren();
   }
-
+  ViewAllAttendance(childid : number){
+    console.log('Navigating to child attendance for child ID:', childid); // Debugging line
+    this.router.navigate(['/teacher/childattendance', childid]);
+   // this.router.navigate(['teacher/childattendance',childid])
+  }
 }
