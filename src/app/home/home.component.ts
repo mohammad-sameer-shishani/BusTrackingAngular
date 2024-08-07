@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TestimonialService } from '../Services/testimonial.service';
+import { HomeService } from '../Services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +8,21 @@ import { TestimonialService } from '../Services/testimonial.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-constructor(public testi :TestimonialService){}
-  ngOnInit(): void {
-    this.testi.GetAllTestimonials();
-  }
+  
+  contentDictionary: { [key: string]: string } = {};
 
+constructor(public testi :TestimonialService,public home:HomeService){}
+  
+ngOnInit(): void {
+  
+  this.testi.GetAllTestimonials();
+    this.createDictionary(this.home.getAllPageContent());
+    
+  }
+  createDictionary(data: any[]) {
+    data.forEach(item => {
+      this.contentDictionary[item.contentkey] = item.contentvalue;
+    });
+  }
 
 }

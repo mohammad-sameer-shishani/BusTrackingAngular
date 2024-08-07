@@ -7,12 +7,14 @@
       <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
   
       <div class="carousel-inner" role="listbox">
-  
+  <h1>
+    {{ contentDictionary['Home Page Title']}}
+  </h1>
         <!-- Slide 1 -->
         <div class="carousel-item active" style="background-image: url(assets/img/slide/slide-1.jpg)">
           <div class="carousel-container">
             <div class="container">
-              <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Bus Tracker</span></h2>
+              <h2 class="animate__animated animate__fadeInDown">Welcome to <span >Bus Tracking{{ contentDictionary['Home Page Title']}}</span></h2>
               <p class="animate__animated animate__fadeInUp">Join us in our mission to make school transportation safer and more convenient for everyone. With SchoolBus Tracker, you'll always know where your child is, giving you the confidence and peace of mind you deserve.</p>
               <a routerLink="/aboutus" class="btn-get-started animate__animated animate__fadeInUp scrollto">Read More</a>
             </div>

@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit{
   }
 
   getTotal(): number {
-    return this.teacherCount + this.studentCount;
+    return this.teacherCount + this.studentCount+this.parentCount+this.driverCount;
   }
 
   getTeacherPercentage(): number {

@@ -171,10 +171,11 @@ updateTestimonial(body:any){
 }
 
 AllPageContent:any=[];
-getAllPageContent(){
+getAllPageContent():any{
 this.http.get('https://localhost:7169/api/PageContent').subscribe((response)=>{
   this.AllPageContent=response;
-  console.log('Page Content');
+  console.log('Got Page Content');
+  return response;
 },error => {
 console.log("Error Getting Page Coontent");
 })
