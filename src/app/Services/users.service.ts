@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class UsersService {
-
+baseURL='https://localhost:7169/api/User/';
   constructor(private http:HttpClient ,private spinner : NgxSpinnerService , private toastr:ToastrService) { } 
   AllTeachers: any=[
 
@@ -34,7 +34,7 @@ export class UsersService {
 
   addUser(body:any){
     body.Imagepath = this.displayImage;
-    this.http.post('https://localhost:7169/api/User',body).subscribe((res)=>{
+    this.http.post(this.baseURL,body).subscribe((res)=>{
       console.log('User created');
       this.toastr.success('Successfully Added','',{
         positionClass: 'toast-bottom-right'})
@@ -50,7 +50,7 @@ export class UsersService {
   
   getAllTeachers(){
     this.spinner.show();
-    this.http.get('https://localhost:7169/api/User/GetAllTeachers').subscribe(res=>{
+    this.http.get(this.baseURL+'GetAllTeachers').subscribe(res=>{
       this.AllTeachers = res;
       this.toastr.success('Reterived Successfully','',{
         positionClass: 'toast-bottom-right'})
@@ -68,7 +68,7 @@ export class UsersService {
 
 getAllDrivers(){
   this.spinner.show();
-  this.http.get('https://localhost:7169/api/User/GetAllDrivers').subscribe(res=>{
+  this.http.get(this.baseURL+'GetAllDrivers').subscribe(res=>{
     this.AllDrivers = res;
     this.toastr.success('Reterived Successfully','',{
       positionClass: 'toast-bottom-right'})
@@ -84,7 +84,7 @@ getAllDrivers(){
 
 getAllParents(){
   this.spinner.show();
-  this.http.get('https://localhost:7169/api/User/GetAllParents').subscribe(res=>{
+  this.http.get(this.baseURL+'GetAllParents').subscribe(res=>{
     this.AllParents = res;
     this.toastr.success('Reterived Successfully','',{
       positionClass: 'toast-bottom-right'})
@@ -100,7 +100,7 @@ getAllParents(){
 
 getUserById(userid: number){
   this.spinner.show();
-  this.http.get('https://localhost:7169/api/User/'+userid).subscribe(res=>{
+  this.http.get(this.baseURL+userid).subscribe(res=>{
     this.User=res;
     console.log("Got The User By Id",this.User)
     this.toastr.success('Reterived Successfully','',{
@@ -119,7 +119,7 @@ getUserById(userid: number){
 
 DeleteUser(userid: number){
   this.spinner.show();
-  this.http.delete('https://localhost:7169/api/User/'+userid).subscribe((res)=>{
+  this.http.delete(this.baseURL+userid).subscribe((res)=>{
     console.log(" User Deleted");
     window.location.reload();
     this.toastr.success('Successfully Deleted','',{
@@ -136,7 +136,7 @@ DeleteUser(userid: number){
 updateUser(body:any){
   this.spinner.show();
 body.imagename = this.displayImage;
-this.http.put('https://localhost:7169/api/User/',body).subscribe((res)=>{
+this.http.put(this.baseURL,body).subscribe((res)=>{
   console.log('User Updated');
   window.location.reload();
   this.toastr.success('Successfully Updated')
@@ -150,7 +150,7 @@ this.spinner.hide();
   displayImage:any;
   uploadAttachmenet(image:FormData){
     this.spinner.show();
-    this.http.post('https://localhost:7169/api/User/UploadImage',image).subscribe((resp:any)=>{
+    this.http.post(this.baseURL+'UploadImage',image).subscribe((resp:any)=>{
       this.displayImage= resp.imagename;
       this.toastr.success('Successfully Added')
     },err=>{

@@ -8,10 +8,8 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private http:HttpClient,private router:Router,private toastr:ToastrService) { 
-   
-  }
+baseURL='https://localhost:7169/api/Login';
+  constructor(private http:HttpClient,private router:Router,private toastr:ToastrService) { }
   Login(email:any,password:any){
     var body={
       Email:email.toString(),
@@ -24,7 +22,7 @@ export class AuthService {
     const requestOptions={
       headers:new HttpHeaders(headerDirc)
     }
-this.http.post('https://localhost:7169/api/Login',body,requestOptions).subscribe((response:any)=>{
+this.http.post(this.baseURL,body,requestOptions).subscribe((response:any)=>{
 const Token={
   token:response.toString()
 }

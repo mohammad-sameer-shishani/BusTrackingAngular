@@ -11,7 +11,7 @@ import { ContentService } from 'src/app/Services/content.service';
 export class ManagePagesComponent implements OnInit { 
   constructor(public content: ContentService, public dialog: MatDialog) { }
   ngOnInit(): void {
-    this.content.getAllPageContents();
+    this.content.getAllPageContent();
   }
   @ViewChild('updateContentDialog') callUpdatePageDialog!:TemplateRef<any>;
 

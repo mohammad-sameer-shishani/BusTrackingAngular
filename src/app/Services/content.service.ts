@@ -5,23 +5,22 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ContentService {
-
+basURL='https://localhost:7169/api/PageContent';
   constructor(private http:HttpClient) { }
 
   AllPageContent:any=[];
-getAllPageContents(){
-  this.http.get('https://localhost:7169/api/PageContent').subscribe(response=>{
-    this.AllPageContent= response;
-    console.log('Got All Page Contents');
+  getAllPageContent():any{
+  this.http.get(this.basURL).subscribe((response)=>{
+    this.AllPageContent=response;
+    console.log('Got Page Content');
+    return response;
   },error => {
-    console.log("error Getting All Page Contents");
-    console.log(error.status);
+  console.log("Error Getting Page Coontent");
   })
-
-}
+  }
 
 UpdateContent(body:any){
-  this.http.put("https://localhost:7169/api/PageContent",body).subscribe((response)=>{
+  this.http.put(this.basURL,body).subscribe((response)=>{
     console.log('content updated');
     window.location.reload();
 },error => {

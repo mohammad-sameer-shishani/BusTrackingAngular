@@ -47,7 +47,7 @@ export class ManageSchoolBusesComponent implements OnInit {
     dailogResult.afterClosed().subscribe((result) => {
       if (result != undefined) {
         if (result == 'yes') {
-          this.home.DeleteBus(busid);
+          this.bus.DeleteBus(busid);
         } else {
           console.log('Thank you');
         }

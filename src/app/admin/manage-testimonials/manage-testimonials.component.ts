@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { HomeComponent } from 'src/app/home/home.component';
-import { HomeService } from 'src/app/Services/home.service';
+import { TestimonialService } from 'src/app/Services/testimonial.service';
 
 @Component({
   selector: 'app-manage-testimonials',
@@ -9,19 +7,19 @@ import { HomeService } from 'src/app/Services/home.service';
   styleUrls: ['./manage-testimonials.component.css']
 })
 export class ManageTestimonialsComponent implements OnInit{
-  constructor(private http:HttpClient,public home :HomeService){}
+  constructor(public testi :TestimonialService){}
   ngOnInit(): void {
-    this.home.getAllTestimonials();
+    this.testi.GetAllTestimonials();
   }
   
   acceptTestimonial(test :any){
     test.status='Accept';
-    this.home.updateTestimonial(test);
+    this.testi.updateTestimonial(test);
   }
 
   rejectTestimonial(test:any){
     test.status='Reject';
-    this.home.updateTestimonial(test);
+    this.testi.updateTestimonial(test);
   }
 
 }

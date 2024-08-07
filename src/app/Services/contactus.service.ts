@@ -5,14 +5,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ContactusService {
-
+baseURL='https://localhost:7169/api/ContactUs/';
   constructor(private http:HttpClient) { }
 allContactUs: any=[
 
 ];
 
   getAllContactMessage(){
-    this.http.get('https://localhost:7169/api/ContactUs').subscribe(res=>{
+    this.http.get(this.baseURL).subscribe(res=>{
       this.allContactUs = res;
       console.log("good");
   },err => {
@@ -24,7 +24,7 @@ allContactUs: any=[
 
  
   createContactUs(body:any){
-    this.http.post('https://localhost:7169/api/ContactUs',body).subscribe((res)=>{
+    this.http.post(this.baseURL,body).subscribe((res)=>{
       console.log("success")
       window.location.reload();
     },err=>{
@@ -37,7 +37,7 @@ allContactUs: any=[
 
 
   DeleteEmail(contactusid: number){
-    this.http.delete('https://localhost:7169/api/ContactUs/'+contactusid).subscribe((res)=>{
+    this.http.delete(this.baseURL+contactusid).subscribe((res)=>{
       console.log(" Email Deleted");
       window.location.reload();
      

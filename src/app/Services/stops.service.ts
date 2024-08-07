@@ -12,18 +12,18 @@ export class StopsService {
   BusStops:any=[];
   StopForBus : any;
 
-  private apiUrl = 'https://localhost:7169/api/Stops';
+  private apiUrl = 'https://localhost:7169/api/Stops/';
   constructor(private http: HttpClient,private spinner : NgxSpinnerService , private toastr:ToastrService) { }
 
   getStops(busId: number) {
     this.spinner.show();
-    this.http.get('https://localhost:7169/api/Stops/BusStops/'+busId).subscribe((res)=>{
+    this.http.get(this.apiUrl+'BusStops/'+busId).subscribe((res)=>{
       this.BusStops =res;
      // console.log(res)
       this.toastr.success('Reterived Successfully','',{
         positionClass: 'toast-bottom-right'})
     },err=>{
-      console.log("error");
+      console.log("error gitting stops");
     console.log(err.status);
     this.toastr.error('Something Wont Wrong!!')
     })
@@ -32,7 +32,7 @@ export class StopsService {
 
   getStop(stopId: number){
     this.spinner.show();
-     this.http.get('https://localhost:7169/api/Stops/Getstop/'+stopId).subscribe((res)=>{
+     this.http.get(this.apiUrl+'Getstop/'+stopId).subscribe((res)=>{
       this.StopForBus = res; 
       console.log(res)
       this.toastr.success('Reterived Successfully','',{
@@ -57,7 +57,7 @@ export class StopsService {
         positionClass: 'toast-bottom-right'})
       window.location.reload();
     },err=>{
-      console.log('error');
+      console.log('error adding stop');
       this.toastr.error('Something Wont Wrong!!')
     })
     this.spinner.hide();
@@ -65,12 +65,12 @@ export class StopsService {
 
   updateStop(stopId: number, stop: any){
     this.spinner.show();
-    this.http.put(`${this.apiUrl}/${stopId}`, stop).subscribe((res)=>{
+    this.http.put(`${this.apiUrl}${stopId}`, stop).subscribe((res)=>{
       console.log('stop Updated');
       window.location.reload();
       this.toastr.success('Successfully Updated')
     },err=>{
-      console.log('error');
+      console.log('error updating stop');
       this.toastr.error('Something Wont Wrong!!')
     })
     this.spinner.hide();
@@ -78,13 +78,13 @@ export class StopsService {
 
   deleteStop(stopId: number){
     this.spinner.show();
-    this.http.delete(`${this.apiUrl}/${stopId}`).subscribe((res)=>{
+    this.http.delete(`${this.apiUrl}${stopId}`).subscribe((res)=>{
       console.log(" stop Deleted");
       window.location.reload();
       this.toastr.success('Successfully Deleted','',{
         positionClass: 'toast-bottom-right'})
     },err=>{
-        console.log("Error");
+        console.log("Error deleting stop");
         this.toastr.error('Something Wont Wrong!!')
     })
     this.spinner.hide();
