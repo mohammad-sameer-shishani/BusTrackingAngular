@@ -1,0 +1,55 @@
+<app-teacher-sidebar></app-teacher-sidebar>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+data-sidebar-position="fixed" data-header-position="fixed">
+<div class="body-wrapper">
+    <app-teacher-navbar></app-teacher-navbar>
+<div class="container-fluid">
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <h2>Attendance for Child</h2>
+  
+    <div *ngIf="childAttendance.length > 0; else noAttendance">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+               
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let attendance of childAttendance">
+             
+                <td>{{ attendance.attendancedate | date: 'mediumDate' }}</td>
+                <td>{{ attendance.status }}</td>
+                <td>
+                  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item type="button">
+                      <span>Edit</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  
+    <ng-template #noAttendance>
+      <p>No attendance records found for this child.</p>
+    </ng-template>
+  </div>
+</div>
+</div>
+</div>

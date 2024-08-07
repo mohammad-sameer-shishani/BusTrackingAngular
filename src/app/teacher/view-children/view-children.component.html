@@ -51,7 +51,22 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     <td class="border-bottom-0">
                       <p class="mb-0 fw-normal">{{child.parent}}</p>
                     </td>
-                   
+                    <td>
+
+
+                      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                      
+                        <button mat-menu-item  type="button"  (click)="ViewAllAttendance(child.childid)">
+                            
+                            <span>View Attendace</span>
+                        </button>
+                      
+                      </mat-menu>
+
+                   </td>
                   </tr> 
                 </tbody>
               </table>
@@ -60,3 +75,15 @@ data-sidebar-position="fixed" data-header-position="fixed">
         </div>
 </div>
        
+
+
+
+
+
+
+
+
+
+
+
+
