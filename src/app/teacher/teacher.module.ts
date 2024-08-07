@@ -11,7 +11,8 @@ import { ViewChildrenComponent } from './view-children/view-children.component';
 import { SharedModule } from "../shared/shared.module";
 import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
 import { TeacherMapComponent } from './teacher-map/teacher-map.component';
-import { MapComponent } from '../driver/map/map.component';
+
+import { MapModule } from '../map/map.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { MapComponent } from '../driver/map/map.component';
   imports: [
     CommonModule,
     TeacherRoutingModule,
+    MapModule,
     SharedModule
 ]
 })

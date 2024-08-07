@@ -1,0 +1,27 @@
+<!-- teacher-map.component.html -->
+<div class="page-wrapper">
+    <app-parent-sidebar></app-parent-sidebar>
+    
+    <!-- Main content area -->
+    <app-maps
+      [busMarkers]="busMarkers"
+      [busStops]="busStops"
+      (busMarkerClicked)="onBusMarkerClicked($event)"
+      (stopMarkerClicked)="onStopMarkerClicked($event)">
+    </app-maps>
+  
+    <!-- Card to display times and toggle button -->
+    <div class="time-card" *ngIf="stopTimes.length > 0 || totalTripTime">
+      <h4>Trip Information</h4>
+  
+      <div *ngFor="let time of stopTimes; let i = index">
+        Stop {{ i + 1 }}: {{ time }}
+      </div>
+      <hr />
+  
+      <div>Total Trip Time: {{ totalTripTime }}</div>
+  
+      <button (click)="toggleStopsVisibility()">Toggle Stops</button>
+    </div>
+  </div>
+  

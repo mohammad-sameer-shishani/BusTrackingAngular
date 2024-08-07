@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapComponent } from './map/map.component';
+
 import { TripChildrenComponent } from './trip-children/trip-children.component';
+import { DrivermapComponent } from './drivermap/drivermap.component';
 
 const routes: Routes = [
 
   {
+    path:'drivermap',
+    component:DrivermapComponent
+  },
+  {
     path:'',
-    component:MapComponent
+    component:DrivermapComponent
   },
   {
     path:'tripchildren',

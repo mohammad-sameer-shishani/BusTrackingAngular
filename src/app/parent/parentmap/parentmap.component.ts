@@ -4,11 +4,11 @@ import { BusLocationService } from 'src/app/Services/bus-location.service';
 import { StopsService } from 'src/app/Services/stops.service';
 
 @Component({
-  selector: 'app-teacher-map',
-  templateUrl: './teacher-map.component.html',
-  styleUrls: ['./teacher-map.component.css']
+  selector: 'app-parentmap',
+  templateUrl: './parentmap.component.html',
+  styleUrls: ['./parentmap.component.css']
 })
-export class TeacherMapComponent implements OnInit {
+export class ParentmapComponent implements OnInit{
   busMarkers: { busId: number, latitude: number, longitude: number, stopName: string }[] = [];
   busStops: { stopId: number, latitude: number, longitude: number, stopName: string }[] = [];
   stopDetails: any;
@@ -17,7 +17,7 @@ export class TeacherMapComponent implements OnInit {
   stopTimes: string[] = [];
   totalTripTime: string = '';
   stopsVisible: boolean = true;
-  teacherId: number = 0;
+  parentId: number = 0;
   user2: any;
 
   @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
@@ -30,20 +30,20 @@ export class TeacherMapComponent implements OnInit {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user2 = JSON.parse(storedUser);
-      this.teacherId = this.user2.UserId; // Now teacherId can be accessed correctly
+      this.parentId = this.user2.UserId; // Now teacherId can be accessed correctly
     } else {
       console.error('No user found in local storage.');
-      this.teacherId = 0; // Handle this case as needed
+      this.parentId = 0; // Handle this case as needed
     }
   }
 
   ngOnInit() {
-    this.loadBusLocationsForTeacher();
+    this.loadBusLocationsForParent();
   }
 
-  loadBusLocationsForTeacher(): void {
-    if (this.teacherId) {
-      this.busLocationService.getBusLocationsByTeacherId(this.teacherId);
+  loadBusLocationsForParent(): void {
+    if (this.parentId) {
+      this.busLocationService.getBusLocationsForParent(this.parentId);
 
       const checkBusLocation = () => {
         const busLocation = this.busLocationService.teacherBus;

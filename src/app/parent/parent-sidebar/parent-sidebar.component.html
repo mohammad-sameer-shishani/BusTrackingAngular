@@ -19,39 +19,50 @@ data-sidebar-position="fixed" data-header-position="fixed">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
           <span class="hide-menu">Home</span>
         </li>
+        
         <li class="sidebar-item">
-          <a class="sidebar-link" routerLink="/driver/drivermap" aria-expanded="false">
+                <a class="sidebar-link" routerLink="" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-bus"></i>
+                  </span>
+                  <span class="hide-menu">Child Attendance</span>
+                </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" routerLink="/account/profile" *ngIf="isAuthenticated" aria-expanded="false">
             <span>
-              <i class="ti ti-map"></i>
+              <i class="ti ti-user fs-6"></i>
             </span>
-            <span class="hide-menu">Map</span>
+            <span class="hide-menu">My Profile</span>
           </a>
         </li>
-
-        <li class="nav-small-cap">
-          <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-          <span class="hide-menu">Categories</span>
+     
+        <li class="sidebar-item">
+          <a class="sidebar-link" routerLink="/parent/map"  >
+            <span>
+              <i class="ti ti-layout-dashboard"></i>
+            </span>
+            <span class="hide-menu">map</span>
+          </a>
+        </li>
+     
+        <li class="sidebar-item">
+          <a class="sidebar-link" routerLink="/parent/map" (click)="logout()" >
+            <span>
+              <i class="ti ti-logout fs-6"></i>
+            </span>
+            <span class="hide-menu">logout</span>
+          </a>
         </li>
     
-        <li class="sidebar-item">
-          <a class="sidebar-link" routerLink="/driver/tripchildren" aria-expanded="false">
-            <span>
-              <i class="ti ti-mood-boy"></i>
-            </span>
-            <span class="hide-menu">Children</span>
-          </a>
-        </li>
+      
+     
 
+  
+        
+ 
       </ul>
-      <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
-        <div class="d-flex">
-          <div class="unlimited-access-title me-3">
-            </div>
-          <div class="unlimited-access-img">
-            <img src="../../../assets/Temp2/images/backgrounds/rocket.png" alt="" class="img-fluid">
-          </div>
-        </div>
-      </div>
+    
     </nav>
     <!-- End Sidebar navigation -->
   </div>
