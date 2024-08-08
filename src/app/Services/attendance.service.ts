@@ -41,4 +41,39 @@ export class AttendanceService {
   getBusWithChildrenByTeacherId(): Observable<AttendanceChildrenBus[]> {
     return this.http.get<AttendanceChildrenBus[]>(`${this.apiUrl}/GetBusWithChildrenByTeacherId/${this.teacherId}`);
   }
+
+
+
+
+
+
+  DeleteAttendance(attendanceId : number){
+    debugger;
+    this.spinner.show();
+    this.http.delete('https://localhost:7169/api/Attendance/'+attendanceId).subscribe((res)=>{
+      window.location.reload();
+      this.toastr.success('Successfully Deleted','',{
+        positionClass: 'toast-bottom-right'})
+    },err=>{
+      console.log("Error");
+      this.toastr.error('Something Wont Wrong!!')
+  })
+  this.spinner.hide();
+  }
+
+
+  UpdateAttendance(attendanceId : number ,body:any){
+    this.spinner.show();
+    this.http.put('https://localhost:7169/api/Attendance/'+attendanceId, body).subscribe((res)=>{
+      console.log('Attendance Updated');
+      window.location.reload();
+      this.toastr.success('Successfully Updated')
+    },err=>{
+      console.log('error');
+      this.toastr.error('Something Wont Wrong!!')
+    })
+    this.spinner.hide();
+  }
+
+
 }

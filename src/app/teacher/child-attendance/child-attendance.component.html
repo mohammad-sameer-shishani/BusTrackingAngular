@@ -36,8 +36,11 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item type="button">
+                    <button mat-menu-item type="button" (click)="openUpdateDialog(attendance)">
                       <span>Edit</span>
+                    </button>
+                    <button mat-menu-item type="button" (click)="openDeleteDailog(attendance.attendanceid)">
+                      <span>Delete </span>
                     </button>
                   </mat-menu>
                 </td>
@@ -53,3 +56,45 @@ data-sidebar-position="fixed" data-header-position="fixed">
 </div>
 </div>
 </div>
+
+
+
+
+
+
+<ng-template #deleteDailog>          
+  <h1 mat-dialog-title>Delete Attendance</h1>
+  <div mat-dialog-content>
+    Would you like to delete this Attendance?
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close="no">No</button>
+    <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+  </div>
+</ng-template> 
+
+
+
+
+
+
+
+
+<ng-template #updateDailog>
+  <h2 mat-dialog-title>Update Attendance Status</h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="updateAttendanceForm">
+      <mat-radio-group formControlName="Status" class="d-flex flex-row">
+        <mat-radio-button value="Present" class="me-3">Present</mat-radio-button>
+        <mat-radio-button value="Absent">Absent</mat-radio-button>
+      </mat-radio-group>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update(UData.attendanceid)">Update</button>
+  </mat-dialog-actions>
+  
+  
+</ng-template>
+

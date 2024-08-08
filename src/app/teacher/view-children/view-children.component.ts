@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { ChildService } from 'src/app/Services/child.service';
 
@@ -18,4 +19,10 @@ ngOnInit(): void {
     this.router.navigate(['/teacher/childattendance', childid]);
    // this.router.navigate(['teacher/childattendance',childid])
   }
+
+
+  
+
+
+
 }
