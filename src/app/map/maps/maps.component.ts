@@ -244,35 +244,49 @@ export class MapsComponent implements OnInit {
 
   calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
     if (this.distanceMatrixService) {
-      const destinations = stops.map(stop => new google.maps.LatLng(stop.latitude, stop.longitude));
+        const destinations = stops.map(stop => new google.maps.LatLng(stop.latitude, stop.longitude));
 
-      this.distanceMatrixService.getDistanceMatrix({
-        origins: [origin],
-        destinations: destinations,
-        travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.METRIC
-      }, (response, status) => {
-        if (status === google.maps.DistanceMatrixStatus.OK && response) {
-          let totalTime = 0;
-          this.stopTimes = [];
+        this.distanceMatrixService.getDistanceMatrix({
+            origins: [origin],
+            destinations: destinations,
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC
+        }, (response, status) => {
+            if (status === google.maps.DistanceMatrixStatus.OK && response) {
+                let totalTime = 0;
+                this.stopTimes = [];
 
-          response.rows[0].elements.forEach((element, index) => {
-            if (element.status === 'OK') {
-              const duration = element.duration.value; // Time in seconds
-              const formattedTime = (duration / 60).toFixed(2) + ' mins';
-              this.stopTimes.push(formattedTime);
-              totalTime += duration;
+                response.rows[0].elements.forEach((element, index) => {
+                    if (element.status === 'OK') {
+                        const duration = element.duration.value; // Time in seconds
+                        const formattedTime = this.formatTime(duration);
+                        this.stopTimes.push(`Stop ${index + 1}: ${formattedTime}`);
+                        totalTime += duration;
+                    }
+                });
+
+                this.totalTripTime = this.formatTime(totalTime);
+                this.changeDetectorRef.detectChanges();
+            } else {
+                console.error('Distance Matrix request failed due to ' + status);
             }
-          });
-
-          this.totalTripTime = (totalTime / 60).toFixed(2) + ' mins';
-          this.changeDetectorRef.detectChanges();
-        } else {
-          console.error('Distance Matrix request failed due to ' + status);
-        }
-      });
+        });
     } else {
-      console.error('Distance Matrix Service is not initialized');
+        console.error('Distance Matrix Service is not initialized');
     }
-  }
+}
+
+private formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    if (hours > 0) {
+        return `${hours} hr ${remainingMinutes} min`;
+    } else {
+        return `${minutes} min ${remainingSeconds} sec`;
+    }
+}
+
 }

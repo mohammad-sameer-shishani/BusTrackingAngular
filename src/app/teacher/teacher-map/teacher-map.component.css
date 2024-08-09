@@ -1,7 +1,6 @@
-/* General Layout */
 .page-wrapper {
   display: flex;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -15,59 +14,98 @@ app-teacher-sidebar {
 }
 
 /* Main Content Area */
-.main-content {
-  flex-grow: 1; /* Allow the main content to take up the remaining space */
+.body-wrapper {
+  flex-grow: 1;
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  padding: 20px; /* Padding inside the content area */
-  overflow-y: auto; /* Scrollable content if needed */
+  flex-direction: column;
 }
 
-/* Map Container Styling */
-.map-container {
-  flex-grow: 1; /* Allow map to grow and fill the available space */
-  height: 100%; /* Full height of the main content area */
-  border: 1px solid #ddd; /* Light border */
-  background-color: #f5f5f5; /* Background color for the map area */
-  margin-bottom: 20px; /* Space below the map */
+.container-fluid {
+  flex-grow: 1;
+  display: flex;
+  padding: 0;
 }
+
+.map-container {
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* Input fields and buttons styling */
+.input-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 5;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  gap: 10px; /* Add space between the elements */
+  width: 300px; /* Set a fixed width for the container */
+}
+
+.input-container input[type="text"], 
+.input-container button {
+  width: 100%; /* Full width inside the container */
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.input-container button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-container button:hover {
+  background-color: #218838;
+}
+
 
 /* Card styling for displaying times */
 .time-card {
-  background-color: #ffffff; /* White background for the card */
-  border: 1px solid #ddd; /* Light border for the card */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  padding: 20px; /* Padding inside the card */
-  max-width: 600px; /* Maximum width of the card */
-  margin: 0 auto; /* Center the card horizontally */
-  font-family: Arial, sans-serif; /* Font styling for the card */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 300px;
+  z-index: 5;
 }
 
-/* Header styling inside the card */
 .time-card h4 {
   margin-top: 0;
-  color: #333; /* Dark text color */
-  font-size: 1.25rem; /* Font size for the header */
+  color: #333;
+  font-size: 1.25rem;
 }
 
-/* Style for the list of times inside the card */
 .time-card div {
-  margin-bottom: 10px; /* Space between times */
-  color: #555; /* Slightly lighter text color */
-  font-size: 1rem; /* Font size for times */
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 1rem;
 }
 
-/* Divider line inside the card */
 .time-card hr {
-  margin: 20px 0; /* Space above and below the line */
+  margin: 20px 0;
   border: 0;
-  border-top: 1px solid #ddd; /* Light gray line */
+  border-top: 1px solid #ddd;
 }
 
-/* Styling for the toggle button */
 .time-card button {
-  background-color: #007bff; /* Primary color for the button */
+  background-color: #007bff;
   border: none;
   color: white;
   padding: 10px 15px;
@@ -77,7 +115,6 @@ app-teacher-sidebar {
   transition: background-color 0.3s ease;
 }
 
-/* Button hover effect */
 .time-card button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
+  background-color: #0056b3;
 }
