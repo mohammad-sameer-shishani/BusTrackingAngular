@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AttendanceChildrenBus } from '../models/AttendanceChildrenBus';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { AttendanceSubmission } from '../models/AttendanceSubmission';
 import { AttendanceForChild } from '../models/AttendanceForChild';
 
@@ -14,6 +14,8 @@ export class AttendanceService {
   private apiUrl = 'https://localhost:7169/api/Attendance';
   user2: any; // Define user2 as an object
   teacherId: number;
+  parentId : number;
+
 
   constructor(private http: HttpClient, 
               private spinner: NgxSpinnerService, 
@@ -24,9 +26,11 @@ export class AttendanceService {
     if (storedUser) {
       this.user2 = JSON.parse(storedUser);
       this.teacherId = this.user2.UserId; // Now teacherId can be accessed correctly
+      this.parentId= this.user2.UserId
     } else {
       console.error('No user found in local storage.');
       this.teacherId = 0; // Handle this case as needed
+      this.parentId = 0;
     }
   }
 
@@ -75,5 +79,11 @@ export class AttendanceService {
     this.spinner.hide();
   }
 
+  getChildAttendanceForParent(): Observable<AttendanceForChild[]> { 
+    this.spinner.show();
+    return this.http.get<AttendanceForChild[]>(`${this.apiUrl}/GetChildAttendanceForParent/${this.parentId}`).pipe(
+        finalize(() => this.spinner.hide()) // This ensures the spinner is hidden once the HTTP request is complete.
+    );
+}
 
 }

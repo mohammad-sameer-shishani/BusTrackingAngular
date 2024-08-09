@@ -7,13 +7,15 @@ import { ParentNavbarComponent } from './parent-navbar/parent-navbar.component';
 import { MapModule } from '../map/map.module';
 import { SharedModule } from '../shared/shared.module';
 import { ParentmapComponent } from './parentmap/parentmap.component';
+import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
 
 
 @NgModule({
   declarations: [
     ParentSidebarComponent,
     ParentNavbarComponent,
-    ParentmapComponent
+    ParentmapComponent,
+    ChildAttendanceComponent
   ],
   imports: [
     CommonModule,

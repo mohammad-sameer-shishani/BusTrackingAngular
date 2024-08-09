@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ParentmapComponent } from './parentmap/parentmap.component';
+import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
 
 const routes: Routes = [
   {
@@ -9,7 +10,11 @@ const routes: Routes = [
   },
   {
     path:'',
-    component:ParentmapComponent
+    component:ChildAttendanceComponent
+  },
+  {
+    path:"childAttendance",
+    component:ChildAttendanceComponent
   }
 ];
 

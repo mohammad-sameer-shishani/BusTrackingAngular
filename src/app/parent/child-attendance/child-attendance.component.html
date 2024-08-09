@@ -1,0 +1,43 @@
+<app-parent-sidebar></app-parent-sidebar>
+
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <app-parent-navbar></app-parent-navbar>
+   
+   <!-- <button (click)="openAddDailog()" type="button" mat-button >add child</button> -->
+    <div class="container-fluid col-12">
+        <div class=" d-flex align-items-stretch">
+
+
+<div class="container">
+    <h2>Your Children Attendance Records</h2>
+    
+    <div *ngIf="childAttendance.length > 0; else noAttendance">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Child Name</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let attendance of childAttendance">
+            <td>{{ attendance.firstname }} {{ attendance.lastname }}</td>
+            <td>{{ attendance.attendancedate | date: 'mediumDate' }}</td>
+            <td>{{ attendance.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <ng-template #noAttendance>
+      <p>No attendance records found for your children.</p>
+    </ng-template>
+  </div>
+</div>
+</div>
+</div>
+</div>
+  
