@@ -43,23 +43,61 @@
    -->
       </div>
   
-      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+      <!-- <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
       </a>
   
       <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
         <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-      </a>
+      </a> -->
   
     </div>
   </section><!-- End Hero -->
   
   <main id="main">
- 
-    <!-- ======= Services Section ======= -->
+   <!-- ======= Features Section ======= -->
+   <section id="features" class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Features</h2>
+        <br><br>
+        <p>Amazing features of our School Bus Tracking System</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="icon-box">
+            <i class="bi bi-shield-check"></i>
+            <h4>Real-Time Tracking</h4>
+            <p>Track the location of the bus in real-time using our advanced GPS technology.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-bell"></i>
+            <h4>Instant Alerts</h4>
+            <p>Receive instant alerts for pick-up and drop-off times, ensuring you are always informed.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+          <div class="icon-box">
+            <i class="bi bi-people"></i>
+            <h4>Safe and Secure</h4>
+            <p>We prioritize safety with secure tracking and regular updates on your child's journey.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Features Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+
     <section id="services" class="services">
       <div class="container">
-  
+        <div class="section-title">
+          <h2>FeedBack</h2>
+          <br><br>
+          <p>What our clients say About {{home.homepageTitle.contentvalue}}</p>
+        </div>
         <div class="row">
           <div class="col-md-6 mt-4 mt-md-0" *ngFor="let testi of testi.AllTestimonials">
             <div class="icon-box">
@@ -73,6 +111,40 @@
   
       </div>
     </section><!-- End Services Section -->
+    <!-- ======= Image Gallery Section ======= -->
+    <section id="gallery" class="gallery">
+      <div class="container">
+        <div class="section-title">
+          <h2>Gallery</h2>
+          <br><br>
+          <p>Take a look at some moments captured with our buses</p>
+        </div>
+  
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-1.jpg" class="gallery-lightbox">
+                <img src="https://media.istockphoto.com/id/515262698/photo/elementary-school-kids-climbing-on-to-a-school-bus.webp?b=1&s=170667a&w=0&k=20&c=5gL4gku_OjK4a0-aM0IEV5379VONwDDz7W2lSMGn0mU=" width="400px" height="200px"  alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-2.jpg" class="gallery-lightbox">
+                <img src="https://media.istockphoto.com/id/1202387762/photo/school-bus-driver.webp?b=1&s=170667a&w=0&k=20&c=tL5Fn5ZyeQtbB4MGpHV2YDMLXoD4N2Yc6ct5DuPQ4Nc=" width="400px" height="400px" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="gallery-item">
+              <a href="assets/img/gallery/gallery-3.jpg" class="gallery-lightbox">
+                <img src="https://media.istockphoto.com/id/1202387751/photo/multi-ethnic-junior-high-students-riding-school-bus.webp?b=1&s=170667a&w=0&k=20&c=MoEWNWGTMvKIVLDV3IaWehRDxmKUYDMp4UPAqE8lU5A=" width="400px" height="200px"  alt="" class="img-fluid">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Gallery Section -->
   
    
   </main><!-- End #main -->
