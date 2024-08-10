@@ -7,12 +7,13 @@
 
         <div class="d-flex justify-content-between align-items-center">
           <h2>Testimonials</h2>
+          <a *ngIf="authenticated!=null" (click)="openAddDailog()"><h3 class="m-3 btn btn-primary">Add Testimonial</h3></a>
+          <a  routerLink="/account/login" *ngIf="authenticated==null"><h3 class="m-3 btn btn-primary">Add Testimonial</h3></a>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a routerLink="/">Home</a></li>
             <li>Testimonials</li>
           </ol>
         </div>
-
       </div>
     </section><!-- End Breadcrumbs -->
 

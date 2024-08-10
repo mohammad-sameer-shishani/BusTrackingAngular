@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
 import { MapModule } from './map/map.module';
 import { ChildrenComponent } from './children/children.component';
+import { AddTestimonialComponent } from './add-testimonial/add-testimonial.component';
 
 
 
@@ -32,6 +33,7 @@ import { ChildrenComponent } from './children/children.component';
     TestimonialsComponent,
     ProfileComponent,
     ChildrenComponent,
+    AddTestimonialComponent,
    
   ],
   imports: [

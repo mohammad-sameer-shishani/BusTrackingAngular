@@ -99,7 +99,7 @@
           <p>What our clients say About {{home.homepageTitle.contentvalue}}</p>
         </div>
         <div class="row">
-          <div class="col-md-6 mt-4 mt-md-0" *ngFor="let testi of testi.AllTestimonials">
+          <div class="col-md-6 mt-4 mt-md-0" *ngFor="let testi of testi.AllTestimonials" [hidden]="testi.status!='Accept'">
             <div class="icon-box">
               <i class="bi bi-card-checklist"></i>
               <h4><a href="#">{{testi.full_Name}}</a></h4>

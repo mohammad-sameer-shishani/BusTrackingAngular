@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TeacherModule } from './teacher/teacher.module';
 import { DriverModule } from './driver/driver.module';
 import { ParentModule } from './parent/parent.module';
+import { AddTestimonialComponent } from './add-testimonial/add-testimonial.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,9 @@ const routes: Routes = [
 },
 {path:'parent',
   loadChildren:()=>ParentModule
+},
+{path:'addtestimonial',
+  component:AddTestimonialComponent
 }
 ];
 

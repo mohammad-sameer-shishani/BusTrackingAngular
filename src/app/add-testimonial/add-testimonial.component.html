@@ -1,0 +1,39 @@
+
+<h2 mat-dialog-title>What do you think about us ?</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="example-form" [formGroup]="addTestimonialForm">
+    
+    <mat-form-field >
+      <mat-label style="margin-right: 20px;">Your FeedBack: </mat-label>
+      <input type="text" matInput formControlName="message">
+      <mat-error *ngIf="addTestimonialForm.controls['message'].hasError('required')">
+        This Field Is <strong>Required</strong>
+      </mat-error>
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field class="example-full-width d-none">
+      <input type="text" matInput formControlName="publisher_Id" value="{{publisherid}}">
+      <input type="text" matInput formControlName="status" value="{{status}}">
+    </mat-form-field>
+    
+    <br>
+  
+</form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="AddTestimonial()" [disabled]="!addTestimonialForm.valid">Add</button>
+</mat-dialog-actions>
+
+
+
+
+
+
+
+ 
+
+
+
