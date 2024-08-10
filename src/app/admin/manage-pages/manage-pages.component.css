@@ -1,0 +1,4 @@
+.table td {
+    word-wrap: break-word; /* Break long words /
+    max-width: 200px; / Limit the width of each cell */
+  }

@@ -10,20 +10,21 @@ import { ContentService } from '../Services/content.service';
 })
 export class HomeComponent implements OnInit{
   
-  contentDictionary: { [key: string]: string } = {};
 
 constructor(public testi :TestimonialService,public home:ContentService){}
-  
+ 
 ngOnInit(): void {
   
+  this.home.getContentByKey('Home Page Title');
+  this.home.getContentByKey('Home Page Footer Title');
+  this.home.getContentByKey('About Us Content');
+  this.home.getContentByKey('Footer Email');
+  this.home.getContentByKey('Footer Phone Number');
+  this.home.getContentByKey('Footer Address');
+  this.home.getContentByKey('Street');
+  
+  
   this.testi.GetAllTestimonials();
-    //this.createDictionary();
-    
-  }
-  createDictionary(data: any[]) {
-    data.forEach(item => {
-      this.contentDictionary[item.contentkey] = item.contentvalue;
-    });
   }
 
 }

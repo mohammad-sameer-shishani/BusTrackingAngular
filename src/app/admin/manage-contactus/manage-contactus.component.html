@@ -15,9 +15,6 @@
                     
                         <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Contact Us Email</h3> 
                     
-                       
-
-                    
                 </div>
                    
                 <div class="table-responsive ">
@@ -29,8 +26,6 @@
                           <h4 class="fw-semibold mb-0">Emails</h4>
                         </th>
                        
-
-                         
                       </tr>
                     </thead>
                     <tbody>
@@ -41,7 +36,7 @@
                                   <mat-panel-title>
                                   Name:   {{ emails.userName }}
                                   </mat-panel-title>
-                                  <mat-panel-description>
+                                  <mat-panel-description >
                                   subject:  {{ emails.subject }}
                                   </mat-panel-description>
                                   <mat-panel-description>
@@ -58,7 +53,7 @@
                                     </mat-menu>
                                   </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <p>{{emails.message}}</p>
+                                <p class="content-value">{{emails.message}}</p>
                               </mat-expansion-panel>
                             </td>
                           </tr>

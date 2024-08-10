@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ContentService } from '../Services/content.service';
 
 @Component({
   selector: 'app-about',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent {
-
+constructor(public home :ContentService){}
 }

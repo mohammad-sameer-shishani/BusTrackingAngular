@@ -28,7 +28,7 @@ allContactUs: any=[
       console.log("success")
       window.location.reload();
     },err=>{
-      console.log("something wrong");
+      console.log("error while trying to add contactus ");
     })
   }
 

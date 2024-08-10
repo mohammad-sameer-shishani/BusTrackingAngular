@@ -11,13 +11,12 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 export class AppComponent implements OnInit{
  
   title = 'BusTrackingAngular';
+  test:any;
 constructor (private spinner : NgxSpinnerService){}
   ngOnInit(): void {
     this.spinner.show();
-    setTimeout (()=>{
-      this.spinner.hide();
+    setTimeout (()=>{this.spinner.hide();},1000)
 
-    },500)
   }
 
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContactusService } from '../Services/contactus.service';
+import { ContentService } from '../Services/content.service';
 
 @Component({
   selector: 'app-contact',
@@ -9,7 +10,7 @@ import { ContactusService } from '../Services/contactus.service';
 })
 export class ContactComponent {
 
-  constructor(public contact:ContactusService){}
+  constructor(public contact:ContactusService,public home : ContentService){}
   
   ContactUsForm:FormGroup = new FormGroup(
     {

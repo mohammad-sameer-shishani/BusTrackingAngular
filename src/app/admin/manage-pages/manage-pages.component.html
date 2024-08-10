@@ -21,7 +21,7 @@
                       <tr *ngFor="let pageContent of content.AllPageContent">
                         <td class="border-bottom-0"><h4 class="fw-semibold mb-1">{{pageContent.pagename}}</h4></td>
                         <td class="border-bottom-0"><h4 class="fw-semibold mb-1">{{pageContent.contentkey}}</h4></td>
-                        <td class="border-bottom-0"><h4 class="fw-semibold mb-1">{{pageContent.contentvalue}}</h4></td>
+                        <td class="border-bottom-0"><h4 class="fw-semibold mb-1">{{pageContent.contentvalue.length > 25?(pageContent.contentvalue | slice:0:25)+ '...':pageContent.contentvalue}}</h4></td>
                         <td>
                             <button class="btn btn-info m-1" (click)="openUpdatePageDailog(pageContent)">Update</button>
                         </td>
@@ -37,9 +37,10 @@
       <h2 mat-dialog-title>Update Child Information</h2>
       <mat-dialog-content class="mat-typography">
         <form class="example-form" [formGroup]="updatePageForm">
-          <mat-form-field class="example-full-width" appearance="fill">
+          <mat-form-field  appearance="fill">
             <mat-label>Content </mat-label>
-            <input type="text" matInput formControlName="contentvalue" [(ngModel)]="pData.contentvalue">
+            <!-- <input type="text" matInput formControlName="contentvalue" [(ngModel)]="pData.contentvalue" > -->
+            <textarea matInput formControlName="contentvalue"  [(ngModel)]="pData.contentvalue" cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="15" >></textarea>
           </mat-form-field>  
         </form>
       </mat-dialog-content>
