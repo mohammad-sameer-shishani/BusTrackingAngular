@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs';
 import { MapsComponent } from 'src/app/map/maps/maps.component';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
+import { BusService } from 'src/app/Services/bus.service';
 import { StopsService } from 'src/app/Services/stops.service';
 
 @Component({
@@ -22,11 +23,13 @@ export class AdminManageMapComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private busLocationService: BusLocationService,
-    private stopsService: StopsService
+    private stopsService: StopsService,
+    private bus:BusService
   ) {}
 
   ngOnInit() {
     this.loadAllBusesLocations();
+    this.bus.getAllBuses();
   }
 
   loadAllBusesLocations(): void {

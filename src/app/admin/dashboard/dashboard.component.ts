@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit{
   parentCount: number = 0;
   errorMessage: string = '';
 
-
   ngOnInit(): void {
     console.log(this.countBuses);
     this.bus.getAllBuses()

@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChildService{
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,public taostr:ToastrService,public router:Router) { }
 
 
 
@@ -36,6 +38,7 @@ GetAllChildren(){
   },error=>{
     console.log('error getting all children');
     console.log(error.status);
+
   })
 }
 

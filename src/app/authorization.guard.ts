@@ -6,7 +6,6 @@ export const authorizationGuard: CanActivateFn = (route, state) => {
   const router =new Router();
   const taostr:ToastrService=inject(ToastrService);
 const token =localStorage.getItem('token');
-debugger
 if (token) 
   {
 

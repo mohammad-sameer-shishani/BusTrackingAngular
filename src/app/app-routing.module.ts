@@ -11,6 +11,7 @@ import { TeacherModule } from './teacher/teacher.module';
 import { DriverModule } from './driver/driver.module';
 import { ParentModule } from './parent/parent.module';
 import { AddTestimonialComponent } from './add-testimonial/add-testimonial.component';
+import { authorizationGuard } from './authorization.guard';
 
 
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
 },
 {
   path:'admin',
-  loadChildren:()=>AdminModule
+  loadChildren:()=>AdminModule,
+  canActivate:[authorizationGuard]
 },
 {path:'teacher',
   loadChildren:()=>TeacherModule

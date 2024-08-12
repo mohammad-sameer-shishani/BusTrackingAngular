@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -62,4 +62,10 @@ import { AdminManageMapComponent } from './admin-manage-map/admin-manage-map.com
    
   ]
 })
-export class AdminModule { }
+export class AdminModule implements OnInit{
+  test_temp:any;
+  ngOnInit(): void {
+    this.test_temp='boooom';
+  }
+  
+ }
