@@ -41,7 +41,19 @@ data-sidebar-position="fixed" data-header-position="fixed">
             <span class="hide-menu">Children</span>
           </a>
         </li>
-
+        <li class="nav-small-cap">
+          <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+          <span class="hide-menu">Account</span>
+        </li>
+    
+        <li class="sidebar-item">
+          <a class="sidebar-link" (click)="logout()" aria-expanded="false">
+            <span>
+              <i class="ti ti-logout fs-6"></i>
+            </span>
+            <span class="hide-menu">Logout</span>
+          </a>
+        </li>
       </ul>
       <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
         <div class="d-flex">

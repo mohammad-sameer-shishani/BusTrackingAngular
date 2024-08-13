@@ -49,10 +49,11 @@ import { AddTestimonialComponent } from './add-testimonial/add-testimonial.compo
     MapModule
   ],
   providers: [ 
-    {provide:HTTP_INTERCEPTORS,
-    useClass:TokenInterceptor,
-    multi:true
-   }
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TokenInterceptor,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-teacher-sidebar',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./teacher-sidebar.component.css']
 })
 export class TeacherSidebarComponent {
-
+  constructor(public auth:AuthService){}
+  logout(){
+    this.auth.logout()
+  }
 }

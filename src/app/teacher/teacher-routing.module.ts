@@ -6,6 +6,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ViewChildrenComponent } from './view-children/view-children.component';
 import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
 import { TeacherMapComponent } from './teacher-map/teacher-map.component';
+import { ViewParentsComponent } from './view-parents/view-parents.component';
+import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
+import { ViewDriversComponent } from './view-drivers/view-drivers.component';
 
 const routes: Routes = [
 {
@@ -30,6 +33,18 @@ const routes: Routes = [
 {
   path:'map',
   component:TeacherMapComponent
+},
+{
+  path:'parents',
+  component:ViewParentsComponent
+},
+{
+  path:'teachers',
+  component:ViewTeachersComponent
+},
+{
+  path:'drivers',
+  component:ViewDriversComponent
 }
 ];
 

@@ -62,10 +62,7 @@ import { AdminManageMapComponent } from './admin-manage-map/admin-manage-map.com
    
   ]
 })
-export class AdminModule implements OnInit{
-  test_temp:any;
-  ngOnInit(): void {
-    this.test_temp='boooom';
-  }
+export class AdminModule{
+
   
  }

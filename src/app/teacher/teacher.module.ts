@@ -13,6 +13,9 @@ import { ChildAttendanceComponent } from './child-attendance/child-attendance.co
 import { TeacherMapComponent } from './teacher-map/teacher-map.component';
 
 import { MapModule } from '../map/map.module';
+import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
+import { ViewDriversComponent } from './view-drivers/view-drivers.component';
+import { ViewParentsComponent } from './view-parents/view-parents.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { MapModule } from '../map/map.module';
     DashboardComponent,
     ViewChildrenComponent,
     ChildAttendanceComponent,
-    TeacherMapComponent
+    TeacherMapComponent,
+    ViewTeachersComponent,
+    ViewDriversComponent,
+    ViewParentsComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import { DriverModule } from './driver/driver.module';
 import { ParentModule } from './parent/parent.module';
 import { AddTestimonialComponent } from './add-testimonial/add-testimonial.component';
 import { authorizationGuard } from './authorization.guard';
+import { driverGuard } from './driver.guard';
 
 
 const routes: Routes = [
@@ -53,7 +54,8 @@ const routes: Routes = [
   loadChildren:()=>TeacherModule
 },
 {path:'driver',
-  loadChildren:()=>DriverModule
+  loadChildren:()=>DriverModule,
+  canActivate:[driverGuard]
 },
 {path:'parent',
   loadChildren:()=>ParentModule

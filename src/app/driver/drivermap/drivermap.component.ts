@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MapsComponent } from 'src/app/map/maps/maps.component';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
+import { ChildService } from 'src/app/Services/child.service';
 import { StopsService } from 'src/app/Services/stops.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class DrivermapComponent implements OnInit{
   constructor(
     private cdr: ChangeDetectorRef,
     private busLocationService: BusLocationService,
-    private stopsService: StopsService
+    private stopsService: StopsService,
+    public child :ChildService
   ) {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -39,6 +41,7 @@ export class DrivermapComponent implements OnInit{
 
   ngOnInit() {
     this.loadBusLocationsForTeacher();
+    this.child.GetChildrenByDriverId(this.child.GetMyId());
   }
 
   loadBusLocationsForTeacher(): void {

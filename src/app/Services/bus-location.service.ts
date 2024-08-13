@@ -26,8 +26,8 @@ export class BusLocationService {
       this.allBusesLocations = res;
 
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+      // this.toastr.success('Reterived Successfully','',{
+      //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log(err.status);
       this.toastr.error('Something Wont Wrong!!')
@@ -40,8 +40,8 @@ export class BusLocationService {
     this.http.get(`${this.apiUrl}/GetLatestLocation/${busId}`).subscribe((res)=>{
       this.bus = res;
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})  
+      // this.toastr.success('Reterived Successfully','',{
+      //   positionClass: 'toast-bottom-right'})  
     },err=>{
       console.log("error getting bus location");
     console.log(err.status);
@@ -53,8 +53,8 @@ export class BusLocationService {
   updateLocation(location: any){
     this.http.post(this.apiUrl, location).subscribe((res)=>{
       console.log('Location updated');
-      this.toastr.success('Location updated','',{
-        positionClass: 'toast-bottom-right'})
+      // this.toastr.success('Location updated','',{
+      //   positionClass: 'toast-bottom-right'})
       window.location.reload();
     },err=>{
       console.log('error');
@@ -68,8 +68,8 @@ export class BusLocationService {
     this.http.get(`${this.apiUrl}/GetBusLocationByTeacherId/${teacherId}`).subscribe((res)=>{
       this.teacherBus = res;
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+      // this.toastr.success('Reterived Successfully','',{
+      //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log('error');
       this.toastr.error('Something Wont Wrong!!')
@@ -86,8 +86,8 @@ export class BusLocationService {
     this.http.get(`${this.apiUrl}/GetBusLocationByDriverId/${driverId}`).subscribe((res)=>{
       this.teacherBus = res;
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+      // this.toastr.success('Reterived Successfully','',{
+      //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log('error');
       this.toastr.error('Something Wont Wrong!!')
@@ -102,8 +102,8 @@ export class BusLocationService {
     this.http.get(`${this.apiUrl}/GetBusLocationForParent/${parentId}`).subscribe((res)=>{
       this.teacherBus = res;
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+      // this.toastr.success('Reterived Successfully','',{
+      //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log('error');
       this.toastr.error('Something Wont Wrong!!')

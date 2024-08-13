@@ -10,7 +10,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 })
 export class AppComponent implements OnInit{
  
-  title = 'BusTrackingAngular';
+  title = 'BusTracking';
   test:any;
 constructor (private spinner : NgxSpinnerService){}
   ngOnInit(): void {

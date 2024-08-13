@@ -14,7 +14,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                   </div>
                   <div class="row mb-4">
                     <div class="col-12">
-                      <input type="text" class="form-control" placeholder="Search by name..." >
+                      <input type="text" class="form-control" placeholder="Search by name..." [(ngModel)]="searchText">
                     </div>
                   </div>
                   <table class="table table-striped text-nowrap mb-0 align-middle">
@@ -38,7 +38,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let child of child.ChildrenByDriverId ">
+                      <tr *ngFor="let child of child.ChildrenByDriverId | filter:searchText">
                         <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
                         <td class="border-bottom-0">
                             <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
