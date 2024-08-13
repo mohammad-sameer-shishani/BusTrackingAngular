@@ -9,7 +9,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
           <div class="card-body p-4">
            
               <div class="row justify-content-between">
-                <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">All Children</h3> 
+                <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Children In The Bus</h3> 
               </div>
               <div class="row mb-4">
                 <div class="col-12">
@@ -25,9 +25,9 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     <th class="border-bottom-0">
                       <h4 class="fw-semibold mb-0">Lastname </h4>
                     </th>
-                    <th class="border-bottom-0">
+                    <!-- <th class="border-bottom-0">
                       <h4 class="fw-semibold mb-0">Address</h4>
-                    </th>
+                    </th> -->
                     <th class="border-bottom-0">
                       <h4 class="fw-semibold mb-0">Bus Number</h4>
                     </th>
@@ -37,19 +37,19 @@ data-sidebar-position="fixed" data-header-position="fixed">
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let child of child.allChildren | filter:searchText">
+                  <tr *ngFor="let child of children | filter:searchText">
                     <td class="border-bottom-0"><h4 class="fw-semibold mb-0"><a>{{child.firstname}}</a></h4></td>
                     <td class="border-bottom-0">
                         <h4 class="fw-semibold mb-1">{{child.lastname}}</h4>
                     </td>
-                    <td class="border-bottom-0">
+                    <!-- <td class="border-bottom-0">
                       <p class="mb-0 fw-normal">{{child.address}}</p>
-                    </td>
+                    </td> -->
                     <td class="border-bottom-0">
                       <p class="mb-0 fw-normal">{{child.busnumber}}</p>
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal">{{child.parent}}</p>
+                      <p class="mb-0 fw-normal">{{child.parentName}}</p>
                     </td>
                     <td>
 

@@ -30,7 +30,7 @@ export class BusLocationService {
       //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log(err.status);
-      this.toastr.error('Something Wont Wrong!!')
+      this.toastr.error('Something Went Wrong!!')
     })
     this.spinner.hide();
   }
@@ -57,8 +57,8 @@ export class BusLocationService {
       //   positionClass: 'toast-bottom-right'})
       window.location.reload();
     },err=>{
-      console.log('error');
-      this.toastr.error('Something Wont Wrong!!')
+      console.log('error updateLocation');
+      this.toastr.error('Something Went Wrong!!')
     })
   }
 
@@ -71,8 +71,8 @@ export class BusLocationService {
       // this.toastr.success('Reterived Successfully','',{
       //   positionClass: 'toast-bottom-right'})
     },err=>{
-      console.log('error');
-      this.toastr.error('Something Wont Wrong!!')
+      console.log('error getBusLocationsByTeacherId');
+      this.toastr.error('Something Went Wrong!!')
     })
     this.spinner.hide();
   }
@@ -89,8 +89,8 @@ export class BusLocationService {
       // this.toastr.success('Reterived Successfully','',{
       //   positionClass: 'toast-bottom-right'})
     },err=>{
-      console.log('error');
-      this.toastr.error('Something Wont Wrong!!')
+      console.log('error  getBusLocationsByDriverId');
+      this.toastr.error('Something Went Wrong!!')
     })
     this.spinner.hide();
   }
@@ -105,8 +105,8 @@ export class BusLocationService {
       // this.toastr.success('Reterived Successfully','',{
       //   positionClass: 'toast-bottom-right'})
     },err=>{
-      console.log('error');
-      this.toastr.error('Something Wont Wrong!!')
+      console.log('error getBusLocationsForParent');
+      this.toastr.error('Something Went Wrong!!')
     })
     this.spinner.hide();
   }
