@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { AttendanceService } from 'src/app/Services/attendance.service';
 import { ChildService } from 'src/app/Services/child.service';
+import { UsersService } from 'src/app/Services/users.service';
 
 @Component({
   selector: 'app-view-children',
@@ -11,17 +12,18 @@ import { ChildService } from 'src/app/Services/child.service';
 })
 export class ViewChildrenComponent implements OnInit{
   children:any=[]
-constructor(public child :ChildService, private router : Router,public attendanceService:AttendanceService){}
+constructor(public child :ChildService, private router : Router,public attendanceService:AttendanceService,public teacher:UsersService){}
 searchText: string = '';  
+teacherid:any
 ngOnInit(): void {
-    //this.child.GetAllChildren();
+    this.teacherid=this.teacher.GetMyId();
     this.loadChildren()
   }
   ViewAllAttendance(childid : number){
     console.log('Navigating to child attendance for child ID:', childid); // Debugging line
     this.router.navigate(['/teacher/childattendance', childid]);
-   // this.router.navigate(['teacher/childattendance',childid])
   }
+
 
 
   loadChildren(): void {

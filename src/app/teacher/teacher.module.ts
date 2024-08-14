@@ -16,6 +16,7 @@ import { MapModule } from '../map/map.module';
 import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { ViewDriversComponent } from './view-drivers/view-drivers.component';
 import { ViewParentsComponent } from './view-parents/view-parents.component';
+import { TripChildrenComponent } from './trip-children/trip-children.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ViewParentsComponent } from './view-parents/view-parents.component';
     TeacherMapComponent,
     ViewTeachersComponent,
     ViewDriversComponent,
-    ViewParentsComponent
+    ViewParentsComponent,
+    TripChildrenComponent
   ],
   imports: [
     CommonModule,

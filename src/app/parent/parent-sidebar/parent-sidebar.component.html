@@ -15,6 +15,14 @@ data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar navigation-->
     <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
       <ul id="sidebarnav">
+        <li class="sidebar-item">
+          <a class="sidebar-link" >
+            <span>
+              <i class="ti ti-notification" ></i>
+            </span>
+            <span class="hide-menu">notifications</span>
+          </a>
+        </li>
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
           <span class="hide-menu">Home</span>
@@ -52,7 +60,17 @@ data-sidebar-position="fixed" data-header-position="fixed">
             <span class="hide-menu">map</span>
           </a>
         </li>
-     
+        <!-- <li class="sidebar-item">
+          <a class="sidebar-link" >
+            <span>
+              <i class="ti ti-notification" mat-button [matMenuTriggerFor]="menu"></i>
+            </span>
+            <span class="hide-menu">notifications</span>
+          </a>
+        </li>
+        <mat-menu #menu="matMenu">
+          <button *ngFor="let notification of notifications" mat-menu-item>{{notification}}</button>
+        </mat-menu> -->
         <li class="sidebar-item">
           <a class="sidebar-link" routerLink="/parent/map" (click)="logout()" >
             <span>
@@ -60,13 +78,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
             </span>
             <span class="hide-menu">logout</span>
           </a>
-        </li>
-    
-      
-     
-
-  
-        
+        </li> 
  
       </ul>
     

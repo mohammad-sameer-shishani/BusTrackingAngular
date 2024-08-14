@@ -9,6 +9,7 @@ import { TeacherMapComponent } from './teacher-map/teacher-map.component';
 import { ViewParentsComponent } from './view-parents/view-parents.component';
 import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { ViewDriversComponent } from './view-drivers/view-drivers.component';
+import { TripChildrenComponent } from './trip-children/trip-children.component';
 
 const routes: Routes = [
 {
@@ -45,6 +46,10 @@ const routes: Routes = [
 {
   path:'drivers',
   component:ViewDriversComponent
+},
+{
+  path:'tripchildren',
+  component:TripChildrenComponent
 }
 ];
 

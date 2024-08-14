@@ -8,6 +8,8 @@ import { MapModule } from '../map/map.module';
 import { SharedModule } from '../shared/shared.module';
 import { ParentmapComponent } from './parentmap/parentmap.component';
 import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { ChildAttendanceComponent } from './child-attendance/child-attendance.co
     ParentSidebarComponent,
     ParentNavbarComponent,
     ParentmapComponent,
-    ChildAttendanceComponent
+    ChildAttendanceComponent,
+    DashboardComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
