@@ -20,7 +20,7 @@ const routes: Routes = [
   component:AbsentsComponent
 },
 {path:'',
-  component:DashboardComponent
+  component:AbsentsComponent
 },
 {
   path:'viewchildren',
