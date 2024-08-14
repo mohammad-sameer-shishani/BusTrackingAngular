@@ -23,7 +23,11 @@
           <li><a routerLink="/teacher">Teacher</a></li>  
           <li><a routerLink="/driver">Driver</a></li>   -->
 
-          <li><a routerLink="/parent" *ngIf="isAuthenticated">Dashboard</a></li>
+          <li *ngIf="isAuthenticated && userRole == 1"><a [routerLink]="['/admin']">Admin Dashboard</a></li>
+          <li *ngIf="isAuthenticated && userRole == 2"><a [routerLink]="['/teacher']">Teacher Dashboard</a></li>
+          <li *ngIf="isAuthenticated && userRole == 3"><a [routerLink]="['/parent']">Parent Dashboard</a></li>
+          <li *ngIf="isAuthenticated && userRole == 4"><a [routerLink]="['/driver']">Driver Dashboard</a></li>
+      
           <li><a routerLink="/account/login" class="getstarted" *ngIf="!isAuthenticated">Log in</a></li>
           <li><a (click)="logout()" class="getstarted" *ngIf="isAuthenticated">Logout</a></li>
         </ul>
