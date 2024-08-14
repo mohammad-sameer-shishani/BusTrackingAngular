@@ -1,27 +1,44 @@
-<!-- teacher-map.component.html -->
-<div class="page-wrapper">
-    <app-driver-sidebar></app-driver-sidebar>
-    
-    <!-- Main content area -->
-    <app-maps
-      [busMarkers]="busMarkers"
-      [busStops]="busStops"
-      (busMarkerClicked)="onBusMarkerClicked($event)"
-      (stopMarkerClicked)="onStopMarkerClicked($event)">
-    </app-maps>
-  
-    <!-- Card to display times and toggle button -->
-    <div class="time-card" *ngIf="stopTimes.length > 0 || totalTripTime">
-      <h4>Trip Information</h4>
-  
-      <div *ngFor="let time of stopTimes; let i = index">
-        Stop {{ i + 1 }}: {{ time }}
+<app-driver-sidebar></app-driver-sidebar>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="body-wrapper">
+    <div class="container-fluid">
+      <div class="map-container">
+        
+        <!-- Input fields and buttons, visible only when a bus marker is clicked -->
+        <div *ngIf="selectedBusId" class="input-container">
+          <input type="text" placeholder="Enter address" [(ngModel)]="address" />
+          <button (click)="updateLocation()">Update Location</button>
+
+          <input type="text" placeholder="Enter stop name" [(ngModel)]="newStopName" />
+          <button (click)="addStop()">Add Stop</button>
+        </div>
+
+        <!-- Inputs for updating or deleting a stop -->
+        <div *ngIf="selectedStopId" class="input-container">
+          <input type="text" [(ngModel)]="updatedStopName" placeholder="Update stop name" />
+          <button (click)="updateStop()">Update Stop</button>
+          <!-- Pass the selectedStopId as an argument to deleteStop() -->
+          <button (click)="deleteStop(selectedStopId)">Delete Stop</button>
+        </div>
+
+        <!-- Map Component -->
+        <app-maps [busMarkers]="busMarkers" [busStops]="busStops" 
+                  (busMarkerClicked)="onBusMarkerClicked($event)"
+                  (stopMarkerClicked)="onStopMarkerClicked($event)">
+        </app-maps>
+
+        <!-- Card to display times and toggle button -->
+        <div class="time-card" *ngIf="stopTimes.length > 0 || totalTripTime">
+          <h4>Trip Information</h4>
+          <div *ngFor="let time of stopTimes; let i = index">
+            Stop {{ i + 1 }}: {{ time }}
+          </div>
+          <hr />
+          <div>Total Trip Time: {{ totalTripTime }}</div>
+          <button (click)="toggleStopsVisibility()">Toggle Stops</button>
+        </div>
       </div>
-      <hr />
-  
-      <div>Total Trip Time: {{ totalTripTime }}</div>
-  
-      <button (click)="toggleStopsVisibility()">Toggle Stops</button>
     </div>
   </div>
-  
+</div>

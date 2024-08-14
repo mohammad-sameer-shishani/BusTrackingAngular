@@ -57,8 +57,8 @@
             </div>
             <div class="col-lg-6">
                 <div class="about-avatar">
-                    <img src="../../../assets/Images/man.jpg" *ngIf="this.user.User.gender=='Male'"><!--    ../../../assets/Images/{{user.Imagepath}}    -->
-                    <img src="../../../assets/Images/woman.jpg" *ngIf="this.user.User.gender=='Female'"><!--    ../../../assets/Images/{{user.Imagepath}}    -->
+                    <img src="../../../assets/Images/{{this.user.User.Imagepath}}" *ngIf="this.user.User.Imagepath != null" ><!--    ../../../assets/Images/{{user.Imagepath}}    -->
+                    <img src="../../../assets/Images/man.jpg" *ngIf="this.user.User.Imagepath == null">
                 </div>
             </div>
         </div>

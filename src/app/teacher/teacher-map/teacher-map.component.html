@@ -18,7 +18,8 @@
         <div *ngIf="selectedStopId" class="input-container">
           <input type="text" [(ngModel)]="updatedStopName" placeholder="Update stop name" />
           <button (click)="updateStop()">Update Stop</button>
-          <button (click)="deleteStop()">Delete Stop</button>
+          <!-- Pass the selectedStopId as an argument to deleteStop() -->
+          <button (click)="deleteStop(selectedStopId)">Delete Stop</button>
         </div>
 
         <!-- Map Component -->

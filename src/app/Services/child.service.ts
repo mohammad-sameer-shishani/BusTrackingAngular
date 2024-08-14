@@ -32,6 +32,7 @@ export class ChildService{
 
 //get all children
 GetAllChildren(){
+ 
   this.http.get(this.baseURL).subscribe((response)=>{
     this.allChildren=response;
     console.log('Got All Children');
@@ -43,7 +44,7 @@ GetAllChildren(){
 }
 
 
-GetChildrenByDriverId(driverid:number){
+GetChildrenByDriverId(driverid:number){ debugger;
   this.http.get(this.baseURL+'GetChildrenByDriverId/'+driverid).subscribe((response)=>{
     this.ChildrenByDriverId=response;
     console.log('Got Children By Driver Id');

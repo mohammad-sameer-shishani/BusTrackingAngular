@@ -55,7 +55,7 @@ const routes: Routes = [
 },
 {path:'driver',
   loadChildren:()=>DriverModule,
-  canActivate:[driverGuard]
+  //canActivate:[driverGuard]
 },
 {path:'parent',
   loadChildren:()=>ParentModule

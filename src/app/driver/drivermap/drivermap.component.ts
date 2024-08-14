@@ -9,7 +9,7 @@ import { StopsService } from 'src/app/Services/stops.service';
   templateUrl: './drivermap.component.html',
   styleUrls: ['./drivermap.component.css']
 })
-export class DrivermapComponent implements OnInit{
+export class DrivermapComponent implements OnInit {
   busMarkers: { busId: number, latitude: number, longitude: number, stopName: string }[] = [];
   busStops: { stopId: number, latitude: number, longitude: number, stopName: string }[] = [];
   stopDetails: any;
@@ -20,6 +20,11 @@ export class DrivermapComponent implements OnInit{
   stopsVisible: boolean = true;
   driverId: number = 0;
   user2: any;
+  address: string = '';
+  newStopName: string = '';
+  updatedStopName: string = '';
+  currentStopIndex: number = 0;  // Track the current stop index
+  busAndStopsArray: any[] = [];  // Array to hold the current bus location and stops
 
   @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
 
@@ -27,29 +32,34 @@ export class DrivermapComponent implements OnInit{
     private cdr: ChangeDetectorRef,
     private busLocationService: BusLocationService,
     private stopsService: StopsService,
-    public child :ChildService
+    public child: ChildService
   ) {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user2 = JSON.parse(storedUser);
-      this.driverId = this.user2.UserId; // Now teacherId can be accessed correctly
+      this.driverId = this.user2.UserId;
+      console.log('Driver ID set:', this.driverId);
     } else {
       console.error('No user found in local storage.');
-      this.driverId = 0; // Handle this case as needed
+      this.driverId = 0;
     }
   }
 
   ngOnInit() {
-    this.loadBusLocationsForTeacher();
+    this.loadBusLocationsForDriver();
     this.child.GetChildrenByDriverId(this.child.GetMyId());
+
+    // Automatically move the bus location every 2 minutes
+    setInterval(() => {
+      this.moveBusToNextStop();
+    }, 120000);  // 120000 ms = 2 minutes
   }
 
-  loadBusLocationsForTeacher(): void {
+  loadBusLocationsForDriver(): void {
     if (this.driverId) {
       this.busLocationService.getBusLocationsByDriverId(this.driverId);
-
       const checkBusLocation = () => {
-        const busLocation = this.busLocationService.teacherBus;
+        const busLocation = this.busLocationService.teacherBus; // Assuming same service is used
         if (busLocation) {
           this.busMarkers = [{
             busId: busLocation.busId,
@@ -57,30 +67,27 @@ export class DrivermapComponent implements OnInit{
             longitude: busLocation.longitude,
             stopName: 'Bus ' + busLocation.busnumber
           }];
-          console.log('Bus markers set:', this.busMarkers);
+          this.selectedBusId = busLocation.busId;
+          console.log('Bus ID set to:', this.selectedBusId);
 
-          // Initialize map only after busMarkers is set
           if (this.mapsComponent) {
-            this.mapsComponent.initializeMap(); 
+            this.mapsComponent.initializeMap();
           }
-
           this.cdr.detectChanges();
+          this.loadStopsForBus(this.selectedBusId!); // Load stops after the bus ID is set
         } else {
-          setTimeout(checkBusLocation, 100); // Retry until the bus location is available
+          setTimeout(checkBusLocation, 100);
         }
       };
-
-      checkBusLocation(); // Start checking for the bus location
+      checkBusLocation();
     } else {
-      console.error('Teacher ID not found in local storage.');
+      console.error('Driver ID not found in local storage.');
     }
   }
 
-  onBusMarkerClicked(busId: number): void {
-    this.selectedBusId = busId;
+  loadStopsForBus(busId: number): void {
     this.stopsService.getStops(busId);
-
-    const checkBusStops = () => {
+    const checkStopsLoaded = () => {
       if (this.stopsService.BusStops.length > 0) {
         this.busStops = this.stopsService.BusStops.map((stop: any) => ({
           stopId: stop.stopid,
@@ -88,39 +95,196 @@ export class DrivermapComponent implements OnInit{
           longitude: stop.longitude,
           stopName: stop.stopname
         }));
-        console.log('Bus stops set:', this.busStops);
-        this.cdr.detectChanges();
+        console.log('Loaded stops for bus ID:', busId, this.busStops);
+
+        // Create a new array with the current bus location and stops
+        this.busAndStopsArray = [
+          ...this.busMarkers,
+          ...this.busStops.map(stop => ({
+            stopId: stop.stopId,
+            latitude: stop.latitude,
+            longitude: stop.longitude,
+            stopName: stop.stopName
+          }))
+        ];
+        console.log('New Array with Bus and Stops:', this.busAndStopsArray);
+
+        this.cdr.detectChanges(); // Trigger UI update
       } else {
-        setTimeout(checkBusStops, 100); // Retry until the bus stops are available
+        console.log('No stops found for bus ID:', busId);
       }
     };
+    checkStopsLoaded();
+  }
 
-    checkBusStops(); // Start checking for the bus stops
+  onBusMarkerClicked(busId: number): void {
+    this.selectedBusId = busId;
+    console.log('Bus marker clicked, bus ID set to:', this.selectedBusId);
+    this.loadStopsForBus(busId);
   }
 
   onStopMarkerClicked(stopId: number): void {
     this.selectedStopId = stopId;
     this.stopsService.getStop(stopId);
-
-    const checkStopDetails = () => {
+    const checkStopDetailsLoaded = () => {
       if (this.stopsService.StopForBus) {
         this.stopDetails = this.stopsService.StopForBus;
-        console.log('Stop details set:', this.stopDetails);
+        this.updatedStopName = this.stopDetails.stopname;
         this.cdr.detectChanges();
       } else {
-        setTimeout(checkStopDetails, 100); // Retry until the stop details are available
+        setTimeout(checkStopDetailsLoaded, 100);
       }
     };
+    checkStopDetailsLoaded();
+  }
 
-    checkStopDetails(); // Start checking for the stop details
+  addStop(): void {
+    if (!this.newStopName || !this.selectedBusId) {
+      console.error('Stop name or bus ID is missing');
+      return;
+    }
+
+    this.geocodeStopAddress(this.newStopName).then((location) => {
+      if (location) {
+        const newStop = {
+          BusId: this.selectedBusId,
+          Latitude: location.lat,
+          Longitude: location.lng,
+          StopName: this.newStopName
+        };
+
+        this.stopsService.addStop(newStop);
+        console.log('Adding stop for Bus ID:', this.selectedBusId);
+        this.loadStopsForBus(this.selectedBusId!);
+      }
+    }).catch((error) => {
+      console.error('Error geocoding stop address:', error);
+    });
+  }
+
+  updateStop(): void {
+    if (!this.selectedStopId || !this.updatedStopName) {
+      console.error('Stop ID or updated stop name is missing');
+      return;
+    }
+
+    this.geocodeStopAddress(this.updatedStopName).then(location => {
+      if (location) {
+        const updatedStop = {
+          Stopid: this.selectedStopId,
+          Busid: this.selectedBusId,
+          Latitude: location.lat,
+          Longitude: location.lng,
+          Stopname: this.updatedStopName
+        };
+
+        this.stopsService.updateStop(this.selectedStopId!, updatedStop);
+      }
+    }).catch(error => {
+      console.error('Error geocoding updated stop address:', error);
+    });
+  }
+
+  deleteStop(stopId: number): void {
+    this.stopsService.deleteStop(stopId);
+    console.log('Stop deleted:', stopId);
+    this.busStops = this.busStops.filter(stop => stop.stopId !== stopId);
+    this.busAndStopsArray = this.busAndStopsArray.filter(stop => stop.stopId !== stopId);
+    this.cdr.detectChanges(); // Update the UI after deleting the stop
+  }
+
+  moveBusToNextStop(): void {
+    if (!this.selectedBusId || this.busAndStopsArray.length === 0) {
+      console.error('Cannot move bus: No selected bus or stops available');
+      return;
+    }
+
+    if (this.busStops.length === 0) {
+      console.error('Insufficient data to calculate route. No stops available for this bus.');
+      alert('No stops available for this bus. Please add stops to create a route.');
+      return;
+    }
+
+    if (this.busMarkers.length === 0) {
+      console.error('Insufficient data to calculate route. Bus location is missing.');
+      alert('Bus location is missing. Please ensure the bus location is set.');
+      return;
+    }
+
+    let nextStopIndex = (this.currentStopIndex + 1) % this.busAndStopsArray.length;
+
+    if (
+      this.busAndStopsArray[nextStopIndex].latitude === this.busMarkers[0].latitude &&
+      this.busAndStopsArray[nextStopIndex].longitude === this.busMarkers[0].longitude
+    ) {
+      nextStopIndex = (nextStopIndex + 1) % this.busAndStopsArray.length;
+    }
+
+    this.currentStopIndex = nextStopIndex;
+
+    const nextLocation = this.busAndStopsArray[this.currentStopIndex];
+    console.log('Moving bus to next location/stop:', nextLocation);
+
+    if (nextLocation.stopId) {
+      this.deleteStop(nextLocation.stopId);
+    }
+
+    this.busLocationService.updateLocation({
+      BusId: this.selectedBusId,
+      Latitude: nextLocation.latitude,
+      Longitude: nextLocation.longitude
+    });
+
+    this.busMarkers = [{
+      busId: this.selectedBusId!,
+      latitude: nextLocation.latitude,
+      longitude: nextLocation.longitude,
+      stopName: nextLocation.stopName
+    }];
+
+    this.cdr.detectChanges();
+
+    console.log(`After Move - Current Stop Index: ${this.currentStopIndex}`);
+    console.log(`After Move - New Bus Location: ${JSON.stringify(nextLocation)}`);
+  }
+
+  geocodeStopAddress(address: string): Promise<{ lat: number, lng: number } | null> {
+    return new Promise((resolve, reject) => {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+          const location = results[0].geometry.location;
+          resolve({ lat: location.lat(), lng: location.lng() });
+        } else {
+          reject(new Error('Geocoding failed: ' + status));
+        }
+      });
+    });
   }
 
   toggleStopsVisibility(): void {
     this.mapsComponent.toggleStopsVisibility();
   }
 
-  calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
-    // Logic to calculate trip time and set stopTimes and totalTripTime
-    this.cdr.detectChanges();
+  updateLocation(): void {
+    if (!this.address) {
+      console.error('No address entered');
+      return;
+    }
+
+    this.geocodeStopAddress(this.address).then((location) => {
+      if (location) {
+        const updateData: any = {
+          BusId: this.selectedBusId!,
+          Latitude: location.lat,
+          Longitude: location.lng
+        };
+
+        this.busLocationService.updateLocation(updateData);
+        console.log('Location updated for Bus ID:', this.selectedBusId);
+      }
+    }).catch((error) => {
+      console.error('Error geocoding address:', error);
+    });
   }
 }
