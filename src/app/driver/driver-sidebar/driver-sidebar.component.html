@@ -5,7 +5,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
   <!-- Sidebar scroll-->
   <div>
     <div class="brand-logo d-flex align-items-center justify-content-between">
-      <a class="text-nowrap logo-img">
+      <a routerLink="" class="text-nowrap logo-img">
         <img src="https://img.freepik.com/free-vector/school-logo-template_23-2149713030.jpg?ga=GA1.1.318993914.1721073795&semt=ais_hybrid" width="250" height="140" alt="" />
       </a>
       <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -18,6 +18,14 @@ data-sidebar-position="fixed" data-header-position="fixed">
         <li class="nav-small-cap">
           <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
           <span class="hide-menu">Home</span>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" routerLink="/home" aria-expanded="false">
+            <span>
+              <i class="ti ti-home"></i>
+            </span>
+            <span class="hide-menu">Home</span>
+          </a>
         </li>
         <li class="sidebar-item">
           <a class="sidebar-link" routerLink="/driver/drivermap" aria-expanded="false">
