@@ -27,6 +27,8 @@ export class MapsComponent implements OnInit {
   stopsVisible: boolean = true;
 
   private infoWindow: google.maps.InfoWindow | null = null;
+  private currentStopIndex: number = 0;  // Track the current stop index
+  private busRoutes: { busId: number; route: any[] }[] = [];  // Array to hold the routes for each bus
 
   constructor(private busLocationService: BusLocationService, private stopsService: StopsService, private cdr: ChangeDetectorRef) {
     this.changeDetectorRef = cdr;
@@ -34,6 +36,9 @@ export class MapsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGoogleMaps();
+    setInterval(() => {
+      this.moveBusToNextStop();
+    }, 120000);  // 120000 ms = 2 minutes
   }
 
   loadGoogleMaps(): void {
@@ -44,11 +49,6 @@ export class MapsComponent implements OnInit {
     script.onload = () => this.initializeMap();
     document.head.appendChild(script);
   }
-
-
-  
-  
-
 
   initializeMap(): void {
     console.log('Initializing map...');
@@ -82,7 +82,6 @@ export class MapsComponent implements OnInit {
       console.error('Map container is not available');
     }
   }
-  
 
   displayBusMarkers(): void {
     if (this.map && this.busMarkers.length > 0) {
@@ -115,8 +114,6 @@ export class MapsComponent implements OnInit {
       console.log('No bus markers to display or map is not initialized.');
     }
   }
-  
-  
 
   async loadStopsForBus(busId: number): Promise<void> {
     try {
@@ -143,6 +140,23 @@ export class MapsComponent implements OnInit {
       }));
 
       this.displayBusStops();
+
+      // Store bus location and stops in the route array for the specific bus
+      const busRoute = this.busMarkers.find(marker => marker.busId === busId);
+      if (busRoute) {
+        const routeArray = [
+          busRoute,
+          ...this.busStops.map(stop => ({
+            stopId: stop.stopId,
+            latitude: stop.latitude,
+            longitude: stop.longitude,
+            stopName: stop.stopName
+          }))
+        ];
+        this.busRoutes.push({ busId: busId, route: routeArray });
+        console.log(`Bus Route for Bus ID ${busId}:`, routeArray);
+      }
+
     } catch (error) {
       console.error('Failed to load stops:', error);
     }
@@ -274,9 +288,9 @@ export class MapsComponent implements OnInit {
     } else {
         console.error('Distance Matrix Service is not initialized');
     }
-}
+  }
 
-private formatTime(seconds: number): string {
+  private formatTime(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     const hours = Math.floor(minutes / 60);
@@ -287,6 +301,60 @@ private formatTime(seconds: number): string {
     } else {
         return `${minutes} min ${remainingSeconds} sec`;
     }
-}
+  }
 
+  moveBusToNextStop(): void {
+    if (!this.busRoutes.length) {
+      console.error('Cannot move bus: No bus routes available');
+      return;
+    }
+
+    // Move the bus to the next stop in its route
+    this.busRoutes.forEach(route => {
+      const nextStopIndex = (this.currentStopIndex + 1) % route.route.length;
+
+      const nextLocation = route.route[nextStopIndex];
+      console.log(`Moving bus with ID ${route.busId} to next location/stop:`, nextLocation);
+
+      // Delete the stop if the bus has reached it
+      if (nextLocation.stopId) {
+          this.stopsService.deleteStop(nextLocation.stopId);
+      }
+
+      // Update the bus location using the service
+      this.busLocationService.updateLocation({
+          BusId: route.busId,
+          Latitude: nextLocation.latitude,
+          Longitude: nextLocation.longitude
+      });
+
+      // Update the bus marker position
+      this.busMarkers = this.busMarkers.map(marker => 
+        marker.busId === route.busId ? { 
+          busId: route.busId, 
+          latitude: nextLocation.latitude, 
+          longitude: nextLocation.longitude, 
+          stopName: nextLocation.stopName 
+        } : marker
+      );
+
+      this.cdr.detectChanges();
+    });
+
+    this.currentStopIndex++;
+  }
+
+  geocodeStopAddress(address: string): Promise<{ lat: number, lng: number } | null> {
+    return new Promise((resolve, reject) => {
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ address: address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+          const location = results[0].geometry.location;
+          resolve({ lat: location.lat(), lng: location.lng() });
+        } else {
+          reject(new Error('Geocoding failed: ' + status));
+        }
+      });
+    });
+  }
 }

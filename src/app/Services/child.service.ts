@@ -44,7 +44,7 @@ GetAllChildren(){
 }
 
 
-GetChildrenByDriverId(driverid:number){ debugger;
+GetChildrenByDriverId(driverid:number){ 
   this.http.get(this.baseURL+'GetChildrenByDriverId/'+driverid).subscribe((response)=>{
     this.ChildrenByDriverId=response;
     console.log('Got Children By Driver Id');

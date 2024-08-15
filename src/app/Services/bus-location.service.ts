@@ -97,7 +97,7 @@ export class BusLocationService {
 
 
   getBusLocationsForParent(parentId : number){
-    debugger;
+    
     this.spinner.show();
     this.http.get(`${this.apiUrl}/GetBusLocationForParent/${parentId}`).subscribe((res)=>{
       this.teacherBus = res;

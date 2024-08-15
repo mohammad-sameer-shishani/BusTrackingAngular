@@ -8,7 +8,7 @@ import { StopsService } from 'src/app/Services/stops.service';
   templateUrl: './parentmap.component.html',
   styleUrls: ['./parentmap.component.css']
 })
-export class ParentmapComponent implements OnInit{
+export class ParentmapComponent implements OnInit {
   busMarkers: { busId: number, latitude: number, longitude: number, stopName: string }[] = [];
   busStops: { stopId: number, latitude: number, longitude: number, stopName: string }[] = [];
   stopDetails: any;
@@ -30,15 +30,20 @@ export class ParentmapComponent implements OnInit{
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       this.user2 = JSON.parse(storedUser);
-      this.parentId = this.user2.UserId; // Now teacherId can be accessed correctly
+      this.parentId = this.user2.UserId;
     } else {
       console.error('No user found in local storage.');
-      this.parentId = 0; // Handle this case as needed
+      this.parentId = 0;
     }
   }
 
   ngOnInit() {
     this.loadBusLocationsForParent();
+
+    // Reload the bus location every 2 minutes
+    setInterval(() => {
+      this.loadBusLocationsForParent();
+    }, 120000);  // 120000 ms = 2 minutes
   }
 
   loadBusLocationsForParent(): void {
@@ -56,9 +61,8 @@ export class ParentmapComponent implements OnInit{
           }];
           console.log('Bus markers set:', this.busMarkers);
 
-          // Initialize map only after busMarkers is set
           if (this.mapsComponent) {
-            this.mapsComponent.initializeMap(); 
+            this.mapsComponent.initializeMap();
           }
 
           this.cdr.detectChanges();
@@ -69,7 +73,7 @@ export class ParentmapComponent implements OnInit{
 
       checkBusLocation(); // Start checking for the bus location
     } else {
-      console.error('Teacher ID not found in local storage.');
+      console.error('Parent ID not found in local storage.');
     }
   }
 
@@ -109,6 +113,7 @@ export class ParentmapComponent implements OnInit{
       }
     };
 
+    checkStopDetails();
     checkStopDetails(); // Start checking for the stop details
   }
 
