@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ParentmapComponent } from './parentmap/parentmap.component';
 import { ChildAttendanceComponent } from './child-attendance/child-attendance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path:'childAttendance',
     component:ChildAttendanceComponent
+  },
+  {
+    path:'notifications',
+    component:NotificationComponent
   }
 ];
 

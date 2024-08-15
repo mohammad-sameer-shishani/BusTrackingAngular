@@ -67,11 +67,22 @@ export class NotificationService {
       console.log('error creating notification')
     })
   }
-Allnotifications:any=[]
+
+  DeleteNotification(id:number){
+    this.http.delete('https://localhost:7169/api/notification/'+id).subscribe(response=>{
+
+      console.log('notification Deleted')
+      window.location.reload()
+    },error=>{
+      console.log('error deleting notification')
+    })
+  }
+
+AllParentNotifications:any=[]
   GetAllNotificationByParentId(parentid:number){
     this.http.get('https://localhost:7169/api/notification/ByParentId/'+parentid).subscribe(response=>{
-      this.Allnotifications=response
-      console.log('Got notification')
+      this.AllParentNotifications=response
+      console.log('Got notification By Parent id')
     },error=>{
       console.log('error Getting notifications')
     })

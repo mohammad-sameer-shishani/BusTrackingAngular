@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { ArrivalService } from 'src/app/Services/arrival.service';
 import { AttendanceService } from 'src/app/Services/attendance.service';
 import { ChildService } from 'src/app/Services/child.service';
@@ -16,12 +18,14 @@ export class TripChildrenComponent implements OnInit{
     private arrival:ArrivalService,
     public child:ChildService,
     public attendanceService:AttendanceService,
-    private notificationService: NotificationService){}
+    private notificationService: NotificationService,
+    private router : Router){}
 
   searchText: string = '';  
   teacherid:any
   children:any=[]
-  public notifications: string[] = [];
+  notifications: string[] = [];
+  
 
   ngOnInit(): void {
     this.teacherid=this.teacher.GetMyId();
@@ -29,6 +33,12 @@ export class TripChildrenComponent implements OnInit{
     this.notifications = this.notificationService.getNotifications();
      }
    
+     Arrived(Child:any){
+      this.ChildArrived(Child.childid,this.teacherid);
+      this.sendNotification(Child);
+     }
+
+
     ChildArrived(childid:number,teacherid:number){
       var status = "arrived";
       var body = {
@@ -45,14 +55,17 @@ export class TripChildrenComponent implements OnInit{
         this.children = data;
       });
     }
-   
+    ViewAllAttendance(childid : number){
+      console.log('Navigating to child attendance for child ID:', childid); // Debugging line
+      this.router.navigate(['/teacher/childattendance', childid]);
+    }
   sendNotification(child:any): void {
     var body={
       teacherid:this.teacher.GetMyId(),
       parentid:child.parentid,
       message:`${child.firstname} Has Arrived To Home`
     }
-    this.notificationService.sendNotification(child.firstname+' Has Arrived At '+Date.now);
+    this.notificationService.sendNotification(child.firstname+' Has Arrived  ');
     this.notificationService.CreateNotification(body)
   }
 }

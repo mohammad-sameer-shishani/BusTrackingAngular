@@ -23,29 +23,24 @@
                     <th class="border-bottom-0">
                       <h4 class="fw-semibold mb-0">Message</h4>
                     </th>
-                    <th class="border-bottom-0">
-                      <h4 class="fw-semibold mb-0">Teacher</h4>
-                    </th>
+                   
                   </tr>
                 </thead>
                 <tbody>
-                  <tr >
+                  <tr *ngFor="let notification of notify.AllParentNotifications">
                    
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"></p>
+                      <p class="mb-0 fw-normal">{{notification.notificationdate | date}}</p>
                     </td>
                     <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"></p>
+                      <p class="mb-0 fw-normal">{{notification.message}}</p>
                     </td>
-                    <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal"></p>
-                    </td>
+                    
                     <td>
-                        <button class="btn btn-danger m-1"><span>
-                            <i class="ti ti-git-branch-deleted fs-6"></i>
+                        <span (click)="deleteNotification(notification.notificationid)">
+                            <i class="ti ti-trash-off btn text-danger"></i>
                           </span>
-                        </button>
-                        
+                       
                   </tr> 
                 </tbody>
               </table>

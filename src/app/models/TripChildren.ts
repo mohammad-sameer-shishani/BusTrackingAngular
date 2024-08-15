@@ -1,4 +1,4 @@
-export interface AttendanceChildrenBus {
+export interface TripChildren {
     childid: number;
     parentid:number;
     firstname: string;

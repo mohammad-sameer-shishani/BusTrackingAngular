@@ -9,7 +9,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
           <div class="card-body p-4">
            
               <div class="row justify-content-between">
-                <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Present Children</h3> 
+                <h3 class="card-title fw-semibold mb-4 col-4 col-md-2 btn">Children In The Bus</h3> 
               </div>
               <div class="row mb-4">
                 <div class="col-12">
@@ -56,23 +56,22 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         <mat-icon>more_vert</mat-icon>
                       </button>
                       <mat-menu #menu="matMenu">
-                    
                       
-                      <button mat-menu-item  type="button"  (click)="ChildArrived(child.childid,teacherid)">
+                        <button mat-menu-item  type="button"  (click)="ViewAllAttendance(child.childid)">
+                            <span>View Attendace</span>
+                      </button>
+                 
+                      <button mat-menu-item  type="button"  (click)="Arrived(child)">
                           <span>Arrived</span>
                       </button>  
                       
-                      <button mat-menu-item  type="button" (click)="sendNotification(child)">
-                        <span>Notify Parents</span>
-                      </button>
 
                       </mat-menu>
-
                    </td>
                   </tr> 
                 </tbody>
               </table>
-              <p *ngFor="let notification of notifications">{{ notification }}</p>
+              <p *ngFor="let notification of notifications">Notification sent!</p>
             </div>
           </div>
         </div>
