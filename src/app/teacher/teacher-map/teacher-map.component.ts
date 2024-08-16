@@ -46,10 +46,7 @@ export class TeacherMapComponent implements OnInit {
   ngOnInit() {
     this.loadBusLocationsForTeacher();
 
-    // Automatically move the bus location every 2 minutes
-    setInterval(() => {
-      this.moveBusToNextStop();
-    }, 120000);  // 120000 ms = 2 minutes
+ 
   }
 
   loadBusLocationsForTeacher(): void {
@@ -194,76 +191,6 @@ export class TeacherMapComponent implements OnInit {
 }
 
 
-  // Move bus to the next stop
-  // Move bus to the next stop
-moveBusToNextStop(): void {
-  if (!this.selectedBusId || this.busAndStopsArray.length === 0) {
-      console.error('Cannot move bus: No selected bus or stops available');
-      return;
-  }
-
-  // Check if bus has any stops
-  if (this.busStops.length === 0) {
-      console.error('Insufficient data to calculate route. No stops available for this bus.');
-      alert('No stops available for this bus. Please add stops to create a route.');
-      return;
-  }
-
-  // Ensure that there is at least one bus marker
-  if (this.busMarkers.length === 0) {
-      console.error('Insufficient data to calculate route. Bus location is missing.');
-      alert('Bus location is missing. Please ensure the bus location is set.');
-      return;
-  }
-
-  // Log the current state before moving
-  console.log(`Before Move - Current Stop Index: ${this.currentStopIndex}`);
-  console.log(`Before Move - Current Location/Stop: ${JSON.stringify(this.busAndStopsArray[this.currentStopIndex])}`);
-
-  // Move to the next location/stop, wrapping around if necessary
-  let nextStopIndex = (this.currentStopIndex + 1) % this.busAndStopsArray.length;
-
-  // If the bus location already matches the next stop, skip it
-  if (
-    this.busAndStopsArray[nextStopIndex].latitude === this.busMarkers[0].latitude &&
-    this.busAndStopsArray[nextStopIndex].longitude === this.busMarkers[0].longitude
-  ) {
-    nextStopIndex = (nextStopIndex + 1) % this.busAndStopsArray.length;
-  }
-
-  this.currentStopIndex = nextStopIndex;
-
-  // Get the next location/stop details
-  const nextLocation = this.busAndStopsArray[this.currentStopIndex];
-  console.log('Moving bus to next location/stop:', nextLocation);
-
-  // Delete the stop if the bus has reached it
-  if (nextLocation.stopId) {
-      this.deleteStop(nextLocation.stopId);
-  }
-
-  // Update the bus location using the service
-  this.busLocationService.updateLocation({
-      BusId: this.selectedBusId,
-      Latitude: nextLocation.latitude,
-      Longitude: nextLocation.longitude
-  });
-
-  // Update bus marker position
-  this.busMarkers = [{
-      busId: this.selectedBusId!,
-      latitude: nextLocation.latitude,
-      longitude: nextLocation.longitude,
-      stopName: nextLocation.stopName
-  }];
-
-  // Manually trigger change detection to update the UI
-  this.cdr.detectChanges();
-
-  // Log the state after moving
-  console.log(`After Move - Current Stop Index: ${this.currentStopIndex}`);
-  console.log(`After Move - New Bus Location: ${JSON.stringify(nextLocation)}`);
-}
 
 
 

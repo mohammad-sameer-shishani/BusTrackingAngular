@@ -84,7 +84,10 @@ app-teacher-sidebar {
   padding: 20px;
   max-width: 300px;
   z-index: 5;
+  color: #333; /* Ensure text is visible */
 }
+
+
 
 .time-card h4 {
   margin-top: 0;

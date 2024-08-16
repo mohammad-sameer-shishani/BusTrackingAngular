@@ -49,10 +49,7 @@ export class DrivermapComponent implements OnInit {
     this.loadBusLocationsForDriver();
     this.child.GetChildrenByDriverId(this.child.GetMyId());
 
-    // Automatically move the bus location every 2 minutes
-    setInterval(() => {
-      this.moveBusToNextStop();
-    }, 120000);  // 120000 ms = 2 minutes
+ 
   }
 
   loadBusLocationsForDriver(): void {
@@ -193,70 +190,7 @@ export class DrivermapComponent implements OnInit {
     this.cdr.detectChanges(); // Update the UI after deleting the stop
   }
 
-  moveBusToNextStop(): void {
-    if (!this.selectedBusId || this.busAndStopsArray.length === 0) {
-        console.error('Cannot move bus: No selected bus or stops available');
-        return;
-    }
-
-    if (this.busStops.length === 0) {
-        console.error('Insufficient data to calculate route. No stops available for this bus.');
-        alert('No stops available for this bus. Please add stops to create a route.');
-        return;
-    }
-
-    if (this.busMarkers.length === 0) {
-        console.error('Insufficient data to calculate route. Bus location is missing.');
-        alert('Bus location is missing. Please ensure the bus location is set.');
-        return;
-    }
-
-    // Calculate the next stop index
-    let nextStopIndex = (this.currentStopIndex + 1) % this.busAndStopsArray.length;
-
-    // Check if the next stop is the same as the current bus location
-    if (
-        this.busAndStopsArray[nextStopIndex].latitude === this.busMarkers[0].latitude &&
-        this.busAndStopsArray[nextStopIndex].longitude === this.busMarkers[0].longitude
-    ) {
-        nextStopIndex = (nextStopIndex + 1) % this.busAndStopsArray.length;
-    }
-
-    this.currentStopIndex = nextStopIndex;
-
-    const nextLocation = this.busAndStopsArray[this.currentStopIndex];
-    console.log('Moving bus to next location/stop:', nextLocation);
-
-    // Delete the stop if the bus has reached it
-    if (nextLocation.stopId) {
-        this.deleteStop(nextLocation.stopId);
-    }
-
-    // Update the bus location using the service, without using subscribe or observables
-    this.busLocationService.updateLocation({
-        BusId: this.selectedBusId!,
-        Latitude: nextLocation.latitude,
-        Longitude: nextLocation.longitude
-    });
-
-    // Refresh the bus locations after the move
-    this.loadBusLocationsForDriver();
-
-    // Update bus marker position in the UI
-    this.busMarkers = [{
-        busId: this.selectedBusId!,
-        latitude: nextLocation.latitude,
-        longitude: nextLocation.longitude,
-        stopName: nextLocation.stopName
-    }];
-
-    // Trigger UI update
-    this.cdr.detectChanges();
-
-    console.log(`After Move - Current Stop Index: ${this.currentStopIndex}`);
-    console.log(`After Move - New Bus Location: ${JSON.stringify(nextLocation)}`);
-}
-
+ 
   
 
   geocodeStopAddress(address: string): Promise<{ lat: number, lng: number } | null> {

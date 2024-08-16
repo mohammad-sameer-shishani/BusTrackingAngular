@@ -55,7 +55,7 @@ export class BusLocationService {
       console.log('Location updated');
       // this.toastr.success('Location updated','',{
       //   positionClass: 'toast-bottom-right'})
-      window.location.reload();
+     
     },err=>{
       console.log('error updateLocation');
       this.toastr.error('Something Went Wrong!!')
