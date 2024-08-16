@@ -28,7 +28,7 @@
           <li *ngIf="isAuthenticated && userRole == 3"><a [routerLink]="['/parent']">Parent Dashboard</a></li>
           <li *ngIf="isAuthenticated && userRole == 4"><a [routerLink]="['/driver']">Driver Dashboard</a></li>
       
-          <li><a routerLink="/account/login" class="getstarted" *ngIf="!isAuthenticated">Log in</a></li>
+          <li><a routerLink="/account/login" class="getstarted" *ngIf="isAuthenticated!=true">Log in</a></li>
           <li><a (click)="logout()" class="getstarted" *ngIf="isAuthenticated">Logout</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

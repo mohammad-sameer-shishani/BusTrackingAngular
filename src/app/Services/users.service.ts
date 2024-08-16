@@ -52,9 +52,7 @@ baseURL='https://localhost:7169/api/User/';
     this.spinner.show();
     this.http.get(this.baseURL+'GetAllTeachers').subscribe(res=>{
       this.AllTeachers = res;
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
-    
+      
   },err => {
     console.log("error");
     console.log(err.status);
@@ -70,8 +68,7 @@ getAllDrivers(){
   this.spinner.show();
   this.http.get(this.baseURL+'GetAllDrivers').subscribe(res=>{
     this.AllDrivers = res;
-    this.toastr.success('Reterived Successfully','',{
-      positionClass: 'toast-bottom-right'})
+   
   },err => {
     console.log("error");
     console.log(err.status);
@@ -86,8 +83,7 @@ getAllParents(){
   this.spinner.show();
   this.http.get(this.baseURL+'GetAllParents').subscribe(res=>{
     this.AllParents = res;
-    this.toastr.success('Reterived Successfully','',{
-      positionClass: 'toast-bottom-right'})
+ 
   },err => {
     console.log("error");
     console.log(err.status);

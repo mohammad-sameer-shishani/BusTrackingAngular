@@ -54,6 +54,7 @@ export class AbsentsComponent implements OnInit{
       response => {
         console.log('Response received:', response);
         alert('Attendance submitted successfully');
+        window.location.reload()
       },
       error => {
         console.error('There was an error!', error);

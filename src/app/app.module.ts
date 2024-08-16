@@ -33,7 +33,7 @@ import { AddTestimonialComponent } from './add-testimonial/add-testimonial.compo
     TestimonialsComponent,
     ProfileComponent,
     ChildrenComponent,
-    AddTestimonialComponent,
+    AddTestimonialComponent
    
   ],
   imports: [

@@ -40,6 +40,7 @@ export class BusService {
 CreatBus(body:any){
   this.http.post(this.baseURL,body).subscribe((response)=>{
     console.log('Bus Created');
+    window.location.reload();
 },error => {
   console.log("Error Creating Bus");
 })
@@ -62,6 +63,7 @@ DeleteBus(Busid:number){
   this.http.delete(this.baseURL+"delete/"+Busid).subscribe((response)=>{
     console.log(Busid);
     console.log("Bus Deleted");
+    window.location.reload();
   },error=>{
       console.log("Error Deleting Bus");
       console.log(error.status);

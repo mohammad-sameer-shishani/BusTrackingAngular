@@ -29,9 +29,7 @@ export class UserStatisticsService {
     this.http.get(`https://localhost:7169/api/UserStatistics/year/${year}`).subscribe(
       (res: any) => {
         this.users = res;
-        this.toastr.success('Retrieved Successfully', '', {
-          positionClass: 'toast-bottom-right'
-        });
+       
       },
       err => {
         console.error("Error retrieving users by year", err);
@@ -48,9 +46,7 @@ export class UserStatisticsService {
     this.http.get(`https://localhost:7169/api/UserStatistics/year/${year}/month/${month}`).subscribe(
       (res: any) => {
         this.users = res;
-        this.toastr.success('Retrieved Successfully', '', {
-          positionClass: 'toast-bottom-right'
-        });
+       
       },
       err => {
         console.error("Error retrieving users by month and year", err);

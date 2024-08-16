@@ -34,19 +34,22 @@ data-sidebar-position="fixed" data-header-position="fixed">
             <th>First Name</th>
             <th>Last Name</th>
             <th>Username</th>
-            <th>RoleId</th>
+            <th>Role</th>
             <th>Created Date</th>
             <th>Address</th>
             <th>Gender</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let user of report.users">
            
             <td>{{ user.firstname }}</td>
             <td>{{ user.lastname }}</td>
             <td>{{ user.username }}</td>
-            <td>{{ user.roleid || 'N/A' }}</td> <!-- Handle optional RoleId -->
+            <td *ngIf="user.roleid==1">admin</td> <!-- Handle optional RoleId -->
+            <td *ngIf="user.roleid==2">teacher</td> 
+            <td *ngIf="user.roleid==3">parent</td> 
+            <td *ngIf="user.roleid==4">driver</td> 
             <td>{{ user.createdDate ? (user.createdDate | date: 'short') : 'N/A' }}</td> <!-- Handle optional CreatedDate -->
             <td>{{ user.address || 'N/A' }}</td> <!-- Handle optional Address -->
             <td>{{ user.gender || 'N/A' }}</td> <!-- Handle optional Gender -->
@@ -55,7 +58,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
       </table>
     </div>
   
-    <div *ngIf="users.length === 0" class="alert alert-info">
+    <div *ngIf="report.users.length === 0" class="alert alert-info">
       No users found for the selected period.
     </div>
   

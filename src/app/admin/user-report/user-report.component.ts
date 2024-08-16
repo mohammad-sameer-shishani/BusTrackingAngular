@@ -11,10 +11,11 @@ export class UserReportComponent {
   year: number | null = null;  // Initialize as null to capture empty input
   month: number | null = null; // Initialize as null to capture empty input
   errorMessage: string = ''; // Initialize errorMessage
+  searchMonth:string =''
+  searchYear:string =''
 
 
-
-  constructor(private report: UserStatisticsService) { }
+  constructor(public report: UserStatisticsService) { }
 
   loadUsersByYear() {
     if (this.year && this.year > 0) {

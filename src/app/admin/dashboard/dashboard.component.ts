@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit{
     this.countTeachers=this.home.AllTeachers.length;
     this.loadStatistics();
     this.GetUserIdFromLocal();
+
   }
   GetUserIdFromLocal(){
     let user=localStorage.getItem("user");
