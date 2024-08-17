@@ -33,6 +33,8 @@ export class MapsComponent implements OnInit {
   private routesLoaded: boolean = false;
   private busMarkersMap: { [busId: number]: google.maps.Marker } = {};
   
+  storedRoute: google.maps.DirectionsRoute | null = null;  // Add this property
+  
   constructor(
     private busLocationService: BusLocationService,
     private stopsService: StopsService,
@@ -41,7 +43,6 @@ export class MapsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGoogleMaps();
-    this.startBusMovement();
   }
 
   loadGoogleMaps(): void {
@@ -337,7 +338,9 @@ export class MapsComponent implements OnInit {
     this.directionsService.route(request, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
             this.directionsRenderer!.setDirections(result);
-            this.moveBusAlongRoute(result!.routes[0].overview_path, result!.routes[0].legs);
+            console.log(`Route calculated and displayed for Bus ID ${busId}.`);
+            // Store the calculated route for later use
+            this.storedRoute = result!.routes[0];
         } else {
             console.error(`Directions request failed due to ${status}`);
         }
@@ -346,41 +349,49 @@ export class MapsComponent implements OnInit {
 
   moveBusAlongRoute(path: google.maps.LatLng[], legs: google.maps.DirectionsLeg[]): void {
     if (this.currentStopIndex < 0 || this.currentStopIndex >= legs.length) {
-      console.error('Invalid current stop index');
-      return;
+        console.error('Invalid current stop index');
+        return;
     }
-  
+
     const leg = legs[this.currentStopIndex];
     if (!leg) {
         console.error('Leg is undefined at index', this.currentStopIndex);
         return;
     }
-  
-    const legDurationInMinutes = leg.duration?.value ? leg.duration.value / 60 : 0;
-    const intervalTime = .02; // 2 minutes interval
-    const totalSteps = legDurationInMinutes > 0 ? Math.floor(legDurationInMinutes / intervalTime) : 1;
-  
+
+    // Number of points to simulate between each stop
+    const numIntermediatePoints = 3;
+    const totalSteps = numIntermediatePoints + 1; // 3 intermediate points + the destination point
+
     let pointIndex = 0;
-  
+
     const moveNext = () => {
-        if (pointIndex < totalSteps && pointIndex < path.length - 1) {
+        if (pointIndex < path.length - 1) {
             const currentPoint = path[pointIndex];
             const nextPoint = path[Math.min(pointIndex + 1, path.length - 1)];
-  
+
+            // Calculate the step size for each segment
             const stepLat = (nextPoint.lat() - currentPoint.lat()) / totalSteps;
             const stepLng = (nextPoint.lng() - currentPoint.lng()) / totalSteps;
-  
-            // Move the bus through each step
+
             setTimeout(() => {
                 const newLat = currentPoint.lat() + stepLat;
                 const newLng = currentPoint.lng() + stepLng;
-                this.updateBusLocation(this.busMarkers[0].busId, 
+
+                this.updateBusLocation(
+                    this.busMarkers[0].busId,
                     { latitude: newLat, longitude: newLng, stopName: '' },
-                    { latitude: nextPoint.lat(), longitude: nextPoint.lng(), stopName: '' });
-  
+                    { latitude: nextPoint.lat(), longitude: nextPoint.lng(), stopName: '' }
+                );
+
                 pointIndex++;
-                if (pointIndex < totalSteps) {
-                    moveNext(); // Continue moving until reaching the next stop
+
+                if (this.isBusAtFinalStop()) {
+                    console.log('Bus has reached its final stop.');
+                    this.displayTotalTripTime();
+                    clearInterval(this.intervalHandle);
+                } else if (pointIndex < path.length - 1) {
+                    moveNext(); // Continue moving to the next point
                 } else {
                     this.currentStopIndex++;
                     if (this.currentStopIndex < this.busStops.length - 1) {
@@ -391,7 +402,7 @@ export class MapsComponent implements OnInit {
                         clearInterval(this.intervalHandle);
                     }
                 }
-            }, intervalTime * 60 * 1000); // Move to the next point every 2 minutes
+            }, 1 * 60 * 1000); // Move to the next point every 2 minutes
         } else {
             console.log('Bus has reached the next stop.');
             this.currentStopIndex++;
@@ -404,11 +415,26 @@ export class MapsComponent implements OnInit {
             }
         }
     };
-  
-    moveNext();
-  }
 
-  startBusMovement(): void {
+    moveNext();
+}
+
+
+// Function to check if the bus is at the final stop
+private isBusAtFinalStop(): boolean {
+  const finalStop = this.busStops[this.busStops.length - 1];
+  const currentBusLocation = this.busMarkers[0];
+  const threshold = 0.0001;
+
+  return (
+      Math.abs(currentBusLocation.latitude - finalStop.latitude) < threshold &&
+      Math.abs(currentBusLocation.longitude - finalStop.longitude) < threshold
+  );
+}
+
+
+
+  public startBusMovement(): void {
     if (this.busMarkers.length === 0) {
         console.warn('No bus markers available to start movement.');
         return;
@@ -419,9 +445,11 @@ export class MapsComponent implements OnInit {
 
     this.loadStopsForBus(busId).then(() => {
         setTimeout(() => {
-            this.intervalHandle = setInterval(() => {
-                this.moveBusToNextStop();
-            }, .02 * 60 * 1000); // 2 minutes interval
+            if (this.storedRoute) {
+                this.moveBusAlongRoute(this.storedRoute.overview_path, this.storedRoute.legs);
+            } else {
+                console.error('No route stored. Ensure the route is calculated first.');
+            }
         }, 1000); // Initial delay to ensure routes are loaded
     }).catch(error => {
         console.error('Failed to start bus movement:', error);

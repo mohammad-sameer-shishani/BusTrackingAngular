@@ -47,39 +47,14 @@ export class DrivermapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadBusLocationsForDriver();
     this.child.GetChildrenByDriverId(this.child.GetMyId());
-
-    // Start updating location every 2 minutes
-    this.intervalHandle = setInterval(() => {
-      this.updateLocation();
-    }, 2 * 60 * 1000); // 2 minutes interval
+    this.loadBusLocationsForDriver();
   }
 
   ngOnDestroy() {
     // Clear the interval when the component is destroyed
     if (this.intervalHandle) {
       clearInterval(this.intervalHandle);
-    }
-  }
- 
-
-
-  updateBusLocationToNextStop(): void {
-    if (this.selectedBusId !== null && this.currentStopIndex < this.busStops.length) {
-      const nextStop = this.busStops[this.currentStopIndex];
-      const updateData = {
-        BusId: this.selectedBusId,
-        Latitude: nextStop.latitude,
-        Longitude: nextStop.longitude
-      };
-      this.busLocationService.updateLocation(updateData);
-      console.log('Bus location updated to:', nextStop);
-      
-      // Optionally, you can also trigger the map component to update the marker position
-      if (this.mapsComponent) {
-        this.mapsComponent.updateBusLocation(this.selectedBusId, nextStop, nextStop);
-      }
     }
   }
 
@@ -143,6 +118,41 @@ export class DrivermapComponent implements OnInit, OnDestroy {
       }
     };
     checkStopsLoaded();
+  }
+
+  startBusMovement(): void {
+    if (this.selectedBusId !== null && this.mapsComponent) {
+      // Check if the route is already stored
+      if (this.mapsComponent.storedRoute) {
+        // Start moving the bus along the stored route
+        this.mapsComponent.startBusMovement();
+      } else {
+        console.error('No stored route available. Please select a bus first.');
+      }
+    } else {
+      console.error('Bus ID is not selected or map is not initialized.');
+    }
+  }
+  
+  updateBusLocationToNextStop(): void {
+    if (this.selectedBusId !== null && this.currentStopIndex < this.busStops.length) {
+      const nextStop = this.busStops[this.currentStopIndex];
+      const updateData = {
+        BusId: this.selectedBusId,
+        Latitude: nextStop.latitude,
+        Longitude: nextStop.longitude
+      };
+      this.busLocationService.updateLocation(updateData);
+      console.log('Bus location updated to:', nextStop);
+      
+      // Optionally, you can also trigger the map component to update the marker position
+      if (this.mapsComponent) {
+        this.mapsComponent.updateBusLocation(this.selectedBusId, nextStop, nextStop);
+      }
+
+      // Move to the next stop
+      this.currentStopIndex++;
+    }
   }
 
   onBusMarkerClicked(busId: number): void {
