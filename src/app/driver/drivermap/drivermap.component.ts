@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MapsComponent } from 'src/app/map/maps/maps.component';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
 import { ChildService } from 'src/app/Services/child.service';
@@ -9,7 +9,7 @@ import { StopsService } from 'src/app/Services/stops.service';
   templateUrl: './drivermap.component.html',
   styleUrls: ['./drivermap.component.css']
 })
-export class DrivermapComponent implements OnInit {
+export class DrivermapComponent implements OnInit, OnDestroy {
   busMarkers: { busId: number, latitude: number, longitude: number, stopName: string }[] = [];
   busStops: { stopId: number, latitude: number, longitude: number, stopName: string }[] = [];
   stopDetails: any;
@@ -25,6 +25,7 @@ export class DrivermapComponent implements OnInit {
   updatedStopName: string = '';
   currentStopIndex: number = 0;  // Track the current stop index
   busAndStopsArray: any[] = [];  // Array to hold the current bus location and stops
+  private intervalHandle: any;   // Handle for the interval
 
   @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
 
@@ -49,7 +50,37 @@ export class DrivermapComponent implements OnInit {
     this.loadBusLocationsForDriver();
     this.child.GetChildrenByDriverId(this.child.GetMyId());
 
+    // Start updating location every 2 minutes
+    this.intervalHandle = setInterval(() => {
+      this.updateLocation();
+    }, 2 * 60 * 1000); // 2 minutes interval
+  }
+
+  ngOnDestroy() {
+    // Clear the interval when the component is destroyed
+    if (this.intervalHandle) {
+      clearInterval(this.intervalHandle);
+    }
+  }
  
+
+
+  updateBusLocationToNextStop(): void {
+    if (this.selectedBusId !== null && this.currentStopIndex < this.busStops.length) {
+      const nextStop = this.busStops[this.currentStopIndex];
+      const updateData = {
+        BusId: this.selectedBusId,
+        Latitude: nextStop.latitude,
+        Longitude: nextStop.longitude
+      };
+      this.busLocationService.updateLocation(updateData);
+      console.log('Bus location updated to:', nextStop);
+      
+      // Optionally, you can also trigger the map component to update the marker position
+      if (this.mapsComponent) {
+        this.mapsComponent.updateBusLocation(this.selectedBusId, nextStop, nextStop);
+      }
+    }
   }
 
   loadBusLocationsForDriver(): void {
@@ -189,9 +220,6 @@ export class DrivermapComponent implements OnInit {
     this.busAndStopsArray = this.busAndStopsArray.filter(stop => stop.stopId !== stopId);
     this.cdr.detectChanges(); // Update the UI after deleting the stop
   }
-
- 
-  
 
   geocodeStopAddress(address: string): Promise<{ lat: number, lng: number } | null> {
     return new Promise((resolve, reject) => {

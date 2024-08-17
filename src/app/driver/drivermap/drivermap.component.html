@@ -7,8 +7,8 @@
         
         <!-- Input fields and buttons, visible only when a bus marker is clicked -->
         <div *ngIf="selectedBusId" class="input-container">
-          <input type="text" placeholder="Enter address" [(ngModel)]="address" />
-          <button (click)="updateLocation()">Update Location</button>
+        <!--   <input type="text" placeholder="Enter address" [(ngModel)]="address" />
+          <button (click)="updateLocation()">Update Location</button>-->
 
           <input type="text" placeholder="Enter stop name" [(ngModel)]="newStopName" />
           <button (click)="addStop()">Add Stop</button>

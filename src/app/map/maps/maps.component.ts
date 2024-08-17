@@ -59,8 +59,7 @@ export class MapsComponent implements OnInit {
     };
 
     document.head.appendChild(script);
-}
-
+  }
 
   initializeMap(): void {
     if (this.mapContainer) {
@@ -127,55 +126,88 @@ export class MapsComponent implements OnInit {
 
   async loadStopsForBus(busId: number): Promise<void> {
     try {
-      const stops = await new Promise<any[]>((resolve, reject) => {
-        this.stopsService.getStops(busId);
-        const interval = setInterval(() => {
-          if (this.stopsService.BusStops.length > 0) {
-            clearInterval(interval);
-            resolve(this.stopsService.BusStops);
-          }
-        }, 100);
-  
-        setTimeout(() => {
-          clearInterval(interval);
-          reject(new Error('Timeout while loading stops'));
-        }, 5000);
-      });
-  
-      this.busStops = stops.map((stop: any) => ({
-        stopId: stop.stopid,
-        latitude: stop.latitude,
-        longitude: stop.longitude,
-        stopName: stop.stopname
-      }));
-  
-      this.displayBusStops();
-  
-      const busMarker = this.busMarkers.find(marker => marker.busId === busId);
-      if (busMarker) {
-        const routeArray = [
-          busMarker,
-          ...this.busStops.map(stop => ({
-            stopId: stop.stopId,
+        const stops = await new Promise<any[]>((resolve, reject) => {
+            this.stopsService.getStops(busId);
+            const interval = setInterval(() => {
+                if (this.stopsService.BusStops.length > 0) {
+                    clearInterval(interval);
+                    resolve(this.stopsService.BusStops);
+                }
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                if (this.stopsService.BusStops.length === 0) {
+                    console.warn(`No stops found for Bus ID ${busId} within the timeout period.`);
+                    resolve([]);  // Resolve with an empty array instead of rejecting
+                }
+            }, 5000);
+        });
+
+        if (!stops || stops.length === 0) {
+            console.warn(`Bus ID ${busId} does not have any stops. The bus will not be moved.`);
+            return;
+        }
+
+        this.busStops = stops.map((stop: any) => ({
+            stopId: stop.stopid,
             latitude: stop.latitude,
             longitude: stop.longitude,
-            stopName: stop.stopName
-          }))
-        ];
-        this.busRoutes.push({ busId: busId, route: routeArray });
-        this.routesLoaded = true;
-  
-        // Calculate time and distance to each stop
-        await this.calculateTimeToStops(busMarker);
-        
-        console.log(`Bus Route for Bus ID ${busId} successfully loaded:`, routeArray);
-      } else {
-        console.error(`No bus marker found for Bus ID ${busId}`);
-      }
+            stopName: stop.stopname
+        }));
+
+        // Order stops by proximity
+        this.orderStopsByProximity();
+
+        this.displayBusStops();
+
+        const busMarker = this.busMarkers.find(marker => marker.busId === busId);
+        if (busMarker) {
+            const routeArray = [
+                busMarker,
+                ...this.busStops.map(stop => ({
+                    stopId: stop.stopId,
+                    latitude: stop.latitude,
+                    longitude: stop.longitude,
+                    stopName: stop.stopName
+                }))
+            ];
+            this.busRoutes.push({ busId: busId, route: routeArray });
+            this.routesLoaded = true;
+
+            // Initialize currentStopIndex
+            this.currentStopIndex = 0;
+
+            // Calculate time and distance to each stop
+            await this.calculateTimeToStops(busMarker);
+
+            console.log(`Bus Route for Bus ID ${busId} successfully loaded:`, routeArray);
+        } else {
+            console.error(`No bus marker found for Bus ID ${busId}`);
+        }
     } catch (error) {
-      console.error('Failed to load stops:', error);
+        console.error('Failed to load stops:', error);
     }
   }
+
+  orderStopsByProximity(): void {
+    if (!this.busStops || this.busStops.length === 0) return;
+
+    this.busStops.sort((a, b) => {
+      const distanceA = google.maps.geometry.spherical.computeDistanceBetween(
+        new google.maps.LatLng(this.busMarkers[0].latitude, this.busMarkers[0].longitude),
+        new google.maps.LatLng(a.latitude, a.longitude)
+      );
+      const distanceB = google.maps.geometry.spherical.computeDistanceBetween(
+        new google.maps.LatLng(this.busMarkers[0].latitude, this.busMarkers[0].longitude),
+        new google.maps.LatLng(b.latitude, b.longitude)
+      );
+      return distanceA - distanceB;
+    });
+
+    console.log('Stops ordered by proximity:', this.busStops);
+  }
+
   async calculateTimeToStops(busMarker: any) {
     if (!this.distanceMatrixService) {
       console.error('DistanceMatrixService is not initialized');
@@ -212,7 +244,6 @@ export class MapsComponent implements OnInit {
       }
     });
   }
-  
 
   displayBusStops(): void {
     this.clearStopMarkers();
@@ -268,84 +299,99 @@ export class MapsComponent implements OnInit {
 
   calculateAndDisplayRoute(busId: number): void {
     if (!this.directionsService || !this.directionsRenderer) {
-      console.error('Directions service or renderer is not initialized');
-      return;
+        console.error('Directions service or renderer is not initialized.');
+        return;
     }
 
-    if (this.busMarkers.length === 0 || this.busStops.length === 0) {
-      console.error('Insufficient data to calculate route. Ensure that busMarkers and busStops are populated.');
-      return;
+    if (!this.busMarkers || this.busMarkers.length === 0) {
+        console.error('No bus markers available. Ensure that busMarkers array is populated.');
+        return;
+    }
+
+    if (!this.busStops || this.busStops.length === 0) {
+        console.warn(`Bus ID ${busId} does not have any stops. The bus will not be moved.`);
+        return;
     }
 
     const busMarker = this.busMarkers.find(marker => marker.busId === busId);
     if (!busMarker) {
-      console.error('Bus marker not found');
-      return;
+        console.error(`Bus marker for Bus ID ${busId} not found.`);
+        return;
     }
 
     const origin = new google.maps.LatLng(busMarker.latitude, busMarker.longitude);
     const destination = new google.maps.LatLng(this.busStops[this.busStops.length - 1].latitude, this.busStops[this.busStops.length - 1].longitude);
 
     const waypoints: google.maps.DirectionsWaypoint[] = this.busStops.map(stop => ({
-      location: new google.maps.LatLng(stop.latitude, stop.longitude),
-      stopover: true
+        location: new google.maps.LatLng(stop.latitude, stop.longitude),
+        stopover: true
     }));
 
     const request: google.maps.DirectionsRequest = {
-      origin: origin,
-      destination: destination,
-      waypoints: waypoints,
-      travelMode: google.maps.TravelMode.DRIVING
+        origin: origin,
+        destination: destination,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING
     };
 
     this.directionsService.route(request, (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        this.directionsRenderer!.setDirections(result);
-        this.moveBusAlongRoute(result!.routes[0].overview_path, result!.routes[0].legs);
-      } else {
-        console.error('Directions request failed due to ' + status);
-      }
+        if (status === google.maps.DirectionsStatus.OK) {
+            this.directionsRenderer!.setDirections(result);
+            this.moveBusAlongRoute(result!.routes[0].overview_path, result!.routes[0].legs);
+        } else {
+            console.error(`Directions request failed due to ${status}`);
+        }
     });
   }
 
   moveBusAlongRoute(path: google.maps.LatLng[], legs: google.maps.DirectionsLeg[]): void {
-    if (this.currentStopIndex === undefined || this.currentStopIndex >= legs.length) {
-        console.error('Invalid current stop index');
-        return;
+    if (this.currentStopIndex < 0 || this.currentStopIndex >= legs.length) {
+      console.error('Invalid current stop index');
+      return;
     }
-
+  
     const leg = legs[this.currentStopIndex];
     if (!leg) {
         console.error('Leg is undefined at index', this.currentStopIndex);
         return;
     }
-
+  
     const legDurationInMinutes = leg.duration?.value ? leg.duration.value / 60 : 0;
-    const intervalTime = 120000; // 2 minutes in milliseconds
-    const totalSteps = legDurationInMinutes > 0 ? Math.floor(legDurationInMinutes / 2) : 1;
-
+    const intervalTime = .02; // 2 minutes interval
+    const totalSteps = legDurationInMinutes > 0 ? Math.floor(legDurationInMinutes / intervalTime) : 1;
+  
     let pointIndex = 0;
-
+  
     const moveNext = () => {
-        if (pointIndex < path.length - 1) {
+        if (pointIndex < totalSteps && pointIndex < path.length - 1) {
             const currentPoint = path[pointIndex];
-            const nextPoint = path[pointIndex + 1];
-
+            const nextPoint = path[Math.min(pointIndex + 1, path.length - 1)];
+  
             const stepLat = (nextPoint.lat() - currentPoint.lat()) / totalSteps;
             const stepLng = (nextPoint.lng() - currentPoint.lng()) / totalSteps;
-
-            for (let i = 0; i < totalSteps; i++) {
-                setTimeout(() => {
-                    const newLat = currentPoint.lat() + stepLat * (i + 1);
-                    const newLng = currentPoint.lng() + stepLng * (i + 1);
-                    this.updateBusLocation(this.busMarkers[0].busId, 
-                        { latitude: newLat, longitude: newLng, stopName: '' },
-                        { latitude: nextPoint.lat(), longitude: nextPoint.lng(), stopName: '' });
-                }, i * intervalTime / totalSteps);
-            }
-
-            pointIndex++;
-            setTimeout(moveNext, intervalTime);
+  
+            // Move the bus through each step
+            setTimeout(() => {
+                const newLat = currentPoint.lat() + stepLat;
+                const newLng = currentPoint.lng() + stepLng;
+                this.updateBusLocation(this.busMarkers[0].busId, 
+                    { latitude: newLat, longitude: newLng, stopName: '' },
+                    { latitude: nextPoint.lat(), longitude: nextPoint.lng(), stopName: '' });
+  
+                pointIndex++;
+                if (pointIndex < totalSteps) {
+                    moveNext(); // Continue moving until reaching the next stop
+                } else {
+                    this.currentStopIndex++;
+                    if (this.currentStopIndex < this.busStops.length - 1) {
+                        this.moveBusToNextStop();
+                    } else {
+                        console.log('Bus has reached its final stop.');
+                        this.displayTotalTripTime();
+                        clearInterval(this.intervalHandle);
+                    }
+                }
+            }, intervalTime * 60 * 1000); // Move to the next point every 2 minutes
         } else {
             console.log('Bus has reached the next stop.');
             this.currentStopIndex++;
@@ -358,41 +404,54 @@ export class MapsComponent implements OnInit {
             }
         }
     };
-
+  
     moveNext();
-}
+  }
 
   startBusMovement(): void {
-    setTimeout(() => {
-      this.intervalHandle = setInterval(() => {
-        this.moveBusToNextStop();
-      }, 120000); // 2 minutes
-    }, 1000); // Initial delay to ensure routes are loaded
+    if (this.busMarkers.length === 0) {
+        console.warn('No bus markers available to start movement.');
+        return;
+    }
+
+    // Automatically select the first bus if none is selected
+    const busId = this.busMarkers[0].busId;
+
+    this.loadStopsForBus(busId).then(() => {
+        setTimeout(() => {
+            this.intervalHandle = setInterval(() => {
+                this.moveBusToNextStop();
+            }, .02 * 60 * 1000); // 2 minutes interval
+        }, 1000); // Initial delay to ensure routes are loaded
+    }).catch(error => {
+        console.error('Failed to start bus movement:', error);
+    });
   }
 
   moveBusToNextStop(): void {
     if (!this.routesLoaded || this.busRoutes.length === 0) {
-      console.error('No bus routes available to move.');
-      return;
+        console.error('No bus routes available to move.');
+        return;
     }
 
-    const route = this.busRoutes[0];
-    if (this.currentStopIndex < route.route.length - 1) {
-      const currentLocation = route.route[this.currentStopIndex];
-      const nextStop = route.route[this.currentStopIndex + 1];
+    const route = this.busRoutes[0]; // Always move the first bus
 
-      this.calculateAndDisplayRouteBetweenStops(currentLocation, nextStop)
-        .then(() => {
-          this.currentStopIndex++;
-          this.cdr.detectChanges();
-        })
-        .catch(error => {
-          console.error('Failed to calculate route:', error);
-        });
+    if (this.currentStopIndex < route.route.length - 1) {
+        const currentLocation = route.route[this.currentStopIndex];
+        const nextStop = route.route[this.currentStopIndex + 1];
+
+        this.calculateAndDisplayRouteBetweenStops(currentLocation, nextStop)
+            .then(() => {
+                this.currentStopIndex++;
+                this.cdr.detectChanges();
+            })
+            .catch(error => {
+                console.error('Failed to calculate route:', error);
+            });
     } else {
-      console.log(`Bus ID ${route.busId} has reached its final stop.`);
-      this.displayTotalTripTime();
-      clearInterval(this.intervalHandle);
+        console.log(`Bus ID ${route.busId} has reached its final stop.`);
+        this.displayTotalTripTime();
+        clearInterval(this.intervalHandle);
     }
   }
 
@@ -424,28 +483,49 @@ export class MapsComponent implements OnInit {
     });
   }
 
-  private async updateBusLocation(busId: number, currentLocation: any, nextStop: any): Promise<void> {
+  public async updateBusLocation(busId: number, currentLocation: any, nextStop: any): Promise<void> {
+    // Validate input
+    if (!busId || !currentLocation || !nextStop) {
+        console.error('Invalid input: Bus ID, current location, or next stop is missing.');
+        return;
+    }
+
     const newLat = nextStop.latitude;
     const newLng = nextStop.longitude;
 
-    const marker = this.busMarkersMap[busId];
-
-    if (marker) {
-      const newPosition = new google.maps.LatLng(newLat, newLng);
-      marker.setPosition(newPosition);
-      console.log(`Updated Bus ID ${busId} location to (${newLat}, ${newLng})`);
-    } else {
-      console.error(`Marker for Bus ID ${busId} not found.`);
+    // Validate the next stop's coordinates
+    if (isNaN(newLat) || isNaN(newLng)) {
+        console.error('Invalid coordinates: Latitude or Longitude for the next stop is not a number.');
+        return;
     }
 
+    const marker = this.busMarkersMap[busId];
+
+    // Check if the marker exists for the bus
+    if (marker) {
+        const newPosition = new google.maps.LatLng(newLat, newLng);
+        marker.setPosition(newPosition);
+        console.log(`Updated Bus ID ${busId} location to (${newLat}, ${newLng})`);
+    } else {
+        console.error(`Marker for Bus ID ${busId} not found.`);
+        return; // Exit early since marker update failed
+    }
+
+    // Prepare data for the location update
     const updateData = {
-      BusId: busId,
-      Latitude: newLat,
-      Longitude: newLng,
-      StopName: currentLocation.stopName
+        BusId: busId,
+        Latitude: newLat,
+        Longitude: newLng,
+        StopName: currentLocation.stopName || 'Unknown Stop'
     };
 
-    this.busLocationService.updateLocation(updateData);
+    try {
+        // Attempt to update the bus location in the service
+        await this.busLocationService.updateLocation(updateData);
+        console.log(`Successfully updated bus location for Bus ID ${busId} in the backend.`);
+    } catch (error) {
+        console.error('Failed to update bus location in the backend:', error);
+    }
   }
 
   private displayTimeBetweenStops(leg: google.maps.DirectionsLeg): void {
