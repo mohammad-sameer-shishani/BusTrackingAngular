@@ -360,24 +360,18 @@ export class MapsComponent implements OnInit {
         return;
     }
 
-    // Number of points to simulate between each stop
-    const numIntermediatePoints = 3;
-    const totalSteps = numIntermediatePoints + 1; // 3 intermediate points + the destination point
+    const totalSteps = path.length;
 
     let pointIndex = 0;
 
     const moveNext = () => {
-        if (pointIndex < path.length - 1) {
+        if (pointIndex < totalSteps - 1) {
             const currentPoint = path[pointIndex];
-            const nextPoint = path[Math.min(pointIndex + 1, path.length - 1)];
-
-            // Calculate the step size for each segment
-            const stepLat = (nextPoint.lat() - currentPoint.lat()) / totalSteps;
-            const stepLng = (nextPoint.lng() - currentPoint.lng()) / totalSteps;
+            const nextPoint = path[pointIndex + 1];
 
             setTimeout(() => {
-                const newLat = currentPoint.lat() + stepLat;
-                const newLng = currentPoint.lng() + stepLng;
+                const newLat = nextPoint.lat();
+                const newLng = nextPoint.lng();
 
                 this.updateBusLocation(
                     this.busMarkers[0].busId,
@@ -387,26 +381,22 @@ export class MapsComponent implements OnInit {
 
                 pointIndex++;
 
-                if (this.isBusAtFinalStop()) {
-                    console.log('Bus has reached its final stop.');
-                    this.displayTotalTripTime();
-                    clearInterval(this.intervalHandle);
-                } else if (pointIndex < path.length - 1) {
+                if (this.isBusAtStop(newLat, newLng)) {
+                    console.log(`Bus has reached stop ${this.currentStopIndex + 1}`);
+                    this.currentStopIndex++;
+                    setTimeout(() => {
+                        moveNext(); // Continue after stopping at the stop
+                    }, 20000); // Stop for 2 seconds at each actual stop
+                } else if (pointIndex < totalSteps - 1) {
                     moveNext(); // Continue moving to the next point
                 } else {
-                    this.currentStopIndex++;
-                    if (this.currentStopIndex < this.busStops.length - 1) {
-                        this.moveBusToNextStop();
-                    } else {
-                        console.log('Bus has reached its final stop.');
-                        this.displayTotalTripTime();
-                        clearInterval(this.intervalHandle);
-                    }
+                    console.log('Bus has reached its final destination.');
+                    this.displayTotalTripTime();
+                    clearInterval(this.intervalHandle);
                 }
-            }, .3 * 60 * 1000); // Move to the next point every 2 minutes
+            }, 20000); // Move to the next point every 2 seconds (adjust as needed)
         } else {
             console.log('Bus has reached the next stop.');
-            this.currentStopIndex++;
             if (this.currentStopIndex < this.busStops.length - 1) {
                 this.moveBusToNextStop();
             } else {
@@ -419,6 +409,19 @@ export class MapsComponent implements OnInit {
 
     moveNext();
 }
+
+// Function to check if the bus is at an actual stop in the busStops array
+private isBusAtStop(lat: number, lng: number): boolean {
+    const threshold = 0.0001; // Define a threshold to determine if the bus is at a stop
+    const currentStop = this.busStops[this.currentStopIndex];
+    
+    return (
+        Math.abs(lat - currentStop.latitude) < threshold &&
+        Math.abs(lng - currentStop.longitude) < threshold
+    );
+}
+
+
 
 
 // Function to check if the bus is at the final stop
