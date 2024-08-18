@@ -39,11 +39,7 @@ export class ParentmapComponent implements OnInit {
 
   ngOnInit() {
     this.loadBusLocationsForParent();
-
-    // Reload the bus location every 2 minutes
-    setInterval(() => {
-      this.loadBusLocationsForParent();
-    }, 120000);  // 120000 ms = 2 minutes
+    this.startPolling(); // Start polling for bus location updates
   }
 
   loadBusLocationsForParent(): void {
@@ -62,7 +58,9 @@ export class ParentmapComponent implements OnInit {
           console.log('Bus markers set:', this.busMarkers);
 
           if (this.mapsComponent) {
-            this.mapsComponent.initializeMap();
+            this.busMarkers.forEach(marker => {
+              this.mapsComponent.updateBusMarker(marker.busId, marker.latitude, marker.longitude);
+            });
           }
 
           this.cdr.detectChanges();
@@ -114,7 +112,6 @@ export class ParentmapComponent implements OnInit {
     };
 
     checkStopDetails();
-    checkStopDetails(); // Start checking for the stop details
   }
 
   toggleStopsVisibility(): void {
@@ -124,5 +121,15 @@ export class ParentmapComponent implements OnInit {
   calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
     // Logic to calculate trip time and set stopTimes and totalTripTime
     this.cdr.detectChanges();
+  }
+
+  startPolling() {
+    this.loadBusLocationsForParent(); // Load initially
+    setInterval(() => {
+      this.loadBusLocationsForParent();
+      if (this.selectedBusId !== null) {
+        this.onBusMarkerClicked(this.selectedBusId); // Reload stops for the selected bus
+      }
+    }, 30000); // Poll every 30 seconds
   }
 }

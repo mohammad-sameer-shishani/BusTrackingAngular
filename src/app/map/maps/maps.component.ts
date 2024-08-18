@@ -14,6 +14,7 @@ export class MapsComponent implements OnInit {
 
   @Output() busMarkerClicked = new EventEmitter<number>();
   @Output() stopMarkerClicked = new EventEmitter<number>();
+  @Output() busLocationUpdated = new EventEmitter<{ busId: number, latitude: number, longitude: number }>();
 
   @ViewChild('mapContainer', { static: false }) mapContainer: ElementRef | null = null;
   map: google.maps.Map | null = null;
@@ -402,7 +403,7 @@ export class MapsComponent implements OnInit {
                         clearInterval(this.intervalHandle);
                     }
                 }
-            }, 1 * 60 * 1000); // Move to the next point every 2 minutes
+            }, .3 * 60 * 1000); // Move to the next point every 2 minutes
         } else {
             console.log('Bus has reached the next stop.');
             this.currentStopIndex++;
@@ -534,6 +535,9 @@ private isBusAtFinalStop(): boolean {
         const newPosition = new google.maps.LatLng(newLat, newLng);
         marker.setPosition(newPosition);
         console.log(`Updated Bus ID ${busId} location to (${newLat}, ${newLng})`);
+
+        // Emit the location update event
+        this.busLocationUpdated.emit({ busId, latitude: newLat, longitude: newLng });
     } else {
         console.error(`Marker for Bus ID ${busId} not found.`);
         return; // Exit early since marker update failed
@@ -555,7 +559,16 @@ private isBusAtFinalStop(): boolean {
         console.error('Failed to update bus location in the backend:', error);
     }
   }
-
+  public updateBusMarker(busId: number, latitude: number, longitude: number): void {
+    const marker = this.busMarkersMap[busId];
+    if (marker) {
+      const newPosition = new google.maps.LatLng(latitude, longitude);
+      marker.setPosition(newPosition);
+      console.log(`Updated Bus ID ${busId} to new position (${latitude}, ${longitude})`);
+    } else {
+      console.warn(`No marker found for Bus ID ${busId}`);
+    }
+  }
   private displayTimeBetweenStops(leg: google.maps.DirectionsLeg): void {
     const timeInMinutes = leg.duration ? leg.duration.value / 60 : 0;
     const timeText = leg.duration?.text || 'Unknown time';
@@ -578,11 +591,12 @@ private isBusAtFinalStop(): boolean {
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
           const location = results[0].geometry.location;
-          resolve({ lat: location.lat(), lng: location.lng() });
+          resolve({ lat: location.lat(), lng: location.lng() }); // Call lng() to get the number
         } else {
           reject(new Error('Geocoding failed: ' + status));
         }
       });
     });
   }
+  
 }

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { map } from 'rxjs';
 import { MapsComponent } from 'src/app/map/maps/maps.component';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
 import { BusService } from 'src/app/Services/bus.service';
@@ -16,20 +15,23 @@ export class AdminManageMapComponent implements OnInit {
   stopDetails: any;
   selectedBusId: number | null = null;
   selectedStopId: number | null = null;
-  stopTimes: string[] = [];  // Add this property
-  totalTripTime: string = '';  // Add this property
-  stopsVisible: boolean = true;  // Add this property to track visibility of stops
+  stopTimes: string[] = [];
+  totalTripTime: string = '';
+  stopsVisible: boolean = true;
+
   @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private busLocationService: BusLocationService,
     private stopsService: StopsService,
-    private bus:BusService
+    private bus: BusService
   ) {}
 
   ngOnInit() {
     this.loadAllBusesLocations();
     this.bus.getAllBuses();
+    this.startPolling(); // Start polling for bus location updates
   }
 
   loadAllBusesLocations(): void {
@@ -40,6 +42,12 @@ export class AdminManageMapComponent implements OnInit {
       longitude: bus.longitude,
       stopName: 'Bus ' + bus.busnumber
     }));
+
+    if (this.mapsComponent) {
+      this.busMarkers.forEach(marker => {
+        this.mapsComponent.updateBusMarker(marker.busId, marker.latitude, marker.longitude);
+      });
+    }
   }
 
   onBusMarkerClicked(busId: number): void {
@@ -71,11 +79,18 @@ export class AdminManageMapComponent implements OnInit {
     this.mapsComponent.toggleStopsVisibility();
   }
 
+  calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
+    // Logic to calculate trip time and set stopTimes and totalTripTime
+    this.cdr.detectChanges();
+  }
 
-    // Add this method to calculate the trip time
-    calculateTripTime(origin: google.maps.LatLng, stops: { latitude: number, longitude: number }[]): void {
-      // Logic to calculate trip time and set stopTimes and totalTripTime
-      // Trigger change detection to update the view
-      this.cdr.detectChanges();
-    }
+  startPolling() {
+    this.loadAllBusesLocations(); // Load initially
+    setInterval(() => {
+      this.loadAllBusesLocations();
+      if (this.selectedBusId !== null) {
+        this.onBusMarkerClicked(this.selectedBusId); // Reload stops for the selected bus
+      }
+    }, 30000); // Poll every 30 seconds
+  }
 }

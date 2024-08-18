@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MapsComponent } from 'src/app/map/maps/maps.component';
-import { StopsService } from 'src/app/Services/stops.service';
 import { BusLocationService } from 'src/app/Services/bus-location.service';
+import { StopsService } from 'src/app/Services/stops.service';
 
 @Component({
   selector: 'app-teacher-map',
@@ -22,8 +22,9 @@ export class TeacherMapComponent implements OnInit {
   address: string = '';
   newStopName: string = '';
   updatedStopName: string = '';
-  currentStopIndex: number = 0;  // Track the current stop index
-  busAndStopsArray: any[] = [];  // Array to hold the current bus location and stops
+  currentStopIndex: number = 0;
+  busAndStopsArray: any[] = [];
+  intervalHandle: any; // Declare intervalHandle property
 
   @ViewChild(MapsComponent) mapsComponent!: MapsComponent;
 
@@ -45,8 +46,7 @@ export class TeacherMapComponent implements OnInit {
 
   ngOnInit() {
     this.loadBusLocationsForTeacher();
-
- 
+    this.startPolling(); // Start polling for bus location updates
   }
 
   loadBusLocationsForTeacher(): void {
@@ -80,38 +80,42 @@ export class TeacherMapComponent implements OnInit {
     }
   }
 
+  loadBusLocations(): void {
+    this.loadBusLocationsForTeacher(); // Reuse the existing method
+  }
+
   loadStopsForBus(busId: number): void {
     this.stopsService.getStops(busId);
     const checkStopsLoaded = () => {
-        if (this.stopsService.BusStops.length > 0) {
-            this.busStops = this.stopsService.BusStops.map((stop: any) => ({
-                stopId: stop.stopid,
-                latitude: stop.latitude,
-                longitude: stop.longitude,
-                stopName: stop.stopname
-            }));
-            console.log('Loaded stops for bus ID:', busId, this.busStops);
-            
-            // Create a new array with the current bus location and stops
-            this.busAndStopsArray = [
-                ...this.busMarkers,
-                ...this.busStops.map(stop => ({
-                    stopId: stop.stopId,
-                    latitude: stop.latitude,
-                    longitude: stop.longitude,
-                    stopName: stop.stopName
-                }))
-            ];
-            console.log('New Array with Bus and Stops:', this.busAndStopsArray);
+      if (this.stopsService.BusStops.length > 0) {
+        this.busStops = this.stopsService.BusStops.map((stop: any) => ({
+          stopId: stop.stopid,
+          latitude: stop.latitude,
+          longitude: stop.longitude,
+          stopName: stop.stopname
+        }));
+        console.log('Loaded stops for bus ID:', busId, this.busStops);
+        
+        // Create a new array with the current bus location and stops
+        this.busAndStopsArray = [
+          ...this.busMarkers,
+          ...this.busStops.map(stop => ({
+            stopId: stop.stopId,
+            latitude: stop.latitude,
+            longitude: stop.longitude,
+            stopName: stop.stopName
+          }))
+        ];
+        console.log('New Array with Bus and Stops:', this.busAndStopsArray);
 
-            this.cdr.detectChanges(); // Trigger UI update
-        } else {
-            console.log('No stops found for bus ID:', busId);
-        }
+        this.cdr.detectChanges(); // Trigger UI update
+      } else {
+        console.log('No stops found for bus ID:', busId);
+      }
     };
 
     checkStopsLoaded();
-}
+  }
 
   onBusMarkerClicked(busId: number): void {
     this.selectedBusId = busId;
@@ -161,24 +165,24 @@ export class TeacherMapComponent implements OnInit {
 
   updateStop(): void {
     if (!this.selectedStopId || !this.updatedStopName) {
-        console.error('Stop ID or updated stop name is missing');
-        return;
+      console.error('Stop ID or updated stop name is missing');
+      return;
     }
 
     this.geocodeStopAddress(this.updatedStopName).then(location => {
-        if (location) {
-            const updatedStop = {
-                Stopid: this.selectedStopId,
-                Busid: this.selectedBusId,
-                Latitude: location.lat,
-                Longitude: location.lng,
-                Stopname: this.updatedStopName
-            };
+      if (location) {
+        const updatedStop = {
+          Stopid: this.selectedStopId,
+          Busid: this.selectedBusId,
+          Latitude: location.lat,
+          Longitude: location.lng,
+          Stopname: this.updatedStopName
+        };
 
-            this.stopsService.updateStop(this.selectedStopId!, updatedStop);
-        }
+        this.stopsService.updateStop(this.selectedStopId!, updatedStop);
+      }
     }).catch(error => {
-        console.error('Error geocoding updated stop address:', error);
+      console.error('Error geocoding updated stop address:', error);
     });
   }
 
@@ -188,11 +192,7 @@ export class TeacherMapComponent implements OnInit {
     this.busStops = this.busStops.filter(stop => stop.stopId !== stopId);
     this.busAndStopsArray = this.busAndStopsArray.filter(stop => stop.stopId !== stopId);
     this.cdr.detectChanges(); // Update the UI after deleting the stop
-}
-
-
-
-
+  }
 
   // Geocoding function
   geocodeStopAddress(address: string): Promise<{ lat: number, lng: number } | null> {
@@ -201,6 +201,7 @@ export class TeacherMapComponent implements OnInit {
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
           const location = results[0].geometry.location;
+          // Call lat() and lng() to get the actual values
           resolve({ lat: location.lat(), lng: location.lng() });
         } else {
           reject(new Error('Geocoding failed: ' + status));
@@ -208,30 +209,24 @@ export class TeacherMapComponent implements OnInit {
       });
     });
   }
-
-  toggleStopsVisibility(): void {
-    this.mapsComponent.toggleStopsVisibility();
+  
+  updateBusMarkersOnMap(): void {
+    if (this.mapsComponent && this.busMarkers) {
+      this.busMarkers.forEach(bus => {
+        this.mapsComponent.updateBusMarker(bus.busId, bus.latitude, bus.longitude);
+      });
+      this.cdr.detectChanges(); // Trigger UI update
+    }
   }
 
-  updateLocation(): void {
-    if (!this.address) {
-      console.error('No address entered');
-      return;
-    }
-
-    this.geocodeStopAddress(this.address).then((location) => {
-      if (location) {
-        const updateData: any = {
-          BusId: this.selectedBusId!,
-          Latitude: location.lat,
-          Longitude: location.lng
-        };
-
-        this.busLocationService.updateLocation(updateData);
-        console.log('Location updated for Bus ID:', this.selectedBusId);
-      }
-    }).catch((error) => {
-      console.error('Error geocoding address:', error);
-    });
+  startPolling() {
+    // Load initially
+    this.loadBusLocations();
+    
+    // Poll every 30 seconds (you can adjust the interval as needed)
+    this.intervalHandle = setInterval(() => {
+      this.loadBusLocations();
+      this.updateBusMarkersOnMap();
+    }, 30000);
   }
 }

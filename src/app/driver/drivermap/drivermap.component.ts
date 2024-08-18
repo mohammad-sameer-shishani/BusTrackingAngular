@@ -270,4 +270,14 @@ export class DrivermapComponent implements OnInit, OnDestroy {
       console.error('Error geocoding address:', error);
     });
   }
+
+  startPolling() {
+    this.loadBusLocationsForDriver(); // Load initially
+    setInterval(() => {
+      this.loadBusLocationsForDriver();
+      if (this.selectedBusId !== null) {
+        this.onBusMarkerClicked(this.selectedBusId); // Reload stops for the selected bus
+      }
+    }, 30000); // Poll every 5 seconds
+  }
 }

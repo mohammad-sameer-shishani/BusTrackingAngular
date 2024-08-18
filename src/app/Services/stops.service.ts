@@ -20,8 +20,8 @@ export class StopsService {
     this.http.get(this.apiUrl+'BusStops/'+busId).subscribe((res)=>{
       this.BusStops =res;
      // console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+     // this.toastr.success('Reterived Successfully','',{
+     //   positionClass: 'toast-bottom-right'})
     },err=>{
       console.log("error gitting stops");
     console.log(err.status);
@@ -35,8 +35,8 @@ export class StopsService {
      this.http.get(this.apiUrl+'Getstop/'+stopId).subscribe((res)=>{
       this.StopForBus = res; 
       console.log(res)
-      this.toastr.success('Reterived Successfully','',{
-        positionClass: 'toast-bottom-right'})
+     // this.toastr.success('Reterived Successfully','',{
+       // positionClass: 'toast-bottom-right'})
     },err=>{
       console.log("Error retrieving stop with ID:", stopId);
         console.log(err.status);
