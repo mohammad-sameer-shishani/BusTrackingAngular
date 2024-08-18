@@ -1,0 +1,93 @@
+<app-teacher-sidebar></app-teacher-sidebar>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+data-sidebar-position="fixed" data-header-position="fixed">
+<div class="body-wrapper">
+    <app-teacher-navbar></app-teacher-navbar>
+<div class="container-fluid">
+
+
+<div class="container">
+    <h2>Arrivals for Child</h2>
+  
+    <div *ngIf="childArrival.length > 0">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+               
+                <th>Name</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let arrival of childArrival">
+             
+                <td>{{arrival.firstname}} {{arrival.lastname}}</td>
+                <td>{{ arrival.status }}</td>
+                <td>
+                  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item type="button" (click)="openUpdateDialog(arrival)">
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item type="button" (click)="openDeleteDailog(arrival)">
+                      <span>Delete </span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  
+    <ng-template #noAttendance>
+      <p>No arrival records found for this child.</p>
+    </ng-template>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<ng-template #deleteDailog>          
+  <h1 mat-dialog-title>Delete Arrival</h1>
+  <div mat-dialog-content>
+    Would you like to delete this Arrival?
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close="no">No</button>
+    <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+  </div>
+</ng-template> 
+
+
+
+
+
+
+
+
+<ng-template #updateDailog>
+  <h2 mat-dialog-title>Update Arrival Status</h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="updateArrivalsForm">
+      <mat-radio-group formControlName="Status" class="d-flex flex-row">
+        <mat-radio-button value="Arrived" class="me-3">Arrived</mat-radio-button>
+        <mat-radio-button value="not Arrived">not Arrived</mat-radio-button>
+      </mat-radio-group>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="update(UData.arrivalid)">Update</button>
+  </mat-dialog-actions>
+  
+  
+</ng-template>
+

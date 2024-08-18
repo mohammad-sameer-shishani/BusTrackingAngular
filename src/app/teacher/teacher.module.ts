@@ -17,6 +17,7 @@ import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { ViewDriversComponent } from './view-drivers/view-drivers.component';
 import { ViewParentsComponent } from './view-parents/view-parents.component';
 import { TripChildrenComponent } from './trip-children/trip-children.component';
+import { ChildArrivalsComponent } from './child-arrivals/child-arrivals.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TripChildrenComponent } from './trip-children/trip-children.component';
     ViewTeachersComponent,
     ViewDriversComponent,
     ViewParentsComponent,
-    TripChildrenComponent
+    TripChildrenComponent,
+    ChildArrivalsComponent
   ],
   imports: [
     CommonModule,

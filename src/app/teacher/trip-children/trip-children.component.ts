@@ -59,6 +59,12 @@ export class TripChildrenComponent implements OnInit{
       console.log('Navigating to child attendance for child ID:', childid); // Debugging line
       this.router.navigate(['/teacher/childattendance', childid]);
     }
+    
+    ViewAllArrival(childid : number){
+      console.log('Navigating to child arrivals for child ID:', childid); // Debugging line
+      this.router.navigate(['/teacher/childarrivals', childid]);
+    }
+
   sendNotification(child:any): void {
     var body={
       teacherid:this.teacher.GetMyId(),

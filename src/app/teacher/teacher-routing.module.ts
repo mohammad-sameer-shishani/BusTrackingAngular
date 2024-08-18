@@ -10,6 +10,7 @@ import { ViewParentsComponent } from './view-parents/view-parents.component';
 import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { ViewDriversComponent } from './view-drivers/view-drivers.component';
 import { TripChildrenComponent } from './trip-children/trip-children.component';
+import { ChildArrivalsComponent } from './child-arrivals/child-arrivals.component';
 
 const routes: Routes = [
 {
@@ -30,6 +31,10 @@ const routes: Routes = [
 {
   path:'childattendance/:childid',
   component:ChildAttendanceComponent
+},
+{
+  path:'childarrivals/:childid',
+  component:ChildArrivalsComponent
 },
 {
   path:'map',
