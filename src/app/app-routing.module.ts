@@ -13,6 +13,8 @@ import { ParentModule } from './parent/parent.module';
 import { AddTestimonialComponent } from './add-testimonial/add-testimonial.component';
 import { authorizationGuard } from './authorization.guard';
 import { driverGuard } from './driver.guard';
+import { teacherGuard } from './teacher.guard';
+import { parentGuard } from './parent.guard';
 
 
 const routes: Routes = [
@@ -51,14 +53,16 @@ const routes: Routes = [
   canActivate:[authorizationGuard]
 },
 {path:'teacher',
-  loadChildren:()=>TeacherModule
+  loadChildren:()=>TeacherModule,
+  canActivate:[teacherGuard]
 },
 {path:'driver',
   loadChildren:()=>DriverModule,
-  //canActivate:[driverGuard]
+  canActivate:[driverGuard]
 },
 {path:'parent',
-  loadChildren:()=>ParentModule
+  loadChildren:()=>ParentModule,
+  canActivate:[parentGuard]
 },
 {path:'addtestimonial',
   component:AddTestimonialComponent

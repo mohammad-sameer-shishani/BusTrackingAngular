@@ -23,8 +23,9 @@ if (token)
     else
     {
       taostr.warning('This page is for Drivers !');
-      router.navigate(['account/login'])
-      return false;
+     router.navigate(['home'])
+    
+    return false;
     }
 
   }
@@ -37,6 +38,7 @@ else
 {
   taostr.warning('Please Sign In !');
   router.navigate(['account/login'])
+
   return false;
 }
 };

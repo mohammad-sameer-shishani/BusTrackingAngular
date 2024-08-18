@@ -17,14 +17,14 @@ if (token)
 
     if (user.RoleId=="2") 
     {
-      taostr.success('Welcome to teacher dashboard')
+      //taostr.success('Welcome to teacher dashboard')
       return true;
     }
 
     else
     {
       taostr.warning('This page is for Teachers !');
-      router.navigate(['account/login'])
+      router.navigate(['home'])
       return false;
     }
 
